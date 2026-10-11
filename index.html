@@ -43,9 +43,9 @@
   <link rel="preload" as="image" href="assets/img/hero-1800.webp" media="(min-width: 721px)">
   <!-- Familia Andamio: marco común con la landing /shows/ y STILL STANDING -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;500&display=swap">
-  <link rel="stylesheet" href="https://andamiocr.com/andamio-familia/familia.css?v=2">
+  <link rel="stylesheet" href="https://andamiocr.com/andamio-familia/familia.css?v=4">
   <style>@media (max-width: 479px) { .lwgy__brand-txt { display: none; } }</style>
-  <link rel="stylesheet" href="assets/css/style.css?v=3.6">
+  <link rel="stylesheet" href="assets/css/style.css?v=4.1">
 
   <script type="application/ld+json">
   {
@@ -150,11 +150,53 @@
       <button class="lwgy__lang" id="lwgyLang" type="button" aria-label="Read in English">
         <b>ES</b><span>EN</span>
       </button>
-      <a class="lwgy__btn lwgy__btn--luz" data-mail="patrocinio" href="mailto:josepablo@persona.cr">
+      <a class="lwgy__btn lwgy__btn--luz lwgy__nav-cta" data-mail="patrocinio" href="mailto:josepablo@persona.cr">
         <span class="lwgy-es">Patrocinar</span><span class="lwgy-en">Sponsor</span>
       </a>
+      <!-- En celular y tablet: abre el "programa de mano" -->
+      <button class="lwgy__menu-btn" id="lwgyMenuBtn" type="button" aria-expanded="false" aria-controls="lwgyMenu">
+        <span class="lwgy__menu-ico" aria-hidden="true"><i></i><i></i></span>
+        <span class="lwgy-es">Menú</span><span class="lwgy-en">Menu</span>
+      </button>
     </div>
   </header>
+
+  <!-- ===================== PROGRAMA DE MANO (menú en celular y tablet) =====================
+       Baja como un telón; cada sección es un acto, como en el programa de una función. -->
+  <dialog class="lwgy__programa" id="lwgyMenu" aria-labelledby="lwgyMenuT">
+    <div class="lwgy__programa-luz" aria-hidden="true"></div>
+    <div class="lwgy__programa-hilos" aria-hidden="true">
+      <i style="--x:7%;--l:3.4rem;--d:4.2s"><svg><use href="#lwgy-estrella"/></svg></i>
+      <i style="--x:26%;--l:5.2rem;--d:5s"><svg><use href="#lwgy-estrella"/></svg></i>
+      <i style="--x:48%;--l:2.6rem;--d:3.8s"><svg><use href="#lwgy-estrella"/></svg></i>
+      <i style="--x:64%;--l:4.4rem;--d:4.6s"><svg><use href="#lwgy-estrella"/></svg></i>
+      <i style="--x:79%;--l:2.2rem;--d:5.4s"><svg><use href="#lwgy-estrella"/></svg></i>
+    </div>
+    <div class="lwgy__programa-in">
+      <div class="lwgy__programa-top">
+        <p class="lwgy__programa-kicker" id="lwgyMenuT"><span class="lwgy-es">Programa de mano</span><span class="lwgy-en">Playbill</span></p>
+        <button class="lwgy__redondo" type="button" data-cerrar aria-label="Cerrar menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </div>
+      <nav aria-label="Secciones">
+        <ol class="lwgy__actos">
+          <li style="--i:0;--k:var(--cian)"><a href="#historia"><b>I</b><span class="lwgy-es">La historia</span><span class="lwgy-en">The story</span></a></li>
+          <li style="--i:1;--k:var(--amarillo)"><a href="#galeria"><b>II</b><span class="lwgy-es">En escena</span><span class="lwgy-en">On stage</span></a></li>
+          <li style="--i:2;--k:var(--magenta)"><a href="#elenco"><b>III</b><span class="lwgy-es">El elenco</span><span class="lwgy-en">The company</span></a></li>
+          <li style="--i:3;--k:var(--lima)"><a href="#sonido"><b>IV</b><span class="lwgy-es">El sonido</span><span class="lwgy-en">The sound</span></a></li>
+          <li style="--i:4;--k:var(--ambar)"><a href="#trayectoria"><b>V</b><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Track record</span></a></li>
+          <li style="--i:5;--k:var(--violeta)"><a href="#ahora"><b>VI</b><span class="lwgy-es">Por qué ahora</span><span class="lwgy-en">Why now</span></a></li>
+          <li style="--i:6;--k:var(--cian)"><a href="#equipo"><b>VII</b><span class="lwgy-es">Equipo creativo</span><span class="lwgy-en">Creative team</span></a></li>
+          <li style="--i:7;--k:var(--lima)"><a href="#sumate"><b>VIII</b><span class="lwgy-es">Sumate</span><span class="lwgy-en">Join us</span></a></li>
+          <li style="--i:8;--k:var(--magenta)"><a href="#contacto"><b>IX</b><span class="lwgy-es">Contacto</span><span class="lwgy-en">Contact</span></a></li>
+          <li style="--i:9;--k:var(--amarillo)" class="lwgy__acto-bis"><a href="#tuluz"><b>Bis</b><span class="lwgy-es">Tu luz</span><span class="lwgy-en">Your light</span></a></li>
+        </ol>
+      </nav>
+      <div class="lwgy__programa-pie">
+        <a class="lwgy__btn lwgy__btn--luz" data-mail="patrocinio" href="mailto:josepablo@persona.cr"><span class="lwgy-es">Quiero patrocinar</span><span class="lwgy-en">Become a sponsor</span></a>
+        <a class="lwgy__btn lwgy__btn--linea" data-wa="50688433789" href="https://wa.me/50688433789" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </dialog>
 
   <main id="contenido">
 
@@ -202,8 +244,34 @@
     </section>
 
 
+    <!-- ===================== EL TEASER (siempre en movimiento, de fondo) =====================
+         El video corre sin sonido, atenuado, y la frase del show se enciende palabra por palabra,
+         como la letra de una canción en la pantalla de un concierto. -->
+    <section class="lwgy__teaser" id="teaser" aria-label="Teaser">
+      <div class="lwgy__teaser-fondo" id="lwgyTeaserFondo" aria-hidden="true">
+        <img class="lwgy__teaser-poster" src="assets/img/galeria-04.webp" width="1400" height="932" alt="" loading="lazy">
+      </div>
+      <div class="lwgy__wrap lwgy__teaser-in">
+        <p class="lwgy__teaser-frase" data-palabras>
+          <span class="lwgy-es">“A veces tenemos que viajar a lo más oscuro<br> para redescubrir la magia que llevamos por dentro...”</span>
+          <span class="lwgy-en">“At times, you must journey through the deepest shadows<br> to uncover the hidden magic you hold within...”</span>
+        </p>
+        <span class="lwgy__teaser-arco" aria-hidden="true"></span>
+        <button class="lwgy__btn lwgy__btn--linea lwgy__teaser-btn" type="button" data-teaser>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          <span class="lwgy-es">Ver el teaser con sonido</span><span class="lwgy-en">Watch the teaser with sound</span>
+        </button>
+      </div>
+    </section>
+
+
     <!-- ===================== LA HISTORIA ===================== -->
-    <section class="lwgy__sec lwgy__sec--niebla lwgy--cian" id="historia">
+    <section class="lwgy__sec lwgy__sec--niebla lwgy--cian lwgy__sec--mar" id="historia">
+      <div class="lwgy__mar" data-mar="cruce" style="--prev:var(--noche);--espuma:rgba(22,19,47,.22)" aria-hidden="true">
+        <svg class="lwgy__mar-ola" viewBox="0 0 2880 120" preserveAspectRatio="none"><use href="#lwgy-ola"/></svg>
+        <svg class="lwgy__mar-espuma" viewBox="0 0 2880 120" preserveAspectRatio="none"><use href="#lwgy-espuma"/></svg>
+        <div class="lwgy__mar-barco"><div class="lwgy__mece"><svg viewBox="0 0 200 130"><use href="#lwgy-barco"/></svg></div></div>
+      </div>
       <div class="lwgy__wrap">
         <p class="lwgy__head" data-head><svg class="lwgy__star" aria-hidden="true"><use href="#lwgy-estrella"/></svg>
           <span class="lwgy-es">La historia</span><span class="lwgy-en">The story</span></p>
@@ -214,14 +282,21 @@
               <span class="lwgy-es">Cansada de la monotonía y la falta de motivación, una joven adulta desencadena una serie de eventos mágicos que la llevan a lo más profundo y desconocido del océano, en busca de propósito y luz.</span>
               <span class="lwgy-en">Weary of routine and short on motivation, a young woman sets off a chain of magical events that carries her to the deepest, most unknown reaches of the ocean, in search of purpose and light.</span>
             </h2>
-            <p class="lwgy__p" style="margin-top:1.5rem">
-              <span class="lwgy-es">Un espectáculo que fusiona teatro, danza y música en vivo en un viaje sensorial y emocional. Inspirado en la magia de Coldplay, combina efectos visuales y sonoros para transformar lo ordinario en extraordinario.</span>
-              <span class="lwgy-en">A show that fuses theatre, dance and live music into a sensory, emotional journey. Inspired by the magic of Coldplay, it blends visual and sound effects to turn the ordinary into the extraordinary.</span>
-            </p>
-            <p class="lwgy__tagline">
-              <span class="lwgy-es">A veces tenemos que viajar a lo más oscuro para redescubrir la magia que llevamos por dentro...</span>
-              <span class="lwgy-en">At times, you must journey through the deepest shadows to uncover the hidden magic you hold within...</span>
-            </p>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="actoHistoria">
+                <div class="lwgy__acto-in">
+                  <p class="lwgy__p">
+                    <span class="lwgy-es">Un espectáculo que fusiona teatro, danza y música en vivo en un viaje sensorial y emocional. Inspirado en la magia de Coldplay, combina efectos visuales y sonoros para transformar lo ordinario en extraordinario.</span>
+                    <span class="lwgy-en">A show that fuses theatre, dance and live music into a sensory, emotional journey. Inspired by the magic of Coldplay, it blends visual and sound effects to turn the ordinary into the extraordinary.</span>
+                  </p>
+                </div>
+              </div>
+            <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="actoHistoria">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Levantar el telón</span><span class="lwgy-en">Raise the curtain</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Bajar el telón</span><span class="lwgy-en">Lower the curtain</span></span>
+            </button>
+            </div>
           </div>
           <figure class="lwgy__historia-foto">
             <img src="assets/img/historia.webp" width="1400" height="933" loading="lazy"
@@ -332,14 +407,13 @@
         <p class="lwgy__head" data-head><svg class="lwgy__star" aria-hidden="true"><use href="#lwgy-estrella"/></svg>
           <span class="lwgy-es">El elenco</span><span class="lwgy-en">The company</span></p>
         <div class="lwgy__elenco-top">
-          <h2 class="lwgy__h2"><span class="lwgy-es">Cuarenta y dos personas en escena.</span><span class="lwgy-en">Forty-two people on stage.</span></h2>
+          <h2 class="lwgy__h2"><span class="lwgy-es">Cuarenta y tres personas en escena.</span><span class="lwgy-en">Forty-three people on stage.</span></h2>
           <p class="lwgy__p lwgy__muted">
-            <span class="lwgy-es">Tres actores, doce bailarines, veinte niñas y niños y siete músicos cuentan una sola historia, sin pistas grabadas.</span>
-            <span class="lwgy-en">Three actors, twelve dancers, twenty children and seven musicians tell a single story, with no backing tracks.</span>
+            <span class="lwgy-es">Tres actores, doce bailarines, veinte niñas y niños y ocho músicos cuentan una sola historia, sin pistas grabadas.</span>
+            <span class="lwgy-en">Three actors, twelve dancers, twenty children and eight musicians tell a single story, with no backing tracks.</span>
           </p>
         </div>
 
-        <!-- VERIFICAR: el dossier 2025 dice 7 músicos; versiones anteriores del sitio decían 8. -->
         <div class="lwgy__elencos">
           <article class="lwgy__elenco" style="--k:var(--amarillo)">
             <div class="lwgy__elenco-foto"><img src="assets/img/elenco-actores.webp" width="900" height="675" loading="lazy" alt="Los tres actores protagonistas sentados en el borde del escenario, uno canta con micrófono"><span class="lwgy__cifra" aria-hidden="true">3</span></div>
@@ -357,8 +431,8 @@
             <p><span class="lwgy-es">El ensamble infantil participa en varias escenas de la obra.</span><span class="lwgy-en">The children's ensemble appears in several scenes.</span></p>
           </article>
           <article class="lwgy__elenco" style="--k:var(--cian)">
-            <div class="lwgy__elenco-foto"><img src="assets/img/elenco-banda.webp" width="900" height="675" loading="lazy" alt="La banda en vivo bajo un techo de estrellas atravesado por un rayo de luz azul"><span class="lwgy__cifra" aria-hidden="true">7</span></div>
-            <h3><span class="lwgy-es">7 músicos</span><span class="lwgy-en">7 musicians</span></h3>
+            <div class="lwgy__elenco-foto"><img src="assets/img/elenco-banda.webp" width="900" height="675" loading="lazy" alt="La banda en vivo bajo un techo de estrellas atravesado por un rayo de luz azul"><span class="lwgy__cifra" aria-hidden="true">8</span></div>
+            <h3><span class="lwgy-es">8 músicos</span><span class="lwgy-en">8 musicians</span></h3>
             <p><span class="lwgy-es">Guitarra eléctrica y acústica, teclados, bajo, percusión, flauta, banjo y mandolina.</span><span class="lwgy-en">Electric and acoustic guitar, keys, bass, percussion, flute, banjo and mandolin.</span></p>
           </article>
         </div>
@@ -452,17 +526,31 @@
           <div>
             <h3 class="lwgy__h3"><span class="lwgy-es">En la prensa</span><span class="lwgy-en">In the press</span></h3>
             <ul class="lwgy__prensa">
-              <li><a href="https://www.larepublica.net/noticia/la-magia-de-coldplay-vuelve-a-costa-rica-con-el-espectaculo-lights-will-guide-you" target="_blank" rel="noopener"><q>La magia de Coldplay vuelve a Costa Rica con el espectáculo ‘Lights Will Guide You’</q><small><b>La República</b> · 09.05.2023 ↗</small></a></li>
-              <li><a href="https://m.estiloejecutivocr.com/noticia/la-magia-de-coldplay-vuelve-a-costa-rica-con-el-espectaculo-lights-will-guide-you" target="_blank" rel="noopener"><q>La magia de Coldplay vuelve a Costa Rica con el espectáculo ‘Lights Will Guide You’</q><small><b>Estilo Ejecutivo</b> · 09.05.2023 ↗</small></a></li>
-              <li><a href="https://goodfoodcr.com/una-historia-bailable-inspirada-en-coldplay/" target="_blank" rel="noopener"><q>Una historia bailable inspirada en Coldplay</q><small><b>GoodFood</b> · 12.05.2023 ↗</small></a></li>
               <li><a href="https://www.nacion.com/tiempo-libre/lights-will-guide-you-espectaculo-de-danza/22XXUVNJLJC6LGZN2M5TLEK6MU/story/" target="_blank" rel="noopener"><q>‘Lights Will Guide You’: espectáculo de danza inspirará al público con la magia de Coldplay</q><small><b>La Nación</b> · 15.05.2023 ↗</small></a></li>
-              <li><q>‘Lights Will Guide You’ con José Pablo García</q><small><b>Amplify Radio</b> · 18.05.2023</small></li>
-              <li><a href="https://www.lateja.cr/tiempo-libre/lights-will-guide-you-espectaculo-de-danza/22XXUVNJLJC6LGZN2M5TLEK6MU/story/" target="_blank" rel="noopener"><q>Presentación de danza: ‘Lights Will Guide You’</q><small><b>La Teja</b> · 18.05.2023 ↗</small></a></li>
-              <li><a href="https://www.lateja.cr/tiempo-libre/eventos/disfrute-de-un-espectaculo-que-combinara-teatro/CBEBH3X3KZAW3OXM3P3DN34LJU/story/" target="_blank" rel="noopener"><q>Disfrute de un espectáculo que combinará teatro, danza y música en vivo</q><small><b>La Teja</b> · 02.04.2024 ↗</small></a></li>
+              <li><a href="https://www.larepublica.net/noticia/la-magia-de-coldplay-vuelve-a-costa-rica-con-el-espectaculo-lights-will-guide-you" target="_blank" rel="noopener"><q>La magia de Coldplay vuelve a Costa Rica con el espectáculo ‘Lights Will Guide You’</q><small><b>La República</b> · 09.05.2023 ↗</small></a></li>
               <li><a href="https://delfino.cr/2024/04/espectaculo-de-musica-teatro-y-danza-lights-will-guide-you-se-presentara-el-27-y-28-de-abil" target="_blank" rel="noopener"><q>Espectáculo de música, teatro y danza se presentará el 27 y 28 de abril</q><small><b>Delfino.cr</b> · 08.04.2024 ↗</small></a></li>
-              <li><a href="https://observador.cr/regresa-el-espectaculo-de-musica-teatro-y-danza-lights-will-guide-you-basado-en-repertorio-de-coldplay/" target="_blank" rel="noopener"><q>Regresa el espectáculo de música, teatro y danza ‘Lights Will Guide You’</q><small><b>El Observador</b> · 13.04.2024 ↗</small></a></li>
               <li><a href="https://thecostaricanews.com/music-theater-and-dance-show-lights-will-guide-you-returns-based-on-coldplay-repertoire/" target="_blank" rel="noopener"><q>‘Lights Will Guide You’ Returns, Based on Coldplay Repertoire</q><small><b>The Costa Rica News</b> · 16.04.2024 ↗</small></a></li>
             </ul>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="actoPrensa">
+                <div class="lwgy__acto-in">
+                  <ul class="lwgy__prensa lwgy__prensa--mas">
+                  <li><a href="https://m.estiloejecutivocr.com/noticia/la-magia-de-coldplay-vuelve-a-costa-rica-con-el-espectaculo-lights-will-guide-you" target="_blank" rel="noopener"><q>La magia de Coldplay vuelve a Costa Rica con el espectáculo ‘Lights Will Guide You’</q><small><b>Estilo Ejecutivo</b> · 09.05.2023 ↗</small></a></li>
+                  <li><a href="https://goodfoodcr.com/una-historia-bailable-inspirada-en-coldplay/" target="_blank" rel="noopener"><q>Una historia bailable inspirada en Coldplay</q><small><b>GoodFood</b> · 12.05.2023 ↗</small></a></li>
+                  <li><q>‘Lights Will Guide You’ con José Pablo García</q><small><b>Amplify Radio</b> · 18.05.2023</small></li>
+                  <li><a href="https://www.lateja.cr/tiempo-libre/lights-will-guide-you-espectaculo-de-danza/22XXUVNJLJC6LGZN2M5TLEK6MU/story/" target="_blank" rel="noopener"><q>Presentación de danza: ‘Lights Will Guide You’</q><small><b>La Teja</b> · 18.05.2023 ↗</small></a></li>
+                  <li><a href="https://www.lateja.cr/tiempo-libre/eventos/disfrute-de-un-espectaculo-que-combinara-teatro/CBEBH3X3KZAW3OXM3P3DN34LJU/story/" target="_blank" rel="noopener"><q>Disfrute de un espectáculo que combinará teatro, danza y música en vivo</q><small><b>La Teja</b> · 02.04.2024 ↗</small></a></li>
+                  <li><a href="https://observador.cr/regresa-el-espectaculo-de-musica-teatro-y-danza-lights-will-guide-you-basado-en-repertorio-de-coldplay/" target="_blank" rel="noopener"><q>Regresa el espectáculo de música, teatro y danza ‘Lights Will Guide You’</q><small><b>El Observador</b> · 13.04.2024 ↗</small></a></li>
+                  </ul>
+                </div>
+              </div>
+            <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="actoPrensa">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Abrir la sala de prensa</span><span class="lwgy-en">Open the press room</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Cerrar la sala de prensa</span><span class="lwgy-en">Close the press room</span></span>
+              <span class="lwgy__acto-cuenta" aria-hidden="true">+6</span>
+            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -483,24 +571,35 @@
         <div class="lwgy__ahora-intro">
           <h2 class="lwgy__h2"><span class="lwgy-es">Costa Rica abrió la gira más grande de Coldplay.</span><span class="lwgy-en">Costa Rica opened Coldplay's biggest tour.</span></h2>
           <p class="lwgy__p lwgy__muted">
-            <span class="lwgy-es">El 18 y 19 de marzo de 2022, el Music of the Spheres World Tour arrancó en el Estadio Nacional de San José. Tres años y medio después cerró en Wembley, y la banda anunció que volverá a los escenarios en 2027. Mientras tanto, millones de fans en Latinoamérica siguen con la música encendida.</span>
-            <span class="lwgy-en">On March 18 and 19, 2022, the Music of the Spheres World Tour kicked off at San José's Estadio Nacional. Three and a half years later it closed at Wembley, and the band announced it will return to the stage in 2027. In the meantime, millions of fans across Latin America keep the music alive.</span>
+            <span class="lwgy-es">El Music of the Spheres World Tour arrancó en el Estadio Nacional de San José y Coldplay vuelve en 2027. Mientras tanto, millones de fans en Latinoamérica siguen con la música encendida.</span>
+            <span class="lwgy-en">The Music of the Spheres World Tour kicked off at San José's Estadio Nacional, and Coldplay returns in 2027. In the meantime, millions of fans across Latin America keep the music alive.</span>
           </p>
         </div>
 
-        <div class="lwgy__pilares">
-          <div class="lwgy__pilar" style="--k:var(--amarillo)">
-            <h3><span class="lwgy-es">Ícono musical del siglo XXI</span><span class="lwgy-en">A 21st-century music icon</span></h3>
-            <p><span class="lwgy-es">Coldplay ha conectado a millones de personas con su capacidad de convertir emociones en sonidos y espectáculos.</span><span class="lwgy-en">Coldplay has connected with millions by turning emotions into sound and spectacle.</span></p>
+        <div class="lwgy__acto lwgy__acto--pilares" data-acto>
+          <div class="lwgy__acto-cuerpo" id="actoPilares">
+            <div class="lwgy__acto-in">
+                <div class="lwgy__pilares">
+                  <div class="lwgy__pilar" style="--k:var(--amarillo)">
+                    <h3><span class="lwgy-es">Ícono musical del siglo XXI</span><span class="lwgy-en">A 21st-century music icon</span></h3>
+                    <p><span class="lwgy-es">Coldplay ha conectado a millones de personas con su capacidad de convertir emociones en sonidos y espectáculos.</span><span class="lwgy-en">Coldplay has connected with millions by turning emotions into sound and spectacle.</span></p>
+                  </div>
+                  <div class="lwgy__pilar" style="--k:var(--magenta)">
+                    <h3><span class="lwgy-es">Impacto emocional</span><span class="lwgy-en">Emotional impact</span></h3>
+                    <p><span class="lwgy-es">Sus canciones viajan de la melancolía a la euforia: amor, dolor, lucha interna y superación.</span><span class="lwgy-en">Their songs travel from melancholy to euphoria: love, pain, inner struggle and resilience.</span></p>
+                  </div>
+                  <div class="lwgy__pilar" style="--k:var(--cian)">
+                    <h3><span class="lwgy-es">Potencial narrativo</span><span class="lwgy-en">Narrative potential</span></h3>
+                    <p><span class="lwgy-es">Lights Will Guide You convierte esa narrativa musical en una experiencia teatral para toda la familia.</span><span class="lwgy-en">Lights Will Guide You turns that musical narrative into a theatre experience for the whole family.</span></p>
+                  </div>
+                </div>
+            </div>
           </div>
-          <div class="lwgy__pilar" style="--k:var(--magenta)">
-            <h3><span class="lwgy-es">Impacto emocional</span><span class="lwgy-en">Emotional impact</span></h3>
-            <p><span class="lwgy-es">Sus canciones viajan de la melancolía a la euforia: amor, dolor, lucha interna y superación.</span><span class="lwgy-en">Their songs travel from melancholy to euphoria: love, pain, inner struggle and resilience.</span></p>
-          </div>
-          <div class="lwgy__pilar" style="--k:var(--cian)">
-            <h3><span class="lwgy-es">Potencial narrativo</span><span class="lwgy-en">Narrative potential</span></h3>
-            <p><span class="lwgy-es">Lights Will Guide You convierte esa narrativa musical en una experiencia teatral para toda la familia.</span><span class="lwgy-en">Lights Will Guide You turns that musical narrative into a theatre experience for the whole family.</span></p>
-          </div>
+          <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="actoPilares">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Descubrir por qué conecta</span><span class="lwgy-en">Discover why it connects</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Guardar el secreto</span><span class="lwgy-en">Keep the secret</span></span>
+            </button>
         </div>
 
         <ol class="lwgy__linea-tiempo">
@@ -523,15 +622,30 @@
             </p>
             <p class="lwgy__fuente" style="margin-top:1rem"><span class="lwgy-es">Audiencia de @lightswillguideyoushow, junio de 2026.</span><span class="lwgy-en">@lightswillguideyoushow audience, June 2026.</span></p>
           </div>
+<div class="lwgy__audiencia-der">
           <ul class="lwgy__paises" aria-label="Países con más seguidores">
-            <li style="--k:var(--cian)"><i></i>Argentina</li>
-            <li style="--k:var(--amarillo)"><i></i>Colombia</li>
-            <li style="--k:var(--magenta)"><i></i>Chile</li>
-            <li style="--k:var(--lima)"><i></i><span class="lwgy-es">Perú</span><span class="lwgy-en">Peru</span></li>
-            <li style="--k:var(--ambar)"><i></i><span class="lwgy-es">México</span><span class="lwgy-en">Mexico</span></li>
-            <li style="--k:var(--violeta)"><i></i>Guatemala</li>
-            <li style="--k:var(--cian)"><i></i><span class="lwgy-es">España</span><span class="lwgy-en">Spain</span></li>
-          </ul>
+              <li style="--k:var(--cian)"><i></i>Argentina</li>
+              <li style="--k:var(--amarillo)"><i></i>Colombia</li>
+              <li style="--k:var(--magenta)"><i></i>Chile</li>
+              <li style="--k:var(--lima)"><i></i><span class="lwgy-es">Perú</span><span class="lwgy-en">Peru</span></li>
+              <li style="--k:var(--ambar)"><i></i><span class="lwgy-es">México</span><span class="lwgy-en">Mexico</span></li>
+              <li style="--k:var(--violeta)"><i></i>Guatemala</li>
+              <li style="--k:var(--cian)"><i></i><span class="lwgy-es">España</span><span class="lwgy-en">Spain</span></li>
+            </ul>
+          <!-- Franja curada de Instagram: 3 publicaciones elegidas (imágenes guardadas en el sitio).
+               Para cambiar una: reemplazá assets/img/ig-N.jpg (cuadrada) y su enlace. -->
+          <div class="lwgy__ig">
+            <ul class="lwgy__ig-posts">
+              <li><a href="https://www.instagram.com/p/DBK11VGuQqU/" target="_blank" rel="noopener"><img src="assets/img/ig-1.jpg" width="480" height="480" loading="lazy" alt="Publicación en Instagram: el elenco bajo luces violeta y estrellas de papel"></a></li>
+              <li><a href="https://www.instagram.com/reel/DKyKrSuxj4g/" target="_blank" rel="noopener" class="lwgy__ig-reel"><img src="assets/img/ig-2.jpg" width="288" height="288" loading="lazy" alt="Reel en Instagram: el teatro iluminado con estrellas de papel"></a></li>
+              <li><a href="https://www.instagram.com/p/C_wrSXqvn7N/" target="_blank" rel="noopener"><img src="assets/img/ig-3.jpg" width="480" height="480" loading="lazy" alt="Publicación en Instagram: la banda en vivo con banjo y voces"></a></li>
+            </ul>
+            <a class="lwgy__ig-cuenta" href="https://www.instagram.com/lightswillguideyoushow" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>
+              @lightswillguideyoushow <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          </div>
         </div>
       </div>
     </section>
@@ -551,34 +665,54 @@
         </div>
 
         <div class="lwgy__lideres">
-          <details class="lwgy__lider">
-            <summary>
-              <img src="assets/img/equipo-melania.webp" width="800" height="1000" loading="lazy" alt="Melania Fernández sosteniendo un elemento escenográfico blanco">
-              <div><h3>Melania Fernández</h3><span class="lwgy__rol"><span class="lwgy-es">Codirectora, productora, coreógrafa y bailarina</span><span class="lwgy-en">Co-director, producer, choreographer and dancer</span></span><span class="lwgy__mas"><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Background</span></span></div>
-            </summary>
-            <p><span class="lwgy-es">Directora de Andamio Escuela de Movimiento, con más de 10 años en educación artística y producción de danza. Maestría en Educación para la Danza por New York University (2012). Ha bailado, coreografiado y enseñado en Costa Rica y Nueva York, e integró los elencos de West Side Story Costa Rica y Alicia en el País de las Maravillas.</span><span class="lwgy-en">Director of Andamio Escuela de Movimiento, with over 10 years in arts education and dance production. MA in Dance Education from New York University (2012). She has danced, choreographed and taught in Costa Rica and New York, and was part of the casts of West Side Story Costa Rica and Alice in Wonderland.</span></p>
-          </details>
-          <details class="lwgy__lider">
-            <summary>
-              <img src="assets/img/equipo-josepablo.webp" width="800" height="1000" loading="lazy" alt="José Pablo García de perfil entre bambalinas">
-              <div><h3>José Pablo García</h3><span class="lwgy__rol"><span class="lwgy-es">Codirector, guionista y cantante protagonista</span><span class="lwgy-en">Co-director, writer and lead singer</span></span><span class="lwgy__mas"><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Background</span></span></div>
-            </summary>
-            <p><span class="lwgy-es">Comunicación Colectiva en la UCR (2008) y Cine y TV en la Universidad Veritas (2012). Más de 15 años dirigiendo y produciendo publicidad, televisión, radio, música, fotografía, cine y teatro. Productor del largometraje «A ojos cerrados» (2010) y director de la serie «Dele Viaje» (2013 y 2018).</span><span class="lwgy-en">Mass Communication at UCR (2008) and Film &amp; TV at Universidad Veritas (2012). Over 15 years directing and producing advertising, television, radio, music, photography, film and theatre. Producer of the feature film “A ojos cerrados” (2010) and director of the series “Dele Viaje” (2013 and 2018).</span></p>
-          </details>
-          <details class="lwgy__lider">
-            <summary>
-              <img src="assets/img/equipo-brandon.webp" width="368" height="461" loading="lazy" alt="Brandon Olsen tocando guitarra eléctrica en escena">
-              <div><h3>Brandon Olsen</h3><span class="lwgy__rol"><span class="lwgy-es">Dirección musical y arreglos</span><span class="lwgy-en">Music direction and arrangements</span></span><span class="lwgy__mas"><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Background</span></span></div>
-            </summary>
-            <p><span class="lwgy-es">Músico, educador, multiinstrumentista y productor. Ha tocado en festivales nacionales e internacionales y es miembro de Mazzk, banda ganadora del premio a Mejor Álbum de Jazz en los Premios ACAM 2024.</span><span class="lwgy-en">Musician, educator, multi-instrumentalist and producer. He has played national and international festivals and is a member of Mazzk, winners of Best Jazz Album at the 2024 ACAM Awards.</span></p>
-          </details>
-          <details class="lwgy__lider">
-            <summary>
-              <img src="assets/img/equipo-adriana.webp" width="515" height="644" loading="lazy" alt="Adriana Álvarez con gorro de lana en el escenario">
-              <div><h3>Adriana Álvarez</h3><span class="lwgy__rol"><span class="lwgy-es">Actriz protagonista</span><span class="lwgy-en">Lead actress</span></span><span class="lwgy__mas"><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Background</span></span></div>
-            </summary>
-            <p><span class="lwgy-es">Estudió teatro en Buenos Aires e hizo una maestría en Actuación en el Actors Studio Drama School de Nueva York. Cine, teatro y TV: Gestación (2009), Puerto Padre (2013), Dele Viaje (2017), Atrás hay relámpagos (2017), El despertar de las hormigas (2019) y Una niña llamada Ana (2022).</span><span class="lwgy-en">She studied theatre in Buenos Aires and earned an MFA in Acting from the Actors Studio Drama School in New York. Film, theatre and TV: Gestación (2009), Puerto Padre (2013), Dele Viaje (2017), Atrás hay relámpagos (2017), El despertar de las hormigas (2019) and Una niña llamada Ana (2022).</span></p>
-          </details>
+          <article class="lwgy__lider">
+            <img src="assets/img/equipo-melania.webp" width="800" height="1000" loading="lazy" alt="Melania Fernández sosteniendo un elemento escenográfico blanco">
+            <div class="lwgy__lider-txt"><h3>Melania Fernández</h3><span class="lwgy__rol"><span class="lwgy-es">Codirectora, productora, coreógrafa y bailarina</span><span class="lwgy-en">Co-director, producer, choreographer and dancer</span></span></div>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="bioMelania"><div class="lwgy__acto-in"><p><span class="lwgy-es">Directora de Andamio Escuela de Movimiento, con más de 10 años en educación artística y producción de danza. Maestría en Educación para la Danza por New York University (2012). Ha bailado, coreografiado y enseñado en Costa Rica y Nueva York, e integró los elencos de West Side Story Costa Rica y Alicia en el País de las Maravillas.</span><span class="lwgy-en">Director of Andamio Escuela de Movimiento, with over 10 years in arts education and dance production. MA in Dance Education from New York University (2012). She has danced, choreographed and taught in Costa Rica and New York, and was part of the casts of West Side Story Costa Rica and Alice in Wonderland.</span></p></div></div>
+              <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="bioMelania">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Ver entre bastidores</span><span class="lwgy-en">Go backstage</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Volver al escenario</span><span class="lwgy-en">Back to the stage</span></span>
+            </button>
+            </div>
+          </article>
+          <article class="lwgy__lider">
+            <img src="assets/img/equipo-josepablo.webp" width="800" height="1000" loading="lazy" alt="José Pablo García de perfil entre bambalinas">
+            <div class="lwgy__lider-txt"><h3>José Pablo García</h3><span class="lwgy__rol"><span class="lwgy-es">Codirector, guionista y cantante protagonista</span><span class="lwgy-en">Co-director, writer and lead singer</span></span></div>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="bioJosePablo"><div class="lwgy__acto-in"><p><span class="lwgy-es">Comunicación Colectiva en la UCR (2008) y Cine y TV en la Universidad Veritas (2012). Más de 15 años dirigiendo y produciendo publicidad, televisión, radio, música, fotografía, cine y teatro. Productor del largometraje «A ojos cerrados» (2010) y director de la serie «Dele Viaje» (2013 y 2018).</span><span class="lwgy-en">Mass Communication at UCR (2008) and Film &amp; TV at Universidad Veritas (2012). Over 15 years directing and producing advertising, television, radio, music, photography, film and theatre. Producer of the feature film “A ojos cerrados” (2010) and director of the series “Dele Viaje” (2013 and 2018).</span></p></div></div>
+              <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="bioJosePablo">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Ver entre bastidores</span><span class="lwgy-en">Go backstage</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Volver al escenario</span><span class="lwgy-en">Back to the stage</span></span>
+            </button>
+            </div>
+          </article>
+          <article class="lwgy__lider">
+            <img src="assets/img/equipo-brandon.webp" width="368" height="461" loading="lazy" alt="Brandon Olsen tocando guitarra eléctrica en escena">
+            <div class="lwgy__lider-txt"><h3>Brandon Olsen</h3><span class="lwgy__rol"><span class="lwgy-es">Dirección musical y arreglos</span><span class="lwgy-en">Music direction and arrangements</span></span></div>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="bioBrandon"><div class="lwgy__acto-in"><p><span class="lwgy-es">Músico, educador, multiinstrumentista y productor. Ha tocado en festivales nacionales e internacionales y es miembro de Mazzk, banda ganadora del premio a Mejor Álbum de Jazz en los Premios ACAM 2024.</span><span class="lwgy-en">Musician, educator, multi-instrumentalist and producer. He has played national and international festivals and is a member of Mazzk, winners of Best Jazz Album at the 2024 ACAM Awards.</span></p></div></div>
+              <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="bioBrandon">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Ver entre bastidores</span><span class="lwgy-en">Go backstage</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Volver al escenario</span><span class="lwgy-en">Back to the stage</span></span>
+            </button>
+            </div>
+          </article>
+          <article class="lwgy__lider">
+            <img src="assets/img/equipo-adriana.webp" width="515" height="644" loading="lazy" alt="Adriana Álvarez con gorro de lana en el escenario">
+            <div class="lwgy__lider-txt"><h3>Adriana Álvarez</h3><span class="lwgy__rol"><span class="lwgy-es">Actriz protagonista</span><span class="lwgy-en">Lead actress</span></span></div>
+            <div class="lwgy__acto" data-acto>
+              <div class="lwgy__acto-cuerpo" id="bioAdriana"><div class="lwgy__acto-in"><p><span class="lwgy-es">Estudió teatro en Buenos Aires e hizo una maestría en Actuación en el Actors Studio Drama School de Nueva York. Cine, teatro y TV: Gestación (2009), Puerto Padre (2013), Dele Viaje (2017), Atrás hay relámpagos (2017), El despertar de las hormigas (2019) y Una niña llamada Ana (2022).</span><span class="lwgy-en">She studied theatre in Buenos Aires and earned an MFA in Acting from the Actors Studio Drama School in New York. Film, theatre and TV: Gestación (2009), Puerto Padre (2013), Dele Viaje (2017), Atrás hay relámpagos (2017), El despertar de las hormigas (2019) and Una niña llamada Ana (2022).</span></p></div></div>
+              <button class="lwgy__acto-btn" type="button" aria-expanded="false" aria-controls="bioAdriana">
+              <span class="lwgy__acto-foco" aria-hidden="true"><i></i></span>
+              <span class="lwgy__acto-abrir"><span class="lwgy-es">Ver entre bastidores</span><span class="lwgy-en">Go backstage</span></span>
+              <span class="lwgy__acto-cerrar"><span class="lwgy-es">Volver al escenario</span><span class="lwgy-en">Back to the stage</span></span>
+            </button>
+            </div>
+          </article>
         </div>
 
         <div class="lwgy__coreos">
@@ -802,7 +936,7 @@
         </div>
         <div class="andf-body">
           <p class="andf-kind"><span class="lwgy-es">Estreno 2026 en el Teatro Nacional</span><span class="lwgy-en">2026 premiere at the Teatro Nacional</span></p>
-          <p class="andf-titulo">Still<br>Standing</p>
+          <p class="andf-titulo">Still <br>Standing</p>
           <p class="andf-hook"><span class="lwgy-es">Una vida atrapada entre pantallas. Una puerta que la devuelve al presente.</span><span class="lwgy-en">A life trapped between screens. A door that brings her back to the present.</span></p>
           <ul class="andf-facts" aria-label="En breve">
             <li><span class="lwgy-es">40+ artistas en escena</span><span class="lwgy-en">40+ performers on stage</span></li>
@@ -833,6 +967,42 @@
       <div><button class="lwgy__redondo" type="button" data-cerrar aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8"/></svg></button></div>
     </div>
   </dialog>
+  <!-- Contactar: mini formulario. Arma el mensaje y lo envía por WhatsApp o por correo.
+       Cuando exista un formulario de Google, puede enviarse directo sin salir de la página. -->
+  <dialog class="lwgy__contactar" id="lwgyContactar" aria-labelledby="lwgyContactarT">
+    <form class="lwgy__contactar-in" method="dialog" novalidate>
+      <div class="lwgy__contactar-top">
+        <p class="lwgy__contactar-kicker"><svg class="lwgy__star" aria-hidden="true"><use href="#lwgy-estrella"/></svg><span class="lwgy-es">Hablemos</span><span class="lwgy-en">Let's talk</span></p>
+        <button class="lwgy__redondo" type="button" data-cerrar aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      </div>
+      <h2 class="lwgy__contactar-t" id="lwgyContactarT"></h2>
+      <fieldset class="lwgy__interes">
+        <legend class="lwgy__sr"><span class="lwgy-es">Me interesa</span><span class="lwgy-en">I'm interested in</span></legend>
+        <label style="--k:var(--amarillo)"><input type="radio" name="tipo" value="patrocinio"><span><span class="lwgy-es">Patrocinar</span><span class="lwgy-en">Sponsoring</span></span></label>
+        <label style="--k:var(--cian)"><input type="radio" name="tipo" value="privada"><span><span class="lwgy-es">Función privada</span><span class="lwgy-en">Private show</span></span></label>
+        <label style="--k:var(--magenta)"><input type="radio" name="tipo" value="licencia"><span><span class="lwgy-es">Licencia</span><span class="lwgy-en">Licensing</span></span></label>
+        <label style="--k:var(--lima)"><input type="radio" name="tipo" value="general"><span><span class="lwgy-es">Otra consulta</span><span class="lwgy-en">Something else</span></span></label>
+      </fieldset>
+      <div class="lwgy__fila-campos">
+        <label class="lwgy__campo2"><span><span class="lwgy-es">Tu nombre</span><span class="lwgy-en">Your name</span></span>
+          <input name="nombre" type="text" autocomplete="name" maxlength="80" required></label>
+        <label class="lwgy__campo2"><span><span class="lwgy-es">Empresa o marca (opcional)</span><span class="lwgy-en">Company or brand (optional)</span></span>
+          <input name="empresa" type="text" autocomplete="organization" maxlength="80"></label>
+      </div>
+      <label class="lwgy__campo2"><span><span class="lwgy-es">Contanos un poco (opcional)</span><span class="lwgy-en">Tell us a little (optional)</span></span>
+        <textarea name="mensaje" rows="3" maxlength="600"></textarea></label>
+      <p class="lwgy__contactar-aviso" aria-live="polite"></p>
+      <div class="lwgy__contactar-envio">
+        <button class="lwgy__btn lwgy__btn--luz" type="button" data-enviar="wa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
+          <span class="lwgy-es">Enviar por WhatsApp</span><span class="lwgy-en">Send via WhatsApp</span></button>
+        <button class="lwgy__btn lwgy__btn--linea" type="button" data-enviar="mail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>
+          <span class="lwgy-es">Enviar por correo</span><span class="lwgy-en">Send by email</span></button>
+      </div>
+      <p class="lwgy__contactar-pie"><span class="lwgy-es">Te respondemos personalmente, en español o en inglés.</span><span class="lwgy-en">We reply personally, in Spanish or English.</span></p>
+    </form>
+  </dialog>
   <dialog class="lwgy__dialog" id="lwgyFoto" aria-label="Foto">
     <img id="lwgyFotoImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
     <div class="lwgy__dialog-bar"><span id="lwgyFotoCap"></span>
@@ -844,6 +1014,6 @@
     </div>
   </dialog>
 
-  <script src="assets/js/main.js?v=3.3" defer></script>
+  <script src="assets/js/main.js?v=3.6" defer></script>
 </body>
 </html>

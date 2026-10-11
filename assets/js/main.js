@@ -13,6 +13,7 @@
   var MOVIL = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var ESFERAS = ['#FFD93D', '#4EE5E5', '#FF3D7F', '#C7FF3D', '#FF8A3D', '#A98BFF'];
   var lang = 'es';
+  var TEASER = '2vuC5Xzz3o4'; // video del teaser en YouTube
 
   /* -------------------------------------------------------------
      Textos dinámicos (lo que no vive en el HTML)
@@ -31,6 +32,18 @@
       ejemplos: ['mi mamá', 'mi hija Sofía', 'mi abuelo, que me enseñó a cantar', 'la música', 'mi mejor amiga', 'mis hijos', 'mi perro Toby', 'mi papá, que ya no está'],
       compartirTexto: 'Te comparto Lights Will Guide You, el espectáculo de teatro, danza y música en vivo inspirado en Coldplay que busca aliados para su próxima temporada:',
       wa: 'Hola, vi el sitio de Lights Will Guide You y me gustaría conversar sobre la próxima temporada.',
+      form: {
+        nombre: 'Nombre', empresa: 'Empresa',
+        falta: 'Escribí tu nombre para que sepamos quién nos escribe.',
+        listoWa: 'Listo: se abrió WhatsApp con tu mensaje. Solo falta tocar Enviar.',
+        listoMail: 'Listo: se abrió tu correo con el mensaje. Solo falta tocar Enviar.',
+        hola: function (n) { return 'Hola, soy ' + n; },
+        vi: 'Vi el sitio de Lights Will Guide You y me interesa',
+        patrocinio: { t: 'Patrocinar la temporada', i: 'patrocinar la próxima temporada.', ph: 'Por ejemplo: qué tipo de presencia busca tu marca' },
+        privada: { t: 'Una función privada', i: 'cotizar una función privada.', ph: 'Por ejemplo: fecha tentativa y cantidad de personas' },
+        licencia: { t: 'Licencia y coproducción', i: 'recibir el dossier para licencia o coproducción.', ph: 'Por ejemplo: teatro o festival, ciudad y fechas' },
+        general: { t: 'Escribinos', i: 'conversar con ustedes.', ph: 'Lo que quieras contarnos' }
+      },
       mail: {
         patrocinio: { to: 'josepablo@persona.cr', cc: 'melania@andamiocr.com', s: 'Patrocinio para Lights Will Guide You',
           b: 'Hola, José Pablo y Melania:\n\nMe interesa conversar sobre patrocinar la próxima temporada de Lights Will Guide You.\n\nNombre:\nEmpresa o marca:\nTeléfono:\n\nGracias.' },
@@ -54,6 +67,18 @@
       ejemplos: ['my mom', 'my daughter Sofía', 'my grandpa, who taught me to sing', 'music', 'my best friend', 'my kids', 'my dog Toby', 'my dad, who is no longer here'],
       compartirTexto: "Sharing Lights Will Guide You with you: a theatre, dance and live music show inspired by Coldplay, looking for partners for its next season:",
       wa: "Hi, I saw the Lights Will Guide You website and I'd like to talk about the next season.",
+      form: {
+        nombre: 'Name', empresa: 'Company',
+        falta: 'Please write your name so we know who is writing.',
+        listoWa: 'Done: WhatsApp opened with your message. Just tap Send.',
+        listoMail: 'Done: your email opened with the message. Just tap Send.',
+        hola: function (n) { return "Hi, I'm " + n; },
+        vi: "I saw the Lights Will Guide You website and I'd like to",
+        patrocinio: { t: 'Sponsor the season', i: 'talk about sponsoring the next season.', ph: 'For example: what kind of presence your brand is looking for' },
+        privada: { t: 'A private performance', i: 'get a quote for a private performance.', ph: 'For example: tentative date and audience size' },
+        licencia: { t: 'Licensing and co-production', i: 'receive the dossier for licensing or co-production.', ph: 'For example: venue or festival, city and dates' },
+        general: { t: 'Write to us', i: 'talk with you.', ph: 'Anything you want to tell us' }
+      },
       mail: {
         patrocinio: { to: 'josepablo@persona.cr', cc: 'melania@andamiocr.com', s: 'Sponsorship for Lights Will Guide You',
           b: "Hi José Pablo and Melania,\n\nI'd like to talk about sponsoring the next season of Lights Will Guide You.\n\nName:\nCompany or brand:\nPhone:\n\nThank you." },
@@ -393,13 +418,13 @@
     $$('.lwgy__dialog').forEach(function (d) {
       d.addEventListener('click', function (e) { if (e.target === d || e.target.closest('[data-cerrar]')) d.close(); });
     });
-    var dlg = $('#lwgyTeaser'), caja = $('#lwgyTeaserVideo'), btn = $('#lwgyTeaserBtn');
-    if (!dlg || !btn) return;
-    btn.addEventListener('click', function () {
-      if (typeof dlg.showModal !== 'function') { window.open('https://youtu.be/2vuC5Xzz3o4', '_blank', 'noopener'); return; }
-      caja.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/2vuC5Xzz3o4?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Lights Will Guide You — Teaser" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    var dlg = $('#lwgyTeaser'), caja = $('#lwgyTeaserVideo'), btns = $$('#lwgyTeaserBtn, [data-teaser]');
+    if (!dlg || !btns.length) return;
+    btns.forEach(function (btn) { btn.addEventListener('click', function () {
+      if (typeof dlg.showModal !== 'function') { window.open('https://youtu.be/' + TEASER, '_blank', 'noopener'); return; }
+      caja.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + TEASER + '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Lights Will Guide You — Teaser" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
       dlg.showModal();
-    });
+    }); });
     dlg.addEventListener('close', function () { caja.innerHTML = ''; });
   }
 
@@ -416,20 +441,6 @@
         b.replaceWith(caja);
       });
     });
-  }
-
-  /* -------------------------------------------------------------
-     9. Equipo: bios abiertas en escritorio, plegables en celular
-     ------------------------------------------------------------- */
-  function initEquipo() {
-    var mq = window.matchMedia('(min-width: 960px)');
-    var items = $$('.lwgy__lider');
-    function ajustar() { items.forEach(function (d) { d.open = mq.matches; }); }
-    items.forEach(function (d) {
-      $('summary', d).addEventListener('click', function (e) { if (mq.matches) e.preventDefault(); });
-    });
-    if (mq.addEventListener) mq.addEventListener('change', ajustar); else mq.addListener(ajustar);
-    ajustar();
   }
 
   /* -------------------------------------------------------------
@@ -723,6 +734,198 @@
      ------------------------------------------------------------- */
   function initAnio() { var y = new Date().getFullYear(); $$('[data-anio]').forEach(function (s) { s.textContent = y; }); }
 
+  /* -------------------------------------------------------------
+     14. Programa de mano: el menú en celular y tablet
+     Baja como un telón; marca el acto en el que está la persona.
+     ------------------------------------------------------------- */
+  function initMenu() {
+    var dlg = $('#lwgyMenu'), btn = $('#lwgyMenuBtn');
+    if (!dlg || !btn) return;
+    if (typeof dlg.showModal !== 'function') { btn.hidden = true; return; }
+    var links = $$('.lwgy__actos a', dlg), saliendo = false;
+    function marcar() {
+      var actual = null;
+      links.forEach(function (a) {
+        var sec = $(a.getAttribute('href'));
+        if (sec && sec.getBoundingClientRect().top < window.innerHeight * 0.4) actual = a;
+      });
+      links.forEach(function (a) { if (a === actual) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    }
+    function cerrar() {
+      if (!dlg.open || saliendo) return;
+      html.classList.remove('lwgy-menu-abierto');
+      if (QUIETO) { dlg.close(); return; }
+      saliendo = true; dlg.classList.add('is-saliendo');
+      setTimeout(function () { dlg.classList.remove('is-saliendo'); saliendo = false; dlg.close(); }, 420);
+    }
+    btn.addEventListener('click', function () {
+      marcar(); dlg.showModal();
+      btn.setAttribute('aria-expanded', 'true'); html.classList.add('lwgy-menu-abierto');
+    });
+    dlg.addEventListener('close', function () { btn.setAttribute('aria-expanded', 'false'); html.classList.remove('lwgy-menu-abierto'); });
+    dlg.addEventListener('cancel', function (e) { e.preventDefault(); cerrar(); });
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg || e.target.closest('[data-cerrar]')) { cerrar(); return; }
+      if (e.target.closest('.lwgy__actos a, .lwgy__programa-pie a')) cerrar();
+    });
+    // Si la pantalla crece hasta mostrar el menú de escritorio, se cierra solo
+    var mq = window.matchMedia('(min-width: 960px)');
+    var alCrecer = function () { if (mq.matches && dlg.open) { html.classList.remove('lwgy-menu-abierto'); dlg.close(); } };
+    if (mq.addEventListener) mq.addEventListener('change', alCrecer); else mq.addListener(alCrecer);
+  }
+
+  /* -------------------------------------------------------------
+     15. El teaser de fondo: sin sonido, atenuado y en bucle.
+     Se carga cuando la franja se acerca y se pausa cuando sale de pantalla.
+     Con "reducir movimiento" o "ahorro de datos" queda solo la foto.
+     ------------------------------------------------------------- */
+  function initTeaserFondo() {
+    var caja = $('#lwgyTeaserFondo');
+    if (!caja || QUIETO || !('IntersectionObserver' in window)) return;
+    var ahorro = navigator.connection && navigator.connection.saveData;
+    if (ahorro) return;
+    var ifr = null;
+    function orden(f) {
+      if (ifr && ifr.contentWindow) ifr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: [] }), '*');
+    }
+    function crear() {
+      ifr = document.createElement('iframe');
+      ifr.className = 'lwgy__teaser-video';
+      ifr.title = 'Teaser de fondo';
+      ifr.setAttribute('tabindex', '-1');
+      ifr.setAttribute('allow', 'autoplay; encrypted-media');
+      ifr.src = 'https://www.youtube-nocookie.com/embed/' + TEASER + '?autoplay=1&mute=1&loop=1&playlist=' + TEASER +
+        '&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&fs=0&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+      // Se muestra un momento después de cargar, para saltar la presentación de YouTube
+      ifr.addEventListener('load', function () { setTimeout(function () { caja.classList.add('is-video'); }, 2800); });
+      caja.appendChild(ifr);
+    }
+    new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { if (!ifr) crear(); else orden('playVideo'); }
+      else orden('pauseVideo');
+    }, { rootMargin: '250px 0px' }).observe(caja);
+  }
+
+  /* -------------------------------------------------------------
+     16. Frases que se encienden palabra por palabra
+     (como la letra en la pantalla de un concierto)
+     ------------------------------------------------------------- */
+  function initPalabras() {
+    $$('[data-palabras]').forEach(function (frase) {
+      $$('.lwgy-es, .lwgy-en', frase).forEach(function (cont) {
+        var n = 0;
+        Array.prototype.slice.call(cont.childNodes).forEach(function (nodo) {
+          if (nodo.nodeType !== 3) return;
+          var frag = document.createDocumentFragment();
+          nodo.textContent.split(/(\s+)/).forEach(function (pedazo) {
+            if (!pedazo) return;
+            if (/^\s+$/.test(pedazo)) { frag.appendChild(document.createTextNode(pedazo)); return; }
+            var w = document.createElement('span');
+            w.className = 'lwgy__palabra'; w.style.setProperty('--n', n++); w.textContent = pedazo;
+            frag.appendChild(w);
+          });
+          cont.replaceChild(frag, nodo);
+        });
+      });
+      if (QUIETO || !('IntersectionObserver' in window)) { frase.classList.add('is-in'); return; }
+      html.classList.add('lwgy-palabras');
+      var io = new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { frase.classList.add('is-in'); io.disconnect(); }
+      }, { rootMargin: '0px 0px -20% 0px' });
+      io.observe(frase);
+    });
+  }
+
+  /* -------------------------------------------------------------
+     17. Actos: textos que se abren como un telón
+     Sin JS todo queda visible; con JS se pliegan y se abren con el botón.
+     ------------------------------------------------------------- */
+  function initActos() {
+    var actos = $$('[data-acto]');
+    if (!actos.length) return;
+    html.classList.add('lwgy-actos');
+    actos.forEach(function (acto) {
+      var btn = $('.lwgy__acto-btn', acto), cuerpo = $('.lwgy__acto-cuerpo', acto), dentro = $('.lwgy__acto-in', acto);
+      if (!btn || !cuerpo) return;
+      // Cada línea entra un poquito después de la anterior
+      Array.prototype.slice.call(dentro.children).forEach(function (h, i) { h.style.setProperty('--n', i); });
+      $$('li, .lwgy__pilar', dentro).forEach(function (h, i) { h.style.setProperty('--n', i); });
+      cuerpo.inert = true;
+      btn.addEventListener('click', function () {
+        var abrir = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+        acto.classList.toggle('is-open', abrir);
+        cuerpo.inert = !abrir;
+        if (abrir) {
+          acto.classList.remove('is-foco'); void acto.offsetWidth; acto.classList.add('is-foco');
+        } else {
+          // Al cerrar, si el botón quedó arriba de la pantalla, se acompaña a la persona
+          var r = acto.getBoundingClientRect();
+          if (r.top < 0) window.scrollBy({ top: r.top - 120, behavior: QUIETO ? 'auto' : 'smooth' });
+        }
+      });
+    });
+  }
+
+  /* -------------------------------------------------------------
+     18. Contactar: mini formulario en vez de abrir el correo de una vez.
+     La persona elige su interés, escribe su nombre y envía por WhatsApp
+     o por correo; el mensaje sale armado y dirigido a quien corresponde.
+     (Los correos visibles en Contacto siguen siendo enlaces normales.)
+     ------------------------------------------------------------- */
+  function initContactar() {
+    var dlg = $('#lwgyContactar');
+    if (!dlg || typeof dlg.showModal !== 'function') return; // sin ventana: los enlaces siguen abriendo el correo
+    var form = $('form', dlg), titulo = $('#lwgyContactarT'), aviso = $('.lwgy__contactar-aviso', dlg);
+    // A quién le llega cada tipo de mensaje por WhatsApp (el correo usa T.mail, con copia)
+    var WA = { patrocinio: '50688433789', privada: '50688055245', licencia: '50688055245', general: '50688433789' };
+    function tipo() { var r = $('input[name="tipo"]:checked', form); return r ? r.value : 'general'; }
+    function pintar() {
+      var f = t('form')[tipo()];
+      titulo.textContent = f.t; form.mensaje.placeholder = f.ph;
+    }
+    function texto() {
+      var F = t('form'), n = form.nombre.value.trim(), e = form.empresa.value.trim(), m = form.mensaje.value.trim();
+      var linea = F.hola(n) + (e ? ' (' + e + ')' : '') + '. ' + F.vi + ' ' + F[tipo()].i;
+      return linea + (m ? '\n\n' + m : '');
+    }
+    function listo() {
+      if (form.nombre.value.trim()) return true;
+      aviso.textContent = t('form').falta; aviso.classList.add('is-error'); form.nombre.focus();
+      return false;
+    }
+    $$('[data-mail]:not([data-to])').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var r = $('input[name="tipo"][value="' + a.getAttribute('data-mail') + '"]', form) || $('input[value="general"]', form);
+        r.checked = true; aviso.textContent = ''; aviso.classList.remove('is-error'); pintar();
+        dlg.showModal();
+      });
+    });
+    $$('input[name="tipo"]', form).forEach(function (r) { r.addEventListener('change', pintar); });
+    form.nombre.addEventListener('input', function () { if (aviso.classList.contains('is-error')) { aviso.textContent = ''; aviso.classList.remove('is-error'); } });
+    $$('[data-enviar]', dlg).forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (!listo()) return;
+        var k = tipo(), cuerpo = texto();
+        if (b.getAttribute('data-enviar') === 'wa') {
+          window.open('https://wa.me/' + WA[k] + '?text=' + encodeURIComponent(cuerpo), '_blank', 'noopener');
+          aviso.textContent = t('form').listoWa;
+        } else {
+          var m = t('mail')[k], q = [];
+          if (m.cc) q.push('cc=' + encodeURIComponent(m.cc));
+          q.push('subject=' + encodeURIComponent(m.s));
+          q.push('body=' + encodeURIComponent(cuerpo + '\n\n' + (lang === 'es' ? 'Gracias.' : 'Thank you.')));
+          location.href = 'mailto:' + (m.to || 'josepablo@persona.cr') + '?' + q.join('&');
+          aviso.textContent = t('form').listoMail;
+        }
+        aviso.classList.remove('is-error');
+      });
+    });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-cerrar]')) dlg.close(); });
+    alCambiarIdioma.push(function () { if (dlg.open) pintar(); });
+  }
+
   /* ------------------------------------------------------------- */
   function arrancar() {
     initIdioma();
@@ -733,7 +936,11 @@
     initGaleria();
     initVentanas();
     initFachadas();
-    initEquipo();
+    initMenu();
+    initContactar();
+    initTeaserFondo();
+    initPalabras();
+    initActos();
     initCompartir();
     initCielo();
     initMares();
