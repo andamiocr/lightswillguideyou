@@ -125,14 +125,18 @@
     poner(inicial);
   }
 
+  /* Todo correo va con copia a José Pablo, Melania y al correo oficial del show
+     (menos a quien ya es el destinatario). */
+  var COPIAS = ['josepablo@persona.cr', 'melania@andamiocr.com', 'info@lightswillguideyou.com'];
+  function copias(to) { return COPIAS.filter(function (c) { return c !== to; }).join(','); }
+
   /* -------------------------------------------------------------
      2. Correos y WhatsApp con mensaje listo (según idioma)
      ------------------------------------------------------------- */
   function initEnlaces() {
     function mailto(m, toOverride) {
-      var to = toOverride || m.to;
-      var q = [];
-      if (m.cc && m.cc !== to) q.push('cc=' + encodeURIComponent(m.cc));
+      var to = toOverride || m.to || 'josepablo@persona.cr';
+      var q = ['cc=' + encodeURIComponent(copias(to))];
       q.push('subject=' + encodeURIComponent(m.s));
       q.push('body=' + encodeURIComponent(m.b));
       return 'mailto:' + to + '?' + q.join('&');
@@ -878,7 +882,7 @@
     if (!dlg || typeof dlg.showModal !== 'function') return; // sin ventana: los enlaces siguen abriendo el correo
     var form = $('form', dlg), titulo = $('#lwgyContactarT'), aviso = $('.lwgy__contactar-aviso', dlg);
     // A quién le llega cada tipo de mensaje por WhatsApp (el correo usa T.mail, con copia)
-    var WA = { patrocinio: '50688433789', privada: '50688055245', licencia: '50688055245', general: '50688433789' };
+    var WA = '50688055245'; // WhatsApp: todo le llega a Melania
     function tipo() { var r = $('input[name="tipo"]:checked', form); return r ? r.value : 'general'; }
     function pintar() {
       var f = t('form')[tipo()];
@@ -909,11 +913,11 @@
         if (!listo()) return;
         var k = tipo(), cuerpo = texto();
         if (b.getAttribute('data-enviar') === 'wa') {
-          window.open('https://wa.me/' + WA[k] + '?text=' + encodeURIComponent(cuerpo), '_blank', 'noopener');
+          window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(cuerpo), '_blank', 'noopener');
           aviso.textContent = t('form').listoWa;
         } else {
           var m = t('mail')[k], q = [];
-          if (m.cc) q.push('cc=' + encodeURIComponent(m.cc));
+          q.push('cc=' + encodeURIComponent(copias(m.to || 'josepablo@persona.cr')));
           q.push('subject=' + encodeURIComponent(m.s));
           q.push('body=' + encodeURIComponent(cuerpo + '\n\n' + (lang === 'es' ? 'Gracias.' : 'Thank you.')));
           location.href = 'mailto:' + (m.to || 'josepablo@persona.cr') + '?' + q.join('&');
