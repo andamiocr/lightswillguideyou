@@ -222,8 +222,10 @@
     document.addEventListener('focusout', function () { escribiendo = false; setTimeout(act, 50); });
     act();
 
-    var cabezas = $$('[data-head]');
+    // Cabeceras que dibujan su línea y fotos que se revelan al entrar en pantalla
+    var cabezas = $$('[data-head], [data-revela]');
     if (!('IntersectionObserver' in window) || QUIETO) { cabezas.forEach(function (c) { c.classList.add('is-in'); }); return; }
+    html.classList.add('lwgy-revela');
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
     }, { rootMargin: '0px 0px -12% 0px' });
