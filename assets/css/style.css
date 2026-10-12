@@ -432,6 +432,10 @@ html[data-lang="en"] .lwgy-es { display: none !important; }
 .lwgy__pista { text-align: center; margin-top: .75rem; font-size: .85rem; color: var(--muted); }
 .lwgy__contador { text-align: center; margin-top: .5rem; font-size: .92rem; color: var(--muted); min-height: 1.4em; }
 .lwgy__contador b { font: 500 1.35rem/1 var(--serif); color: var(--papel); margin-right: .3rem; font-feature-settings: 'lnum' 1; }
+.lwgy__mundo { text-align: center; margin-top: .9rem; font-size: .95rem; }
+.lwgy__mundo a { color: var(--amarillo); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .28em; }
+.lwgy__mundo a:hover { text-decoration-thickness: 2px; }
+.lwgy__estado .lwgy__mundo { margin-top: 1.1rem; }
 .lwgy__luz-form { max-width: 26rem; margin: 2rem auto 0; text-align: center; }
 .lwgy__campo { position: relative; }
 .lwgy__campo label { display: block; font: 400 1rem/1.3 var(--serif); font-variation-settings: 'opsz' 18, 'SOFT' 100; color: var(--muted); margin-bottom: .2rem; }

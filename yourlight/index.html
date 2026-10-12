@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100D26">
+  <title>Who is the light that guides you? | Lights Will Guide You</title>
+  <meta name="description" content="A sky of paper stars hung by Coldplay fans around the world. Write who your light is and hang your star over your country. ¿Quién es la luz que te guía? Encendé tu estrella.">
+  <link rel="canonical" href="https://www.lightswillguideyou.com/yourlight/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lights Will Guide You">
+  <meta property="og:title" content="Who is the light that guides you?">
+  <meta property="og:description" content="Hang your star over your country in the Lights Will Guide You sky. ¿Quién es la luz que te guía?">
+  <meta property="og:url" content="https://www.lightswillguideyou.com/yourlight/">
+  <meta property="og:image" content="https://www.lightswillguideyou.com/yourlight/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 6 61.8 37.2 95 38.2 68.8 58.8 78.2 91 50 72 21.8 91 31.2 58.8 5 38.2 38.2 37.2Z' fill='%23FFD93D'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..600,0..100&display=swap">
+  <link rel="stylesheet" href="luz.css?v=1">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Who is the light that guides you?","url":"https://www.lightswillguideyou.com/yourlight/","inLanguage":["en","es"],"isPartOf":{"@id":"https://www.lightswillguideyou.com/#web"},"about":{"@id":"https://www.lightswillguideyou.com/#obra"}}
+  </script>
+  <script>
+    /* Idioma: ?lang=es|en  >  elección guardada  >  idioma del teléfono/navegador */
+    (function () {
+      var l = 'en';
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        var g = localStorage.getItem('lwgy-lang');
+        var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        l = (q === 'es' || q === 'en') ? q : (g === 'es' || g === 'en') ? g : (/^es\b/i.test(nav) ? 'es' : 'en');
+      } catch (e) {}
+      document.documentElement.lang = l; document.documentElement.setAttribute('data-lang', l);
+    })();
+    /* Conexión con Google Forms + Sheets.
+       En la hoja: escribí una X en la columna "Ocultar" (antes "Aprobar") para retirar una luz. */
+    window.LUZ_CONFIG = {
+      FORM_ID: '1FAIpQLSdtvUx8qb49xNN8yg5zartMP3LPO3WevlKZmDkkx48EouukZQ',
+      ENTRY: { luz: 'entry.683565306', pais: 'entry.914260210', ciudad: 'entry.1124724585', idioma: 'entry.1469277646' },
+      SHEET_ID: '1W1SKMnOSGgtmoJ8c5Z49qIFYvbkuQ9-2xulzseXz6g8',
+      URL: 'https://www.lightswillguideyou.com/yourlight/'
+    };
+  </script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="estrella" viewBox="0 0 100 100"><path d="M50 6 61.8 37.2 95 38.2 68.8 58.8 78.2 91 50 72 21.8 91 31.2 58.8 5 38.2 38.2 37.2Z"/></symbol>
+    <symbol id="barco" viewBox="0 0 200 130"><path d="M52 78 100 8 100 78Z" fill="#FBFAFD"/><path d="M100 8 148 78 100 78Z" fill="#E3DFEC"/><path d="M52 78 100 8 148 78" fill="none" stroke="#16132F" stroke-width="1.6" stroke-linejoin="round"/><path d="M100 8V78" stroke="#16132F" stroke-width="1" opacity=".4"/><path d="M8 78H192L162 112H38Z" fill="#F6F4FA"/><path d="M38 112 62 78 138 78 162 112Z" fill="#16132F" opacity=".05"/><path d="M38 112 62 78M162 112 138 78" stroke="#16132F" stroke-width="1" opacity=".35"/><path d="M8 78H192L162 112H38Z" fill="none" stroke="#16132F" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="barra">
+    <a class="marca" href="https://www.lightswillguideyou.com/" data-href-es="https://www.lightswillguideyou.com/" data-href-en="https://www.lightswillguideyou.com/en/">
+      <svg aria-hidden="true"><use href="#estrella"/></svg><span>Lights Will Guide You</span>
+    </a>
+    <button class="idioma" id="idioma" type="button" aria-label="Español / English"><span data-l="es">ES</span><span data-l="en">EN</span></button>
+  </header>
+
+  <main>
+    <section class="escena" id="escena" aria-labelledby="titulo">
+     <div class="lienzo" id="lienzo">
+      <div class="focos" aria-hidden="true"></div>
+      <canvas class="cielo" id="cielo" aria-hidden="true"></canvas>
+      <div class="tarjeta" id="tarjeta" role="status" aria-live="polite"></div>
+
+      <div class="cabecera">
+        <h1 id="titulo"><span class="es">¿Quién es la luz que te&nbsp;guía?</span><span class="en">Who is the light that guides&nbsp;you?</span></h1>
+        <p class="bajada">
+          <span class="es">Cada estrella de este cielo es la respuesta de alguien. Escribí la tuya y colgala sobre tu país.</span>
+          <span class="en">Every star in this sky is someone's answer. Write yours and hang it over your country.</span>
+        </p>
+        <p class="contador" id="contador" aria-live="polite"></p>
+      </div>
+      <p class="pista" id="pista"><span class="es">Deslizá para recorrer el mundo. Tocá una estrella para leerla.</span><span class="en">Swipe to travel the world. Tap a star to read it.</span></p>
+
+      <div class="mar" aria-hidden="true">
+        <svg class="ola ola--3" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0 30 Q75 14 150 30 T300 30 T450 30 T600 30 T750 30 T900 30 T1050 30 T1200 30 V60 H0Z"/></svg>
+        <div class="barquito" id="barquito"><svg viewBox="0 0 200 130"><use href="#barco"/></svg><i class="orbe" id="orbe"></i></div>
+        <svg class="ola ola--2" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0 26 Q100 42 200 26 T400 26 T600 26 T800 26 T1000 26 T1200 26 V60 H0Z"/></svg>
+        <svg class="ola ola--1" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0 34 Q60 22 120 34 T240 34 T360 34 T480 34 T600 34 T720 34 T840 34 T960 34 T1080 34 T1200 34 V60 H0Z"/></svg>
+      </div>
+     </div>
+
+      <!-- Formulario -->
+      <div class="panel" id="panel">
+        <form class="formulario" id="formulario" novalidate>
+          <label class="campo campo--luz" for="luz">
+            <span class="etiqueta"><span class="es">Mi luz es…</span><span class="en">My light is…</span></span>
+            <textarea id="luz" name="luz" rows="2" maxlength="90" required autocomplete="off" enterkeyhint="send"></textarea>
+            <span class="cuenta" id="cuenta" aria-hidden="true"></span>
+          </label>
+          <div class="fila">
+            <label class="campo" for="pais">
+              <span class="etiqueta"><span class="es">Desde</span><span class="en">From</span></span>
+              <select id="pais" name="pais" required></select>
+            </label>
+            <label class="campo" for="ciudad">
+              <span class="etiqueta"><span class="es">Ciudad (opcional)</span><span class="en">City (optional)</span></span>
+              <input id="ciudad" name="ciudad" type="text" maxlength="40" autocomplete="address-level2">
+            </label>
+          </div>
+          <button class="boton" id="enviar" type="submit" disabled>
+            <svg aria-hidden="true"><use href="#estrella"/></svg>
+            <span class="es">Colgar mi estrella</span><span class="en">Hang my star</span>
+          </button>
+          <p class="aviso" id="aviso" role="alert"></p>
+          <p class="letra-chica">
+            <span class="es">No pedimos tu nombre. Las luces que faltan el respeto se retiran.</span>
+            <span class="en">We don't ask for your name. Lights that disrespect others are removed.</span>
+          </p>
+        </form>
+
+        <div class="listo" id="listo" hidden>
+          <p class="listo-t"><span id="listoTexto"></span></p>
+          <p class="listo-s"><span class="es">Ahora invitá a alguien a colgar la suya.</span><span class="en">Now invite someone to hang theirs.</span></p>
+          <div class="acciones">
+            <button class="boton" id="compartir" type="button"><span class="es">Compartir en historias</span><span class="en">Share to Stories</span></button>
+            <button class="boton boton--linea" id="descargar" type="button"><span class="es">Descargar</span><span class="en">Download</span></button>
+            <a class="boton boton--linea" id="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <button class="otra" id="otra" type="button"><span class="es">Colgar otra estrella</span><span class="en">Hang another star</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="carrera" aria-labelledby="carreraT">
+      <div class="envoltura dos">
+        <div>
+          <h2 id="carreraT"><span class="es">¿Qué país brilla más?</span><span class="en">Which country shines brightest?</span></h2>
+          <p class="nota"><span class="es">Contamos cada estrella colgada desde cada país. Compartí tu luz para que el tuyo suba.</span><span class="en">We count every star hung from every country. Share your light so yours climbs.</span></p>
+          <ol class="ranking" id="ranking"></ol>
+        </div>
+        <div>
+          <h2><span class="es">Las últimas luces</span><span class="en">The latest lights</span></h2>
+          <ul class="ultimas" id="ultimas"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="escenario">
+      <div class="envoltura">
+        <p class="promesa">
+          <span class="es">Las luces de este cielo van a brillar en el escenario, en la próxima temporada de Lights Will Guide You.</span>
+          <span class="en">The lights in this sky will shine on stage in the next season of Lights Will Guide You.</span>
+        </p>
+        <a class="volver" href="https://www.lightswillguideyou.com/" data-href-es="https://www.lightswillguideyou.com/" data-href-en="https://www.lightswillguideyou.com/en/">
+          <span class="es">Conocé el espectáculo</span><span class="en">Discover the show</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p><span class="es">Lights Will Guide You es un espectáculo de teatro, danza y música en vivo inspirado en Coldplay, creado en Costa Rica por Andamio Escuela de Movimiento. No está afiliado a Coldplay ni a sus representantes.</span><span class="en">Lights Will Guide You is a theatre, dance and live music show inspired by Coldplay, created in Costa Rica by Andamio Escuela de Movimiento. It is not affiliated with Coldplay or its representatives.</span></p>
+  </footer>
+
+  <script src="mapa.js?v=1"></script>
+  <script src="luz.js?v=1"></script>
+</body>
+</html>

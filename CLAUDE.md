@@ -21,3 +21,12 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
   (GitHub Actions también lo regenera solo en cada Push; después hacer Pull antes de seguir editando).
 - Si cambiás el título, la descripción o los alt de los videos en español, actualizá también sus equivalentes en inglés dentro de `herramientas/generar_en.py`.
 - Datos para Google (JSON-LD) viven en el `<script type="application/ld+json">` de index.html: mantener cifras y fechas al día.
+
+## Tu luz / Your light (/yourlight/)
+- Página propia en `yourlight/` (index.html, luz.css, luz.js, mapa.js, og.jpg). `/tuluz/` solo redirige a `/yourlight/?lang=es`.
+- Un solo archivo para los dos idiomas: elige solo (?lang=es|en › elección guardada › idioma del teléfono) y tiene botón ES/EN.
+- Formulario de Google (respuesta corta): Luz, País, Ciudad, Idioma. El país se guarda como código de 2 letras (CR, MX, US…).
+- La hoja se lee pública (gviz). Moderación al revés: todo se publica; una X (o cualquier valor) en la columna "Ocultar" (antes "Aprobar") retira la luz.
+- La sección "Tu luz" de la portada usa el mismo formulario y la misma hoja (LWGY_CONFIG en index.html) y enlaza al mapa.
+- mapa.js es generado (puntos de tierra + centro de cada país): no editar a mano salvo coordenadas de un país.
+- Vista de prueba con estrellas inventadas (solo en tu navegador): /yourlight/?demo=1

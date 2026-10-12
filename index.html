@@ -364,12 +364,13 @@
        de cada persona, pero las respuestas no se guardan.
        ========================================================= */
     window.LWGY_CONFIG = {
-      FORM_ID:    '',           // entre /d/e/ y /viewform del formulario
-      ENTRY_LUZ:  '',           // ej. 'entry.1234567890' (pregunta: ¿Quién es tu luz?)
-      ENTRY_PAIS: '',           // ej. 'entry.0987654321' (pregunta: ¿Desde dónde?)
-      SHEET_ID:   '',           // ID de la hoja de respuestas
-      SHEET_TAB:  'publicar',   // pestaña con las respuestas aprobadas (columnas: luz | pais)
-      URL_SITIO:  'https://www.lightswillguideyou.com/'
+      /* Mismo formulario y hoja que /yourlight. Para retirar una luz: X en la columna "Ocultar". */
+      FORM_ID:      '1FAIpQLSdtvUx8qb49xNN8yg5zartMP3LPO3WevlKZmDkkx48EouukZQ',
+      ENTRY_LUZ:    'entry.683565306',
+      ENTRY_PAIS:   'entry.914260210',
+      ENTRY_IDIOMA: 'entry.1469277646',
+      SHEET_ID:     '1W1SKMnOSGgtmoJ8c5Z49qIFYvbkuQ9-2xulzseXz6g8',
+      URL_SITIO:    'https://www.lightswillguideyou.com/'
     };
   </script>
 </head>
@@ -1124,6 +1125,7 @@
       </div>
       <p class="lwgy__pista"><span class="lwgy-es">Tocá una estrella para leerla.</span><span class="lwgy-en">Tap a star to read it.</span></p>
       <p class="lwgy__contador" id="lwgyContador" aria-live="polite"></p>
+      <p class="lwgy__mundo"><a class="lwgy-es" href="/yourlight/?lang=es">Ver las estrellas de todo el mundo en el mapa</a><a class="lwgy-en" href="/yourlight/?lang=en">See stars from all over the world on the map</a></p>
       <ul class="lwgy__sr" id="lwgyLucesLista" aria-label="Luces encendidas"></ul>
 
       <div class="lwgy__wrap">
@@ -1137,19 +1139,20 @@
             <label for="lwgyPais"><span class="lwgy-es">¿Desde dónde? (opcional)</span><span class="lwgy-en">Where are you? (optional)</span></label>
             <select id="lwgyPais">
               <option value="">—</option>
-              <option>Costa Rica</option><option>Argentina</option><option>Chile</option><option>Colombia</option>
-              <option>Guatemala</option><option>México</option><option>Perú</option><option>España</option>
-              <option>Estados Unidos</option><option value="Otro">Otro / Other</option>
+              <option value="CR">Costa Rica</option><option value="AR">Argentina</option><option value="CL">Chile</option><option value="CO">Colombia</option>
+              <option value="GT">Guatemala</option><option value="MX">México</option><option value="PE">Perú</option><option value="ES">España</option>
+              <option value="US">Estados Unidos</option><option value="">Otro / Other</option>
             </select>
           </div>
           <button class="lwgy__btn lwgy__btn--luz" id="lwgyLuzEnviar" type="button" disabled data-i18n="enviar">Encender mi luz</button>
           <p class="lwgy__aviso" id="lwgyLuzAviso" aria-live="polite"></p>
-          <p class="lwgy__fuente"><span class="lwgy-es">Es anónimo. Revisamos las respuestas antes de que aparezcan para todo el público.</span><span class="lwgy-en">It's anonymous. We review answers before they appear for everyone.</span></p>
+          <p class="lwgy__fuente"><span class="lwgy-es">Es anónimo. Las luces que faltan el respeto se retiran.</span><span class="lwgy-en">It's anonymous. Lights that disrespect others are removed.</span></p>
         </div>
         <div class="lwgy__estado" id="lwgyLuzGracias">
           <b><span class="lwgy-es">Tu luz ya está encendida.</span><span class="lwgy-en">Your light is on.</span></b>
           <span><span class="lwgy-es">Es la estrella que acaba de aparecer. Gracias por sumarla.</span><span class="lwgy-en">It's the star that just appeared. Thank you for adding it.</span></span>
           <button class="lwgy__btn lwgy__btn--linea" type="button" data-compartir><span class="lwgy-es">Invitá a alguien a encender la suya</span><span class="lwgy-en">Invite someone to light theirs</span></button>
+          <p class="lwgy__mundo"><a class="lwgy-es" href="/yourlight/?lang=es">Ver mi estrella en el mapa del mundo</a><a class="lwgy-en" href="/yourlight/?lang=en">See my star on the world map</a></p>
         </div>
       </div>
 
@@ -1283,6 +1286,6 @@
     </div>
   </dialog>
 
-  <script src="assets/js/main.js?v=3.9" defer></script>
+  <script src="assets/js/main.js?v=4.0" defer></script>
 </body>
 </html>

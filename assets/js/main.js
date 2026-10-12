@@ -508,6 +508,18 @@
     var aviso = $('#lwgyLuzAviso'), form = $('#lwgyLuzForm'), gracias = $('#lwgyLuzGracias');
     var CLAVE = 'lwgy_luz_v1';
     var cargadas = false, conHoja = !!CFG.SHEET_ID;
+    // Los países llegan como código (CR, MX…) desde /yourlight; se muestran con su nombre en el idioma activo.
+    function nomPais(p) {
+      p = String(p || '').trim();
+      if (!/^[A-Za-z]{2}$/.test(p)) return p;
+      if (p.toUpperCase() === 'ZZ') return '';
+      try { return new Intl.DisplayNames([lang], { type: 'region' }).of(p.toUpperCase()); } catch (e) { return p; }
+    }
+    function aceptable(s) {
+      if (/https?:|www\.|\.com\b|\.net\b|@|\d[\d\s-]{6,}\d/i.test(s)) return false;
+      var n = ' ' + s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ') + ' ';
+      return !/ (puta|putas|puto|putos|mierda[a-z]*|verga[a-z]*|cono|pendej[a-z]*|hijueputa[a-z]*|malparid[a-z]*|fuck[a-z]*|shit[a-z]*|bitch[a-z]*|cunt[a-z]*|nigg[a-z]*|fagg[a-z]*|porn[a-z]*|sexo|sex|xxx) /.test(n.replace(/\s+/g, '  '));
+    }
 
     function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
     function azar(seed) { return function () { seed = (seed + 0x6D2B79F5) | 0; var r = Math.imul(seed ^ (seed >>> 15), 1 | seed); r ^= r + Math.imul(r ^ (r >>> 7), 61 | r); return ((r ^ (r >>> 14)) >>> 0) / 4294967296; }; }
@@ -532,7 +544,7 @@
       var l = { t: texto, p: p || '', propia: !!esPropia, semilla: semilla != null ? semilla : -1, nace: esPropia ? performance.now() : 0 };
       luces.push(l); ubicar(l);
       if (esPropia) propia = l;
-      if (l.semilla < 0) { var li = document.createElement('li'); li.textContent = texto + (p ? ' (' + p + ')' : ''); lista.appendChild(li); }
+      if (l.semilla < 0) { var li = document.createElement('li'); li.textContent = texto + (nomPais(p) ? ' (' + nomPais(p) + ')' : ''); lista.appendChild(li); }
       return l;
     }
     // Las primeras luces las enciende el espectáculo (palabras de su mensaje),
@@ -595,7 +607,7 @@
       if (!l) { tip.classList.remove('is-on'); if (QUIETO) dibujar(performance.now()); return; }
       tip.innerHTML = '';
       var b = document.createElement('span'); b.textContent = l.t; tip.appendChild(b);
-      var meta = l.semilla > -1 ? t('delShow') : (l.propia ? t('tuLuz') + (l.p ? ', ' + l.p : '') : l.p);
+      var meta = l.semilla > -1 ? t('delShow') : (l.propia ? t('tuLuz') + (nomPais(l.p) ? ', ' + nomPais(l.p) : '') : nomPais(l.p));
       if (meta) { var sm = document.createElement('small'); sm.textContent = meta; tip.appendChild(sm); }
       var x = Math.min(Math.max(l.x * W, 90), W - 90);
       tip.style.left = x + 'px'; tip.style.top = (l.y * H) + 'px';
@@ -618,18 +630,19 @@
     // Cargar luces aprobadas desde Google Sheets (mismo método que STILL STANDING)
     function cargar() {
       if (!conHoja) { pintarContador(); return; }
-      var u = 'https://docs.google.com/spreadsheets/d/' + CFG.SHEET_ID + '/gviz/tq?tqx=out:json&sheet=' + encodeURIComponent(CFG.SHEET_TAB || 'publicar') + '&_=' + Date.now();
+      // Hoja de respuestas del formulario (la misma de /yourlight). Una X en "Ocultar" retira la luz.
+      var u = 'https://docs.google.com/spreadsheets/d/' + CFG.SHEET_ID + '/gviz/tq?tqx=out:json&headers=1&_=' + Date.now();
       fetch(u).then(function (r) { return r.text(); }).then(function (txt) {
         var j = JSON.parse(txt.substring(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
-        var cols = (j.table.cols || []).map(function (c) { return String(c.label || '').toLowerCase(); });
-        var iL = cols.findIndex(function (c) { return c.indexOf('luz') > -1 || c.indexOf('light') > -1; });
-        var iP = cols.findIndex(function (c) { return c.indexOf('pa') === 0 || c.indexOf('country') > -1; });
-        if (iL < 0) iL = 0; if (iP < 0) iP = 1;
+        var cols = (j.table.cols || []).map(function (c) { return String(c.label || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim(); });
+        function col(re, def) { var i = cols.findIndex(function (c) { return re.test(c); }); return i > -1 ? i : def; }
+        var iL = col(/^(luz|light)/, 1), iP = col(/^(pais|country)/, 2), iX = col(/^(ocultar|hide|aprobar)/, 5);
         (j.table.rows || []).slice(-400).forEach(function (row) {
           var c = row.c || [];
           var texto = c[iL] && c[iL].v != null ? String(c[iL].v).trim() : '';
           var p = c[iP] && c[iP].v != null ? String(c[iP].v).trim() : '';
-          if (!texto || (propia && texto === propia.t)) return;
+          var oculta = c[iX] && c[iX].v != null && String(c[iX].v).trim() !== '';
+          if (!texto || oculta || !aceptable(texto) || (propia && texto === propia.t)) return;
           agregar(texto.slice(0, 80), p.slice(0, 30), false);
         });
         cargadas = true; pintarContador(); despertar();
@@ -678,6 +691,7 @@
       var d = new URLSearchParams();
       d.append(CFG.ENTRY_LUZ, texto);
       if (CFG.ENTRY_PAIS && p) d.append(CFG.ENTRY_PAIS, p);
+      if (CFG.ENTRY_IDIOMA) d.append(CFG.ENTRY_IDIOMA, lang);
       fetch('https://docs.google.com/forms/d/e/' + CFG.FORM_ID + '/formResponse', {
         method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: d.toString()
       }).then(exito).catch(function () {
