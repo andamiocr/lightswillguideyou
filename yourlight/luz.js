@@ -31,7 +31,7 @@
       errorEnvio: 'No pudimos guardar tu luz. Revisá tu conexión y probá de nuevo.',
       listo: function (p) { return 'Tu estrella ya cuelga sobre ' + p + '.'; },
       tuLuz: 'Tu luz', miLuz: 'La luz que me guía es…', pregunta: '¿Quién es la luz que te guía?',
-      tipo: ['Un espectáculo de teatro, danza', 'y música en vivo inspirado en Coldplay'], cta: 'Colgá tu estrella en lightswillguideyou.com/yourlight', copiado: '¡Enlace copiado!',
+      tipo: ['Un espectáculo de teatro, danza', 'y música en vivo inspirado en Coldplay'], cta: 'Colgá tu estrella en lightswillguideyou.com/tuluz', copiado: '¡Enlace copiado!',
       wa: function (t) { return 'Mi luz es "' + t + '". Colgué mi estrella en el cielo de Lights Will Guide You. ¿Quién es la tuya? '; },
       compartirTxt: '¿Quién es la luz que te guía? Colgá tu estrella:'
     },
@@ -507,7 +507,7 @@
       // La luz que me guía es… «frase» · lugar — el grupo se centra entre la estrella y el logo
       g.textAlign = 'center';
       var tam = 100, lineas;
-      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 900); tam -= 4; } while ((lineas.length > 4 || lineas.length * tam * 1.12 > 350) && tam > 50);
+      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 800); tam -= 4; } while ((lineas.length > 4 || lineas.length * tam * 1.12 > 330) && tam > 48);
       tam += 4;
       var altoFrase = (lineas.length - 1) * tam * 1.12 + tam * .78, grupo = 80 + altoFrase + 75, arriba = 450 + Math.max(0, (600 - grupo) / 2);
       g.fillStyle = '#CFCBE3'; g.font = 'italic 400 46px Fraunces, Georgia, serif'; g.fillText(t('miLuz'), 540, arriba + 34);
@@ -516,7 +516,7 @@
       g.fillStyle = '#FFD93D'; g.font = '500 40px "DM Sans", sans-serif';
       g.fillText([l.c, nombrePais(l.p)].filter(Boolean).join(', '), 540, y0 + (lineas.length - 1) * tam * 1.12 + 75);
       // El espectáculo: logo de cuatro líneas y qué es
-      logo4(g, 540, 1080, 262, '#F8F7FB');
+      logo4(g, 540, 1112, 200, '#F8F7FB');
       g.fillStyle = '#CFCBE3'; g.font = '500 33px "DM Sans", sans-serif';
       g.fillText(t('tipo')[0], 540, 1340); g.fillText(t('tipo')[1], 540, 1382);
       // Mar y barquito
