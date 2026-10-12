@@ -36,4 +36,4 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
 - `links/index.html`: página para el link de la bio de Instagram/TikTok (reemplaza Linktree). noindex: no compite con la portada en Google.
 - Orden según la campaña del momento: la tarjeta dorada es la acción principal (hoy: Tu luz). Cambiar el orden o la tarjeta destacada cuando haya temporada nueva (entradas primero).
 - Mismo idioma automático que /yourlight (clave `lwgy-lang`).
-- Contador: GoatCounter, cuenta única "persona" (persona.goatcounter.com). Las rutas se anotan con el dominio delante (window.goatcounter.path) para mezclar varios sitios en un mismo panel.
+- Contador: GoatCounter, cuenta única "persona" (persona.goatcounter.com). Rutas simples (/links/, /info/…).
