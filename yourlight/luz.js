@@ -30,7 +30,8 @@
       espera: 'Esperá unos segundos antes de colgar otra estrella.',
       errorEnvio: 'No pudimos guardar tu luz. Revisá tu conexión y probá de nuevo.',
       listo: function (p) { return 'Tu estrella ya cuelga sobre ' + p + '.'; },
-      tuLuz: 'Tu luz', miLuz: 'Mi luz es…', pregunta: '¿Quién es la luz que te guía?',
+      tuLuz: 'Tu luz', miLuz: 'La luz que me guía es…', pregunta: '¿Quién es la luz que te guía?',
+      tipo: ['Un espectáculo de teatro, danza', 'y música en vivo inspirado en Coldplay'], cta: 'Colgá tu estrella en lightswillguideyou.com/yourlight', copiado: '¡Enlace copiado!',
       wa: function (t) { return 'Mi luz es "' + t + '". Colgué mi estrella en el cielo de Lights Will Guide You. ¿Quién es la tuya? '; },
       compartirTxt: '¿Quién es la luz que te guía? Colgá tu estrella:'
     },
@@ -46,7 +47,8 @@
       espera: 'Wait a few seconds before hanging another star.',
       errorEnvio: 'We could not save your light. Check your connection and try again.',
       listo: function (p, c) { return 'Your star now hangs over ' + (CON_THE.indexOf(c) > -1 ? 'the ' : '') + p + '.'; },
-      tuLuz: 'Your light', miLuz: 'My light is…', pregunta: 'Who is the light that guides you?',
+      tuLuz: 'Your light', miLuz: 'The light that guides me is…', pregunta: 'Who is the light that guides you?',
+      tipo: ['A theatre, dance and live music show', 'inspired by Coldplay'], cta: 'Hang your star at lightswillguideyou.com/yourlight', copiado: 'Link copied!',
       wa: function (t) { return 'My light is "' + t + '". I hung my star in the Lights Will Guide You sky. Who is yours? '; },
       compartirTxt: 'Who is the light that guides you? Hang your star:'
     }
@@ -459,10 +461,11 @@
       setTimeout(function () { lanzar(o); }, window.innerWidth < 960 ? 650 : 50);
       if (navigator.vibrate) navigator.vibrate(30);
       form.reset(); llenarPaises(); sel.value = p; validar(); cuenta.textContent = '';
-      form.hidden = true; listo.hidden = false; pintarListo();
+      form.hidden = true; listo.hidden = false; pintarListo(); contar('estrella-colgada');
       tarjetaCompartir = null;
     }).catch(function () { enviar.disabled = false; aviso.textContent = t('errorEnvio'); });
   });
+  function contar(nombre) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: nombre, title: nombre, event: true }); } catch (e) {} }
   function pintarListo() { if (ultimaPropia) $('#listoTexto').textContent = t('listo')(nombrePais(ultimaPropia.p), ultimaPropia.p); actualizarWa(); }
   $('#otra').addEventListener('click', function () { listo.hidden = true; form.hidden = false; luz.focus(); });
 
@@ -476,49 +479,69 @@
   function crearImagen() {
     if (tarjetaCompartir) return Promise.resolve(tarjetaCompartir);
     var l = ultimaPropia; if (!l) return Promise.reject();
-    var fuentes = document.fonts ? Promise.all([document.fonts.load('italic 400 80px Fraunces'), document.fonts.load('400 60px Fraunces'), document.fonts.load('500 40px "DM Sans"')]).catch(function () {}) : Promise.resolve();
+    var fuentes = document.fonts ? Promise.all([document.fonts.load('italic 400 80px Fraunces'), document.fonts.load('400 60px Fraunces'), document.fonts.load('500 40px "DM Sans"'), document.fonts.load('700 46px "DM Sans"'), document.fonts.load('italic 400 46px Fraunces')]).catch(function () {}) : Promise.resolve();
     return fuentes.then(function () {
       var Wc = 1080, Hc = 1920, c = document.createElement('canvas'); c.width = Wc; c.height = Hc;
       var g = c.getContext('2d');
-      var bg = g.createLinearGradient(0, 0, 0, Hc); bg.addColorStop(0, '#1E1846'); bg.addColorStop(.55, '#100D26'); bg.addColorStop(1, '#0A1838');
+      /* Tarjeta para historias de Instagram (1080 × 1920).
+         Arriba y abajo quedan franjas solo decorativas: Instagram las tapa con su barra y con "Enviar mensaje". */
+      var bg = g.createLinearGradient(0, 0, 0, Hc); bg.addColorStop(0, '#16113A'); bg.addColorStop(.5, '#0B0920'); bg.addColorStop(1, '#0A1838');
       g.fillStyle = bg; g.fillRect(0, 0, Wc, Hc);
       function foco(x, ang, col) { g.save(); g.translate(x, -40); g.rotate(ang); var gr = g.createLinearGradient(0, 0, 0, 1500); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.beginPath(); g.moveTo(-20, 0); g.lineTo(20, 0); g.lineTo(330, 1500); g.lineTo(-330, 1500); g.closePath(); g.fill(); g.restore(); }
-      foco(140, -.42, 'rgba(169,139,255,.22)'); foco(940, .42, 'rgba(78,229,229,.16)');
+      foco(140, -.42, 'rgba(169,139,255,.2)'); foco(940, .42, 'rgba(78,229,229,.14)');
       var sem = hash(l.t) * 2147483646 + 1; function rnd() { sem = (sem * 16807) % 2147483647; return sem / 2147483647; }
-      for (var i = 0; i < 46; i++) {
-        var x = 40 + rnd() * 1000, y = 110 + rnd() * 450, R = 10 + rnd() * 9;
+      for (var i = 0; i < 44; i++) {
+        var x = 40 + rnd() * 1000, y = 90 + rnd() * 330, R = 9 + rnd() * 9;
+        if (Math.abs(x - 540) < 120 && y > 220) continue;
         g.strokeStyle = 'rgba(248,247,251,.12)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, y - R); g.stroke();
-        g.save(); g.translate(x, y); g.scale(.35 + rnd() * .65, 1); trazarEstrella(g, 0, 0, R, 0); g.fillStyle = 'rgba(248,247,251,' + (.55 + rnd() * .4).toFixed(2) + ')'; g.fill(); g.restore();
+        g.save(); g.translate(x, y); g.scale(.35 + rnd() * .65, 1); trazarEstrella(g, 0, 0, R, 0); g.fillStyle = 'rgba(248,247,251,' + (.5 + rnd() * .4).toFixed(2) + ')'; g.fill(); g.restore();
       }
-      var sx = 540, sy = 470;
-      g.strokeStyle = 'rgba(255,217,61,.6)'; g.lineWidth = 2; g.beginPath(); g.moveTo(sx, 0); g.lineTo(sx, sy - 60); g.stroke();
-      var gl = g.createRadialGradient(sx, sy, 0, sx, sy, 230); gl.addColorStop(0, 'rgba(255,217,61,.55)'); gl.addColorStop(1, 'rgba(255,217,61,0)');
-      g.fillStyle = gl; g.beginPath(); g.arc(sx, sy, 230, 0, 6.283); g.fill();
-      trazarEstrella(g, sx, sy, 78, 0); g.fillStyle = '#FFE680'; g.fill();
-      g.save(); trazarEstrella(g, sx, sy, 78, 0); g.clip(); g.fillStyle = 'rgba(224,168,0,.75)'; g.fillRect(sx, sy - 80, 80, 160); g.restore();
-      g.textAlign = 'center'; g.fillStyle = '#A9A4C6'; g.font = '500 44px "DM Sans", sans-serif';
-      g.fillText(t('miLuz'), 540, 690);
-      var tam = 104, lineas; g.fillStyle = '#F8F7FB';
-      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 900); tam -= 6; } while ((lineas.length > 4 || lineas.length * tam * 1.15 > 440) && tam > 52);
-      tam += 6; var y0 = 780 + tam * .8;
-      lineas.forEach(function (ln, i) { g.fillText(ln, 540, y0 + i * tam * 1.15); });
-      g.fillStyle = '#FFD93D'; g.font = '500 42px "DM Sans", sans-serif';
-      g.fillText([l.c, nombrePais(l.p)].filter(Boolean).join(', '), 540, y0 + lineas.length * tam * 1.15 + 40);
-      // mar
+      // La estrella de esta persona
+      var sx = 540, sy = 335;
+      g.strokeStyle = 'rgba(255,217,61,.6)'; g.lineWidth = 2; g.beginPath(); g.moveTo(sx, 0); g.lineTo(sx, sy - 56); g.stroke();
+      var gl = g.createRadialGradient(sx, sy, 0, sx, sy, 210); gl.addColorStop(0, 'rgba(255,217,61,.5)'); gl.addColorStop(1, 'rgba(255,217,61,0)');
+      g.fillStyle = gl; g.beginPath(); g.arc(sx, sy, 210, 0, 6.283); g.fill();
+      trazarEstrella(g, sx, sy, 70, 0); g.fillStyle = '#FFE680'; g.fill();
+      g.save(); trazarEstrella(g, sx, sy, 70, 0); g.clip(); g.fillStyle = 'rgba(224,168,0,.75)'; g.fillRect(sx, sy - 72, 72, 144); g.restore();
+      // La luz que me guía es… «frase»
+      // La luz que me guía es… «frase» · lugar — el grupo se centra entre la estrella y el logo
+      g.textAlign = 'center';
+      var tam = 100, lineas;
+      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 900); tam -= 4; } while ((lineas.length > 4 || lineas.length * tam * 1.12 > 350) && tam > 50);
+      tam += 4;
+      var altoFrase = (lineas.length - 1) * tam * 1.12 + tam * .78, grupo = 80 + altoFrase + 75, arriba = 450 + Math.max(0, (600 - grupo) / 2);
+      g.fillStyle = '#CFCBE3'; g.font = 'italic 400 46px Fraunces, Georgia, serif'; g.fillText(t('miLuz'), 540, arriba + 34);
+      var y0 = arriba + 80 + tam * .78; g.fillStyle = '#F8F7FB'; g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif';
+      lineas.forEach(function (ln, i) { g.fillText(ln, 540, y0 + i * tam * 1.12); });
+      g.fillStyle = '#FFD93D'; g.font = '500 40px "DM Sans", sans-serif';
+      g.fillText([l.c, nombrePais(l.p)].filter(Boolean).join(', '), 540, y0 + (lineas.length - 1) * tam * 1.12 + 75);
+      // El espectáculo: logo de cuatro líneas y qué es
+      logo4(g, 540, 1080, 262, '#F8F7FB');
+      g.fillStyle = '#CFCBE3'; g.font = '500 33px "DM Sans", sans-serif';
+      g.fillText(t('tipo')[0], 540, 1340); g.fillText(t('tipo')[1], 540, 1382);
+      // Mar y barquito
       function ola(y, amp, col, fase) { g.fillStyle = col; g.beginPath(); g.moveTo(0, Hc); for (var x = 0; x <= Wc; x += 20) g.lineTo(x, y + Math.sin(x / 90 + fase) * amp); g.lineTo(Wc, Hc); g.closePath(); g.fill(); }
-      ola(1390, 14, '#17204A', 0);
-      var bx = 300, by = 1420; g.save(); g.translate(bx, by); g.rotate(-.04); g.scale(1.1, 1.1);
-      g.fillStyle = '#FBFAFD'; g.beginPath(); g.moveTo(52 - 100, 78 - 112); g.lineTo(0, 8 - 112); g.lineTo(0, 78 - 112); g.fill();
-      g.fillStyle = '#E3DFEC'; g.beginPath(); g.moveTo(0, 8 - 112); g.lineTo(48, 78 - 112); g.lineTo(0, 78 - 112); g.fill();
-      g.fillStyle = '#F6F4FA'; g.beginPath(); g.moveTo(-92, 78 - 112); g.lineTo(92, 78 - 112); g.lineTo(62, 0); g.lineTo(-62, 0); g.fill();
-      var ob = g.createRadialGradient(-4, -78, 0, 0, -74, 40); ob.addColorStop(0, 'rgba(255,217,61,.8)'); ob.addColorStop(1, 'rgba(255,217,61,0)'); g.fillStyle = ob; g.beginPath(); g.arc(0, -74, 40, 0, 6.283); g.fill();
+      ola(1440, 12, '#17204A', 0);
+      var bx = 935, by = 1468; g.save(); g.translate(bx, by); g.rotate(-.03); g.scale(.85, .85);
+      g.fillStyle = '#FBFAFD'; g.beginPath(); g.moveTo(-48, -34); g.lineTo(0, -104); g.lineTo(0, -34); g.fill();
+      g.fillStyle = '#E3DFEC'; g.beginPath(); g.moveTo(0, -104); g.lineTo(48, -34); g.lineTo(0, -34); g.fill();
+      g.fillStyle = '#F6F4FA'; g.beginPath(); g.moveTo(-92, -34); g.lineTo(92, -34); g.lineTo(62, 0); g.lineTo(-62, 0); g.fill();
+      var ob = g.createRadialGradient(-4, -66, 0, 0, -62, 44); ob.addColorStop(0, 'rgba(255,217,61,.85)'); ob.addColorStop(1, 'rgba(255,217,61,0)'); g.fillStyle = ob; g.beginPath(); g.arc(0, -62, 44, 0, 6.283); g.fill();
       g.restore();
-      ola(1412, 18, '#142A55', 1.4); ola(1462, 12, '#0D2147', 2.6);
-      palabra(g, 540, 1528, 640, '#F8F7FB');
-      g.fillStyle = '#F8F7FB'; g.font = '400 46px Fraunces, Georgia, serif'; g.fillText(t('pregunta'), 540, 1640);
-      g.fillStyle = '#A9A4C6'; g.font = '500 34px "DM Sans", sans-serif'; g.fillText('lightswillguideyou.com/yourlight', 540, 1700);
+      ola(1462, 16, '#142A55', 1.4); ola(1508, 10, '#0D2147', 2.6);
+      // Dónde encontrarnos
+      g.fillStyle = '#FFD93D'; g.font = '700 46px "DM Sans", sans-serif'; g.fillText('@lightswillguideyoushow', 540, 1592);
+      g.fillStyle = '#A9A4C6'; g.font = '500 30px "DM Sans", sans-serif'; g.fillText(t('cta'), 540, 1645);
       return new Promise(function (ok) { c.toBlob(function (b) { tarjetaCompartir = b; ok(b); }, 'image/png'); });
     });
+  }
+  // Logo de cuatro líneas (sale del símbolo #logo de la página)
+  function logo4(g, cx, arriba, ancho, color) {
+    var sy = document.getElementById('logo'); if (!sy || !window.Path2D) return;
+    var vb = sy.getAttribute('viewBox').split(/[\s,]+/).map(Number), k = ancho / vb[2];
+    g.save(); g.translate(cx - ancho / 2, arriba); g.scale(k, k); g.translate(-vb[0], -vb[1]); g.fillStyle = color;
+    sy.querySelectorAll('path').forEach(function (p) { g.fill(new Path2D(p.getAttribute('d'))); });
+    g.restore();
   }
   // Nombre del show con las letras del logo (sale del símbolo #palabra de la página)
   function palabra(g, cx, arriba, ancho, color) {
@@ -529,13 +552,23 @@
   }
   function descargar(b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'my-light-lights-will-guide-you.png'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
   $('#compartir').addEventListener('click', function () {
+    contar('compartir-historia');
     crearImagen().then(function (b) {
       var f = new File([b], 'my-light.png', { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], text: t('compartirTxt') + ' ' + CFG.URL }).catch(function () {});
       descargar(b);
     });
   });
-  $('#descargar').addEventListener('click', function () { crearImagen().then(descargar); });
+  $('#descargar').addEventListener('click', function () { contar('descargar-imagen'); crearImagen().then(descargar); });
+  $('#whatsapp').addEventListener('click', function () { contar('whatsapp'); });
+  $('#seguir').addEventListener('click', function () { contar('seguir-instagram'); });
+  $('#copiar').addEventListener('click', function () {
+    contar('copiar-enlace');
+    var b = this, u = CFG.URL;
+    function ok() { var o = b.innerHTML; b.textContent = t('copiado'); setTimeout(function () { b.innerHTML = o; }, 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(ok, function () { prompt('', u); });
+    else prompt('', u);
+  });
   function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + CFG.URL + (lang === 'es' ? '?lang=es' : '')); }
 
   /* ---------- Idioma ---------- */

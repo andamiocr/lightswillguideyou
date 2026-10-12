@@ -174,3 +174,11 @@ h2 { margin: 0; font: 400 clamp(1.7rem, 3vw, 2.3rem)/1.1 var(--serif); font-vari
   .ola, .barquito { animation: none; }
   .tarjeta, .boton { transition: none; }
 }
+
+/* Pantalla de "listo": pasos para compartir y seguir */
+.pasos { margin: .2rem 0 1rem; padding-left: 1.2rem; color: var(--bruma); font-size: .88rem; line-height: 1.45; }
+.pasos li + li { margin-top: .35rem; }
+.pasos b { color: var(--papel); font-weight: 600; }
+.enlace { margin-left: .25rem; padding: .1rem .55rem; border: 1px solid #4A4380; border-radius: 99px; background: transparent; color: var(--orbe); font: 600 .8rem var(--sans); cursor: pointer; }
+.seguir { display: flex; justify-content: center; align-items: center; min-height: 2.75rem; margin-top: .7rem; border-radius: 99px; box-shadow: inset 0 0 0 1px #4A4380; color: var(--papel); font-weight: 600; text-decoration: none; }
+.seguir:hover { box-shadow: inset 0 0 0 1px var(--papel); }
