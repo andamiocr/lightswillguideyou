@@ -173,7 +173,8 @@
       document.getElementById('idioma').addEventListener('click', function () { poner(html.getAttribute('data-lang') === 'es' ? 'en' : 'es'); });
     })();
   </script>
-  <!-- Contador de visitas y clics (GoatCounter: sin cookies). Panel: https://lightswillguideyou.goatcounter.com -->
-  <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <!-- Contador (GoatCounter, sin cookies). Una sola cuenta "persona" para todos los sitios: cada página se anota con su dominio delante. Panel: https://persona.goatcounter.com -->
+  <script>window.goatcounter = { path: function (p) { return location.host + p; } };</script>
+  <script data-goatcounter="https://persona.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
