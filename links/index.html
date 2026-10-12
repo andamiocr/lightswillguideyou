@@ -37,9 +37,9 @@
     main { position: relative; z-index: 1; width: min(30rem, 100%); margin: 0 auto; padding: 0 1rem max(2rem, env(safe-area-inset-bottom)); }
 
     /* Portada: la protagonista con la esfera, detrás de las estrellas y el nombre */
-    .portada { position: relative; margin: 0 -1rem; aspect-ratio: 900 / 1300; overflow: hidden; }
-    .portada > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
-    .portada::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,.35), transparent 22%, transparent 62%, #000 97%); }
+    .portada { position: relative; margin: 0 -1rem; aspect-ratio: 900 / 1120; overflow: hidden; }
+    .portada > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+    .portada::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,.35), transparent 22%, transparent 70%, #000 99%); }
     .cielo { position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 150px; }
     .cielo svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     .colgada { transform-box: fill-box; transform-origin: 50% 0; animation: mece 7s ease-in-out infinite alternate; }
@@ -47,8 +47,8 @@
     .colgada:nth-child(3n) { animation-duration: 8s; animation-delay: -5s; }
     @keyframes mece { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
 
-    .cabeza { position: absolute; z-index: 2; left: 1rem; right: 1rem; top: 64px; text-align: center; }
-    .logo { display: block; width: min(13.5rem, 58%); height: auto; margin: 0 auto; color: var(--papel); overflow: visible; filter: drop-shadow(0 4px 24px rgba(0,0,0,.6)); }
+    .cabeza { position: absolute; z-index: 2; left: 1rem; right: 1rem; top: 56px; text-align: center; }
+    .logo { display: block; width: min(10.6rem, 46%); height: auto; margin: 0 auto; color: var(--papel); overflow: visible; filter: drop-shadow(0 4px 24px rgba(0,0,0,.6)); }
     .logo g { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0; transform: translateY(30%); animation: sube .95s cubic-bezier(.34,1.56,.64,1) forwards; }
     .logo g:nth-child(2) { animation-delay: .15s; } .logo g:nth-child(3) { animation-delay: .3s; } .logo g:nth-child(4) { animation-delay: .45s; }
     @keyframes sube { to { opacity: 1; transform: none; } }
@@ -197,7 +197,7 @@
       var cx = cv.getContext('2d'), COL = ['#FFD93D', '#4EE5E5', '#FF3D7F', '#C7FF3D', '#FF8A3D', '#A98BFF'];
       var W, H, dpr, o = { x: 0, y: 0, r: 8 }, P = [], t0 = 0, inicio = performance.now(), vivo = true;
       function medir() { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr;
-        var s = Math.max(W / 900, H / 1452), dw = 900 * s; o.x = (W - dw) / 2 + .5 * dw; o.y = .735 * 1452 * s; o.r = Math.max(6, .02 * dw); }
+        var s = Math.max(W / 900, H / 1452), dw = 900 * s; var dh = 1452 * s, oy = (H - dh) * .45; o.x = (W - dw) / 2 + .5 * dw; o.y = oy + .785 * dh; o.r = Math.max(6, .02 * dw); }
       function nueva() { var a = Math.random() * 6.283, d = Math.random() * o.r;
         return { x: Math.cos(a) * d, y: Math.sin(a) * d * .7, vx: (Math.random() - .5) * 30, vy: -(14 + Math.random() * 34), r: .8 + Math.random() * 1.8, c: COL[(Math.random() * COL.length) | 0], v: 0, d: 2.8 + Math.random() * 3.6 }; }
       medir(); addEventListener('resize', medir);
@@ -216,8 +216,7 @@
       document.getElementById('idioma').addEventListener('click', function () { poner(html.getAttribute('data-lang') === 'es' ? 'en' : 'es'); });
     })();
   </script>
-  <!-- Contador (GoatCounter, sin cookies). Una sola cuenta "persona" para todos los sitios: cada página se anota con su dominio delante. Panel: https://persona.goatcounter.com -->
-  <script>window.goatcounter = { path: function (p) { return location.host + p; } };</script>
-  <script data-goatcounter="https://persona.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <!-- Contador de visitas y clics (GoatCounter: sin cookies). Panel: https://lightswillguideyou.goatcounter.com -->
+  <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
