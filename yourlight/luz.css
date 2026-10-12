@@ -31,9 +31,9 @@ a { color: inherit; }
 .barra { position: absolute; z-index: 20; inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: center; padding: max(.9rem, env(safe-area-inset-top)) var(--gutter) .9rem; pointer-events: none; }
 .barra > * { pointer-events: auto; }
 /* El nombre usa las letras del logo oficial (todo en mayúsculas) */
-.marca { --alto: clamp(10.5px, 2.9vw, 14px); display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--papel); }
+.marca { --alto: clamp(11.7px, 3.24vw, 15.6px); display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--papel); }
 .marca-estrella { flex: none; width: .95rem; height: .95rem; fill: var(--orbe); filter: drop-shadow(0 0 4px rgba(255, 217, 61, .6)); }
-.palabra { display: block; height: var(--alto); width: calc(var(--alto) * 18.99); fill: currentColor; }
+.palabra { display: block; height: var(--alto); width: calc(var(--alto) * 17.07); fill: currentColor; overflow: visible; }
 .idioma { display: inline-flex; gap: .15rem; padding: .25rem; border: 1px solid var(--hilo); border-radius: 99px; background: rgba(16, 13, 38, .6); color: var(--bruma); font: 600 .78rem/1 var(--sans); cursor: pointer; }
 .idioma span { padding: .4rem .55rem; border-radius: 99px; }
 html[data-lang="es"] .idioma [data-l="es"], html[data-lang="en"] .idioma [data-l="en"] { background: var(--papel); color: var(--tinta); }
