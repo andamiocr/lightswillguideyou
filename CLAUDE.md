@@ -31,3 +31,8 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
 - La sección "Tu luz" de la portada usa el mismo formulario y la misma hoja (LWGY_CONFIG en index.html) y enlaza al mapa.
 - mapa.js es generado (puntos de tierra + centro de cada país): no editar a mano salvo coordenadas de un país.
 - Vista de prueba con estrellas inventadas (solo en tu navegador): /yourlight/?demo=1
+
+## Links de la bio (/links/)
+- `links/index.html`: página para el link de la bio de Instagram/TikTok (reemplaza Linktree). noindex: no compite con la portada en Google.
+- Orden según la campaña del momento: la tarjeta dorada es la acción principal (hoy: Tu luz). Cambiar el orden o la tarjeta destacada cuando haya temporada nueva (entradas primero).
+- Mismo idioma automático que /yourlight (clave `lwgy-lang`).

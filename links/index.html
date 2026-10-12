@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>Lights Will Guide You Show | Links</title>
+  <meta name="description" content="Teatro, danza y música en vivo que celebra la magia de Coldplay. Theatre, dance and live music celebrating the magic of Coldplay.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://www.lightswillguideyou.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lights Will Guide You Show">
+  <meta property="og:title" content="Lights Will Guide You Show">
+  <meta property="og:description" content="Theatre, dance and live music celebrating the magic of Coldplay.">
+  <meta property="og:image" content="https://www.lightswillguideyou.com/yourlight/og.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,0..100;1,9..144,400,0..100&display=swap">
+  <script>
+    (function () { var l = 'en';
+      try { var q = new URLSearchParams(location.search).get('lang'), g = localStorage.getItem('lwgy-lang'), n = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        l = (q === 'es' || q === 'en') ? q : (g === 'es' || g === 'en') ? g : (/^es\b/i.test(n) ? 'es' : 'en'); } catch (e) {}
+      document.documentElement.lang = l; document.documentElement.setAttribute('data-lang', l); })();
+  </script>
+  <style>
+    :root { --noche: #050409; --telon: #12101F; --papel: #F8F7FB; --bruma: #A9A4C6; --hilo: #2D2853; --orbe: #FFD93D; --tinta: #16132F;
+      --serif: 'Fraunces', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif; --suave: cubic-bezier(.2, .7, .2, 1); }
+    * { box-sizing: border-box; }
+    html { background: var(--noche); color: var(--papel); -webkit-text-size-adjust: 100%; }
+    body { margin: 0; min-height: 100svh; font: 400 1rem/1.45 var(--sans); overflow-x: clip; background: linear-gradient(#000 0, #000 40%, var(--noche)); }
+    html[data-lang="es"] .en, html[data-lang="en"] .es { display: none !important; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--orbe); outline-offset: 3px; border-radius: 8px; }
+    main { position: relative; z-index: 1; width: min(30rem, 100%); margin: 0 auto; padding: 0 1rem max(2rem, env(safe-area-inset-bottom)); }
+
+    /* Portada: la protagonista con la esfera, detrás de las estrellas y el nombre */
+    .portada { position: relative; margin: 0 -1rem; aspect-ratio: 900 / 1300; overflow: hidden; }
+    .portada > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+    .portada::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,.35), transparent 22%, transparent 62%, #000 97%); }
+    .cielo { position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 150px; }
+    .cielo svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .colgada { transform-box: fill-box; transform-origin: 50% 0; animation: mece 7s ease-in-out infinite alternate; }
+    .colgada:nth-child(2n) { animation-duration: 9s; animation-delay: -3s; }
+    .colgada:nth-child(3n) { animation-duration: 8s; animation-delay: -5s; }
+    @keyframes mece { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+
+    .cabeza { position: absolute; z-index: 2; left: 1rem; right: 1rem; top: 150px; text-align: center; }
+    .palabra { display: block; width: min(19rem, 82%); aspect-ratio: 18.99; margin: 0 auto; fill: var(--papel); }
+    .cabeza p { margin: .8rem auto 0; max-width: 22rem; color: #D9D6E8; font-size: .98rem; text-wrap: balance; text-shadow: 0 2px 14px #000; }
+
+    .lista { position: relative; z-index: 2; display: grid; gap: .85rem; margin-top: -1.6rem; }
+
+    /* Tu luz: la acción principal */
+    .luz { position: relative; display: block; padding: 1.25rem 1.2rem 1.2rem; border-radius: 20px; text-decoration: none; overflow: hidden;
+      background: radial-gradient(circle at 86% 18%, rgba(255,217,61,.2), transparent 42%), rgba(16,14,30,.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: inset 0 0 0 1px rgba(255,217,61,.38), 0 18px 50px -24px rgba(255,217,61,.45); }
+    .luz svg.estrella { position: absolute; right: 1.25rem; top: 0; width: 46px; height: 84px; overflow: visible; }
+    .luz h2 { margin: 0; max-width: 15rem; font: 400 1.6rem/1.12 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.01em; }
+    .luz p { margin: .45rem 0 1rem; max-width: 17rem; color: var(--bruma); font-size: .95rem; }
+    .boton { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; padding: .65rem 1.15rem; border-radius: 99px; background: var(--orbe); color: var(--tinta); font-weight: 600; transition: box-shadow .2s; }
+    .boton svg { width: 1rem; height: 1rem; fill: currentColor; }
+    .luz:hover .boton { box-shadow: 0 0 0 5px rgba(255,217,61,.2); }
+
+    /* Videos */
+    .video { display: block; text-decoration: none; border-radius: 18px; overflow: hidden; background: var(--telon); box-shadow: inset 0 0 0 1px #24203F; }
+    .video .marco { display: block; position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0A0820; }
+    .video img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--suave); }
+    .video:hover img { transform: scale(1.03); }
+    .video .play { position: absolute; left: 50%; top: 50%; width: 3.4rem; height: 3.4rem; margin: -1.7rem 0 0 -1.7rem; border-radius: 50%; background: rgba(16,13,38,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: inset 0 0 0 1.5px rgba(248,247,251,.7); }
+    .video .play::after { content: ''; position: absolute; left: 1.32rem; top: 1.05rem; border: .65rem solid transparent; border-left: 1.05rem solid var(--papel); border-right: 0; }
+    .pie-tarjeta { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .8rem 1rem .9rem; }
+    .pie-tarjeta b, .fila b { font: 600 1.02rem/1.3 var(--sans); }
+    .pie-tarjeta small { color: var(--bruma); font-size: .8rem; white-space: nowrap; }
+
+    /* Enlaces simples */
+    .fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; padding: .7rem 1rem; border-radius: 16px; text-decoration: none; background: rgba(18,16,31,.9); box-shadow: inset 0 0 0 1px #24203F; transition: box-shadow .2s, background .2s; }
+    .fila:hover { background: #17142A; box-shadow: inset 0 0 0 1px #4A4380; }
+    
+    .fila small { display: block; color: var(--bruma); font-size: .8rem; }
+    .fila i { flex: none; width: .55rem; height: .55rem; border-top: 1.6px solid var(--bruma); border-right: 1.6px solid var(--bruma); transform: rotate(45deg); }
+    .fila--contratar { background: transparent; box-shadow: inset 0 0 0 1px rgba(248,247,251,.28); }
+
+    .redes { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem 1.1rem; margin: 2rem 0 0; padding: 0; list-style: none; font-size: .9rem; }
+    .redes a { color: var(--bruma); text-decoration: none; padding: .3rem 0; }
+    .redes a:hover { color: var(--papel); }
+    .idioma { position: fixed; z-index: 5; top: max(.8rem, env(safe-area-inset-top)); right: .8rem; }
+    .idioma button { display: inline-flex; gap: .15rem; padding: .2rem; border: 1px solid rgba(248,247,251,.25); border-radius: 99px; background: rgba(0,0,0,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--bruma); font: 600 .78rem var(--sans); cursor: pointer; }
+    .idioma span { padding: .3rem .65rem; border-radius: 99px; }
+    html[data-lang="es"] .idioma [data-l="es"], html[data-lang="en"] .idioma [data-l="en"] { background: var(--papel); color: var(--tinta); }
+    .legal { margin: 1.2rem auto 0; max-width: 24rem; text-align: center; color: #6F6992; font-size: .72rem; }
+    @media (prefers-reduced-motion: reduce) { .colgada { animation: none; } .video img { transition: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="estrella" viewBox="0 0 100 100"><path d="M50 6 61.8 37.2 95 38.2 68.8 58.8 78.2 91 50 72 21.8 91 31.2 58.8 5 38.2 38.2 37.2Z"/></symbol>
+    <symbol id="palabra" viewBox="185 31 5187 273"><path d="M415.4,293.4c0,1.4-.25,2.5-.74,3.3-1.2,2.2-6.2,3.3-15.1,3.3-.99,0-20.3-.25-58.1-.74-37.7-.5-72.1-.74-103.1-.74-12.7,0-29.0,.49-48.7,1.4-1.7,0-2.5-2.2-2.5-6.6,0-5.4,1.2-8.1,3.6-8.1,21.8,0,32.8-7.0,32.8-21.0v-192.2c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.0,0,41.3-.37,48.7-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-22.3,0-33.5,7.3-33.5,22.1v173.0c0,12.7,3.1,23.0,9.4,30.8,6.2,7.7,14.5,11.3,24.9,10.8l60.5-2.5c13.5-.49,25.0-5.4,34.6-14.7,10.8-10.8,16.2-25.4,16.2-43.9,0-1.9,2.5-2.9,7.7-2.9s7.3,.99,7.3,2.9v67.9ZM572.4,300.0c-9.8-.99-26.4-1.4-49.8-1.4s-40.3,.49-50.1,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c22.8,0,34.3-7.5,34.3-22.5v-190.7c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.8,0,42.4-.37,49.8-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-13.0,0-22.0,1.5-27.1,4.6-5.0,3.0-7.5,8.9-7.5,17.5v190.7c0,15.0,11.5,22.5,34.6,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM872.3,206.3c-12.3,0-19.9,1.3-22.8,4.0-2.9,2.7-4.4,8.7-4.4,18.0v42.4c0,8.6,2.3,12.9,7.0,12.9,1.9,0,2.9,1.4,2.9,4.4s-.8,4.4-2.4,4.4-8.9,.74-21.9,2.2c-9.8,1.7-19.8,3.4-29.8,5.1-15.7,2.4-30.7,3.6-45.0,3.6-10.0,0-22.0-1.9-35.7-5.9-16.4-4.9-30.8-11.4-43.1-19.5-13.7-9.3-25.4-22.7-35.0-40.2-11.0-20.6-16.6-43.4-16.6-68.2,0-31.4,10.9-61.7,32.8-90.7,24.1-31.9,56.9-47.9,98.5-47.9,20.6,0,41.9,2.2,63.8,6.6,14.5,2.9,22.8,4.4,25.0,4.4,1.4,3.2,2.8,12.6,4.0,28.4,.98,13.0,1.4,23.5,1.4,31.3,0,1.9-2.2,3.0-6.6,3.3-4.1,.25-6.4-.61-6.6-2.5-1.4-14.0-6.5-25.7-15.1-35.0-14.0-15.2-36.4-22.8-67.1-22.8-28.2,0-51.2,12.1-69,36.5-16.2,22.1-24.3,47.8-24.3,77.1,0,43.5,11.6,77.4,35.0,101.8,18.4,19.4,38.8,29.1,61.2,29.1,24.1,0,41.3-3.0,51.6-9.2,2.7-1.7,4.0-6.7,4.0-15.1v-36.5c0-9.8-2.9-16.1-8.8-18.8-4.9-2.2-16.6-3.3-35.0-3.3-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,27.3,1.1,59.7,1.1,20.9,0,35.0-.37,42.4-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM1201.2,300.0c-9.8-.99-26.4-1.4-49.8-1.4s-40.3,.49-50.1,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c22.8,0,34.3-7.5,34.3-22.5v-84.1c0-4.9-2.4-7.3-7.3-7.3h-135.7c-4.9,0-7.3,2.4-7.3,7.3v84.1c0,15.0,11.5,22.5,34.6,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-9.8-.99-26.4-1.4-49.8-1.4s-40.3,.49-50.1,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c22.8,0,34.3-7.5,34.3-22.5v-190.7c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.8,0,42.4-.37,49.8-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-13.0,0-22.0,1.5-27.1,4.6-5.0,3.0-7.5,8.9-7.5,17.5v75.6c0,4.9,2.4,7.3,7.3,7.3h135.7c4.9,0,7.3-2.4,7.3-7.3v-75.6c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.8,0,42.4-.37,49.8-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-13.0,0-22.0,1.5-27.1,4.6-5.0,3.0-7.5,8.9-7.5,17.5v190.7c0,15.0,11.5,22.5,34.6,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM1536.8,104.1c0,2.2-2.4,3.3-7.3,3.3s-7.3-1.1-7.3-3.3c0-32.7-17.1-49.8-51.2-51.2-14.2-.49-32.6-1.1-54.9-1.8-6.6-.24-9.9,2.7-9.9,8.8v202.9c0,15.0,12.1,22.5,36.5,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-9.8-.99-26.9-1.4-51.2-1.4-26.3,0-44.4,.49-54.2,1.4-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c8.8,0,16.9-1.7,24.3-5.1,9.1-4.1,13.6-9.9,13.6-17.3v-202.9c0-5.9-3.0-8.8-9.2-8.8-17.2,.25-35.7,.86-55.7,1.8-34.2,1.4-51.2,18.5-51.2,51.2,0,2.2-2.4,3.3-7.3,3.3s-7.3-1.1-7.3-3.3v-61.6c0-3.1,1.9-5.1,5.9-5.9,.7-.24,3.9-.37,9.5-.37,.7,0,15,.18,42.8,.5,27.8,.3,57.0,.55,87.8,.55s60.8-.18,88.7-.55c27.9-.37,42.2-.55,42.9-.55,6.3,0,10.5,.43,12.3,1.2,1.8,.86,2.7,2.5,2.7,4.9v61.6ZM1747.0,223.2c0,22.9-6.4,41.7-19.1,56.5-14.0,16.0-32.7,24.0-56.0,24.0-16.7,0-31.2-2.0-43.5-6.2-4.4-1.2-14.1-5.5-29.1-12.9-2.2-5.6-4.4-14.8-6.6-27.6-2.4-13.7-3.3-23.3-2.5-28.7,.24-1.7,2.4-2.8,6.6-3.3,4.1-.49,6.2,0,6.2,1.4,1.2,16.4,7.8,30.6,19.9,42.4,14.0,13.7,32.2,20.6,54.6,20.6,9.3,0,18.4-3.5,27.3-10.7,10.5-9.1,15.8-21.0,15.8-35.7,0-17.2-5.7-31.1-17.3-41.7-8.3-7.3-21.5-14.2-39.4-20.6-9.3-4.1-18.8-8.3-28.4-12.5-10.8-5.1-19.3-10.9-25.4-17.3-12.3-12.5-18.4-30.8-18.4-54.9,0-16.7,7.7-32.4,23.2-47.2,12.0-11.5,29.2-17.3,51.6-17.3,13.0,0,26.3,1.4,39.8,4.4,10.8,2.4,17.2,3.5,19.1,3.3,3.4,12.3,5.9,28.9,7.3,49.8,.24,2.9-2.2,4.4-7.3,4.4-3.6,0-5.6-.86-5.8-2.6-2.4-13.8-8.8-25.5-19.1-34.9-8.5-7.9-21.0-11.8-37.5-11.8-14.9,0-26.3,4.8-34.2,14.4-6.6,8.1-9.9,17.7-9.9,28.8,0,14.7,3.6,25.8,11.0,33.2,8.5,8.6,22.5,16.0,41.9,22.1,16.1,5.1,27.5,9.2,34.2,12.1,10.7,5.1,19.1,11.3,25.0,18.4,10.7,13.3,16.1,30.0,16.1,50.2ZM2257.9,49.9c-16.7,0-27.5,5.5-32.4,16.6l-104.8,230.6c-2.2,4.6-3.9,7.0-5.1,7.0-1.4,0-3.2-2.2-5.1-6.6l-44.3-98.8c-.97-2.2-1.9-3.3-2.9-3.3s-1.9,1.1-2.9,3.3l-44.4,98.9c-1.9,4.3-3.7,6.5-5.2,6.5s-3.2-2.2-5.2-6.6l-101.1-225.4c-6.6-14.7-16.1-22.1-28.4-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,21.4,1.1,42.0,1.1s33.2-.37,40.5-1.1c1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-14.5,0-21.7,3.6-21.7,11.0,0,2.9,1.0,6.6,3.0,11.0l76.3,170.1c1.2,2.4,2.3,3.7,3.3,3.7,1.2,0,2.4-1.3,3.6-4.0l28.0-61.2c2.2-5.1,2.0-10.5-.43-16.2l-41.4-92.2c-6.6-14.7-15.4-22.1-26.4-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,20.7,1.1,40.2,1.1s33.2-.37,40.5-1.1c1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-14.5,0-21.7,3.6-21.7,11.0,0,2.9,.98,6.6,2.9,11.0l22.5,50.1c1.4,2.9,2.7,4.4,3.6,4.4s2.2-1.6,3.6-4.8l21.7-47.9c2.2-4.6,3.3-8.7,3.3-12.1,0-7.8-6.4-11.8-19.1-11.8-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,19.1,1.1,35.4,1.1,17.7,0,30.2-.37,37.6-1.1,1.9,0,2.9,2.4,2.9,7.3s-.98,7.4-2.9,7.4c-19.1,0-31.1,5.5-36.0,16.6l-33.9,74.8c-2.5,5.6-2.8,10.6-.87,15.1l38.4,85.5c1.2,2.4,2.3,3.6,3.2,3.6,1.2,0,2.4-1.3,3.6-4.0l76.3-167.9c2.3-4.6,3.4-8.6,3.4-11.7,0-8.1-6.4-12.1-19.1-12.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,19.1,1.1,35.4,1.1,15.2,0,26.5-.37,33.9-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM2391.3,300.0c-9.8-.99-26.4-1.4-49.8-1.4s-40.3,.49-50.1,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c22.8,0,34.3-7.5,34.3-22.5v-190.7c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.8,0,42.4-.37,49.8-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-13.0,0-22.0,1.5-27.1,4.6-5.0,3.0-7.5,8.9-7.5,17.5v190.7c0,15.0,11.5,22.5,34.6,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM2671.8,293.4c0,1.4-.25,2.5-.74,3.3-1.2,2.2-6.2,3.3-15.1,3.3-.99,0-20.3-.25-58.1-.74-37.7-.5-72.1-.74-103.1-.74-12.7,0-29.0,.49-48.7,1.4-1.7,0-2.5-2.2-2.5-6.6,0-5.4,1.2-8.1,3.6-8.1,21.8,0,32.8-7.0,32.8-21.0v-192.2c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.0,0,41.3-.37,48.7-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-22.3,0-33.5,7.3-33.5,22.1v173.0c0,12.7,3.1,23.0,9.4,30.8,6.2,7.7,14.5,11.3,24.9,10.8l60.5-2.5c13.5-.49,25.0-5.4,34.6-14.7,10.8-10.8,16.2-25.4,16.2-43.9,0-1.9,2.5-2.9,7.7-2.9s7.3,.99,7.3,2.9v67.9ZM2953.8,293.4c0,1.4-.25,2.5-.74,3.3-1.2,2.2-6.2,3.3-15.1,3.3-.99,0-20.3-.25-58.1-.74-37.7-.5-72.1-.74-103.1-.74-12.7,0-29.0,.49-48.7,1.4-1.7,0-2.5-2.2-2.5-6.6,0-5.4,1.2-8.1,3.6-8.1,21.8,0,32.8-7.0,32.8-21.0v-192.2c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.0,0,41.3-.37,48.7-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-22.3,0-33.5,7.3-33.5,22.1v173.0c0,12.7,3.1,23.0,9.4,30.8,6.2,7.7,14.5,11.3,24.9,10.8l60.5-2.5c13.5-.49,25.0-5.4,34.6-14.7,10.8-10.8,16.2-25.4,16.2-43.9,0-1.9,2.5-2.9,7.7-2.9s7.3,.99,7.3,2.9v67.9ZM3333.0,206.3c-12.3,0-19.9,1.3-22.8,4.0-2.9,2.7-4.4,8.7-4.4,18.0v42.4c0,8.6,2.3,12.9,7.0,12.9,1.9,0,2.9,1.4,2.9,4.4s-.8,4.4-2.4,4.4-8.9,.74-21.9,2.2c-9.8,1.7-19.8,3.4-29.8,5.1-15.7,2.4-30.7,3.6-45.0,3.6-10.0,0-22.0-1.9-35.7-5.9-16.4-4.9-30.8-11.4-43.1-19.5-13.7-9.3-25.4-22.7-35.0-40.2-11.0-20.6-16.6-43.4-16.6-68.2,0-31.4,10.9-61.7,32.8-90.7,24.1-31.9,56.9-47.9,98.5-47.9,20.6,0,41.9,2.2,63.8,6.6,14.5,2.9,22.8,4.4,25.0,4.4,1.4,3.2,2.8,12.6,4.0,28.4,.98,13.0,1.4,23.5,1.4,31.3,0,1.9-2.2,3.0-6.6,3.3-4.1,.25-6.4-.61-6.6-2.5-1.4-14.0-6.5-25.7-15.1-35.0-14.0-15.2-36.4-22.8-67.1-22.8-28.2,0-51.2,12.1-69,36.5-16.2,22.1-24.3,47.8-24.3,77.1,0,43.5,11.6,77.4,35.0,101.8,18.4,19.4,38.8,29.1,61.2,29.1,24.1,0,41.3-3.0,51.6-9.2,2.7-1.7,4.0-6.7,4.0-15.1v-36.5c0-9.8-2.9-16.1-8.8-18.8-4.9-2.2-16.6-3.3-35.0-3.3-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,27.3,1.1,59.7,1.1,20.9,0,35.0-.37,42.4-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM3645.1,49.9c-23.1,0-34.6,7.3-34.6,22.1v54.6c0,36.1-.74,64.2-2.2,84.1-2.2,31-12.4,54.6-30.6,70.8-16.4,14.7-39.7,22.1-69.7,22.1-20.1,0-36.6-2.5-49.4-7.7-21.1-8.6-34.8-24.9-40.9-49.0-4.1-16.2-6.2-33.7-6.2-52.4v-122.5c0-14.7-12.0-22.1-36.1-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.7,1.1,52.0,1.1,29.2,0,47.6-.37,54.9-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-15.5,0-26.0,1.7-31.5,5.1-5.5,3.4-8.3,9.1-8.3,16.9v93.7c0,7.6,.37,17.1,1.1,28.4,.74,12.7,1.1,20.1,1.1,22.1,.49,20.1,4.4,35.6,11.8,46.4,12.0,17.7,31.6,26.5,58.6,26.5,23.8,0,42.1-6.6,54.9-19.9,12.7-13.2,19.1-34.9,19.1-64.9v-132.4c0-14.7-12.0-22.1-36.1-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,23,1.1,46.8,1.1s38.0-.37,45.3-1.1c1.9,0,2.9,2.4,2.9,7.3s-.98,7.3-2.9,7.3ZM3791.5,300.0c-9.8-.99-26.4-1.4-49.8-1.4s-40.3,.49-50.1,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c22.8,0,34.3-7.5,34.3-22.5v-190.7c0-14.7-12.1-22.1-36.5-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.8,1.1,52.4,1.1,25.8,0,42.4-.37,49.8-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-13.0,0-22.0,1.5-27.1,4.6-5.0,3.0-7.5,8.9-7.5,17.5v190.7c0,15.0,11.5,22.5,34.6,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM4105.3,157.6c0,45.0-12.9,80.4-38.7,106.2-24.1,24.1-55.1,36.1-92.9,36.1-8.1,0-19.3-.25-33.7-.74-14.3-.5-30.0-.74-47.0-.74-6.4,0-21.9,.4-46.4,1.4-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c23.1,0,34.6-7.5,34.6-22.5v-190.7c0-14.0-12.1-21.0-36.5-21.0-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c18.4,.74,35.4,1.1,50.9,1.1,13.5,0,26.2-.18,38.1-.55,11.9-.37,22.2-.55,30.8-.55,40.0,0,73.1,10.4,99.2,31.3,27.8,22.3,41.7,52.4,41.7,90.0ZM4068.4,160.2c0-30.0-10.2-55.7-30.6-77.1-22.6-23.3-52.4-35.0-89.3-35.0-12.7,0-21.0,.62-24.7,1.8-7.8,2.9-11.8,9.8-11.8,20.6v170.4c0,20.6,4.9,34.3,14.7,40.9,6.1,4.1,17.3,6.2,33.5,6.2,30.5,0,55.7-10.7,75.6-32.1,21.6-23.3,32.4-55.3,32.4-95.9ZM4369.1,294.1c0,3.2-1.7,5.0-5.1,5.5-.74,.2-3.6,.37-8.8,.37-.25,0-15.9-.25-47.0-.74-31.1-.5-62.7-.74-95.0-.74-9.3,0-26.3,.49-50.9,1.4-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c24.1,0,36.1-7.0,36.1-21.0v-192.2c0-14.0-12.0-21.0-36.1-21.0-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c18.4,.74,35.4,1.1,50.9,1.1,32.2,0,61.7-.18,88.5-.55,26.8-.37,40.3-.55,40.5-.55,5.1,0,8.1,.13,8.8,.37,3.4,.5,5.1,2.3,5.1,5.5v61.2c0,2.2-2.3,3.3-7.0,3.3-4.9,0-7.3-1.1-7.3-3.3,0-33.9-16.6-51.4-49.8-52.4l-54.9-1.4c-5.1-.24-7.7,2.8-7.7,9.2v102.9c0,4.1,1.7,6.2,5.1,6.2h39.8c10.0,0,16.6-2.4,19.5-7.3,1.9-2.7,2.9-7.7,2.9-15.1v-14.3c0-1.9,2.3-2.9,7.0-2.9,4.4,0,6.6,.99,6.6,2.9-.99,9.8-1.4,24.4-1.4,43.9,0,17.2,.49,30.7,1.4,40.5,0,1.7-2.2,2.5-6.6,2.5-4.6,0-7.0-.86-7.0-2.5v-15.8c0-5.9-.99-10.0-2.9-12.5-3.2-3.9-9.7-5.9-19.5-5.9h-40.2c-3.2,0-4.8,1.9-4.8,5.9v60.8c0,11.3,2.7,20.6,8.3,28.0s13.2,10.9,23.0,10.7l43.9-1.4c33.4-.98,50.1-18.4,50.1-52.4,0-2.2,2.4-3.3,7.3-3.3,4.6,0,7.0,1.1,7.0,3.3v61.2ZM4766.8,50.3c-11.3,0-20.3,2.6-27.1,7.9-6.7,5.2-16.3,17.4-28.6,36.3l-44.6,68.2c-7.1,11.0-11.3,18.5-12.7,22.3-1.3,3.8-2.0,10.2-2.0,19.3v58.6c0,15.0,10.5,22.5,31.7,22.5,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-9.8-.99-25.3-1.4-46.4-1.4s-38.1,.49-47.9,1.4c-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c11.3,0,19.4-1.5,24.3-4.6,4.9-3.0,7.3-9.0,7.3-17.9v-58.3c0-9.3-.55-15.7-1.6-19.1-1.1-3.4-5.1-10.8-11.9-22.1l-54.6-91.1c-8.8-14.7-21.0-22.1-36.5-22.1-1.9,0-2.9-2.4-2.9-7.3s.99-7.3,2.9-7.3c7.3,.74,22.6,1.1,45.7,1.1s38.7-.37,46.1-1.1c1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-15.5,0-23.2,3.6-23.2,11.0,0,2.9,1.3,6.6,4.0,11.0l54.3,91.4c1.9,3.4,3.9,3.4,6.0,0l57.7-89.5c3.4-5.4,5.1-9.9,5.1-13.6,0-6.8-7.1-10.3-21.4-10.3-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,20.4,1.1,39.1,1.1,17.4,0,29.8-.37,37.2-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3ZM5046.7,170.9c0,28.5-8.6,55.4-25.8,80.8-23.8,34.9-56.9,52.4-99.2,52.4-27.3,0-52.0-8.1-74.1-24.3-13.5-9.8-24.8-23.4-33.9-40.9-10.8-20.9-16.2-43.7-16.2-68.6,0-33.2,10.5-63.8,31.7-91.8,23.6-31.2,54.7-46.8,93.3-46.8,30.2,0,56.0,9.8,77.4,29.5,31.2,28.7,46.8,65.4,46.8,109.9ZM5009.8,173.9c0-37.3-10.2-69-30.6-94.8-17.9-22.6-37.2-33.9-57.9-33.9-21.9,0-39.9,7.3-54.2,22.1-10.5,10.8-18.8,25.2-24.7,43.1-5.4,15.9-8.1,32.1-8.1,48.3,0,43.0,11.4,77,34.3,101.8,17.7,19.4,36.2,29.1,55.7,29.1,31.9,0,55.4-15.2,70.4-45.7,10.0-20.6,15.1-44.0,15.1-70.1ZM5369.0,50.3c-23.1,0-34.6,7.3-34.6,22.1v54.6c0,36.1-.74,64.2-2.2,84.1-2.2,31-12.4,54.6-30.6,70.8-16.4,14.7-39.7,22.1-69.7,22.1-20.1,0-36.6-2.5-49.4-7.7-21.1-8.6-34.8-24.9-40.9-49.0-4.1-16.2-6.2-33.7-6.2-52.4v-122.5c0-14.7-12.0-22.1-36.1-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,24.7,1.1,52.0,1.1,29.2,0,47.6-.37,54.9-1.1,1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3c-15.5,0-26.0,1.7-31.5,5.1-5.5,3.4-8.3,9.1-8.3,16.9v93.7c0,7.6,.37,17.1,1.1,28.4,.74,12.7,1.1,20.1,1.1,22.1,.49,20.1,4.4,35.6,11.8,46.4,12.0,17.7,31.6,26.5,58.6,26.5,23.8,0,42.1-6.6,54.9-19.9,12.7-13.2,19.1-34.9,19.1-64.9v-132.4c0-14.7-12.0-22.1-36.1-22.1-1.7,0-2.5-2.4-2.5-7.3s.86-7.3,2.5-7.3c7.3,.74,23,1.1,46.8,1.1s38.0-.37,45.3-1.1c1.9,0,2.9,2.4,2.9,7.3s-.99,7.3-2.9,7.3Z"/></symbol>
+  </svg>
+  <main>
+    <div class="idioma"><button id="idioma" type="button" aria-label="Español / English"><span data-l="es">ES</span><span data-l="en">EN</span></button></div>
+    <div class="portada">
+      <img src="/assets/img/hero-m.webp" width="900" height="1452" alt="Una joven sostiene una esfera de luz bajo un cielo de estrellas de papel" fetchpriority="high">
+    <div class="cielo" aria-hidden="true">
+      <svg viewBox="0 0 480 150" preserveAspectRatio="xMidYMin slice">
+        <g fill="#F8F7FB" stroke="rgba(248,247,251,.16)" stroke-width="1">
+          <g class="colgada"><path d="M44 0V62" /><use href="#estrella" x="34" y="60" width="20" height="20" opacity=".8" stroke="none"/></g>
+          <g class="colgada"><path d="M98 0V96" /><use href="#estrella" x="90" y="94" width="16" height="16" opacity=".6" stroke="none"/></g>
+          <g class="colgada"><path d="M160 0V44" /><use href="#estrella" x="149" y="42" width="22" height="22" opacity=".85" stroke="none"/></g>
+          <g class="colgada"><path d="M318 0V52" /><use href="#estrella" x="308" y="50" width="20" height="20" opacity=".8" stroke="none"/></g>
+          <g class="colgada"><path d="M380 0V100" /><use href="#estrella" x="372" y="98" width="16" height="16" opacity=".55" stroke="none"/></g>
+          <g class="colgada"><path d="M440 0V58" /><use href="#estrella" x="430" y="56" width="21" height="21" opacity=".75" stroke="none"/></g>
+        </g>
+        <g class="colgada"><path d="M240 0V70" stroke="rgba(255,217,61,.55)" stroke-width="1.2"/>
+          <circle cx="240" cy="86" r="26" fill="rgba(255,217,61,.18)"/><use href="#estrella" x="223" y="68" width="34" height="34" fill="#FFD93D"/></g>
+      </svg>
+    </div>
+
+    <header class="cabeza">
+      <h1 style="margin:0"><svg class="palabra" role="img" aria-label="Lights Will Guide You"><use href="#palabra"/></svg></h1>
+      <p><span class="es">Teatro, danza y música en vivo que celebra la magia de Coldplay.</span><span class="en">Theatre, dance and live music celebrating the magic of Coldplay.</span></p>
+    </header>
+    </div>
+
+    <nav class="lista" aria-label="Links">
+      <a class="luz" data-goatcounter-click="tu-luz" data-href-es="/yourlight/?lang=es" data-href-en="/yourlight/?lang=en" href="/yourlight/">
+        <svg class="estrella" viewBox="0 0 46 84" aria-hidden="true"><path d="M23 0V44" stroke="rgba(255,217,61,.6)" stroke-width="1.2"/><use href="#estrella" x="6" y="42" width="34" height="34" fill="#FFD93D"/></svg>
+        <h2><span class="es">¿Quién es la luz que te guía?</span><span class="en">Who is the light that guides you?</span></h2>
+        <p><span class="es">Escribila y colgala como una estrella sobre tu país, en el cielo del show.</span><span class="en">Write it down and hang it as a star over your country, in the show's sky.</span></p>
+        <span class="boton"><svg aria-hidden="true"><use href="#estrella"/></svg><span class="es">Colgar mi estrella</span><span class="en">Hang my star</span></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/IJOK1HAB5E8" data-goatcounter-click="fix-you" target="_blank" rel="noopener">
+        <span class="marco"><img src="/assets/img/fixyou-estudio.webp" width="1280" height="720" alt="" loading="lazy"><span class="play"></span></span>
+        <span class="pie-tarjeta"><b><span class="es">Nuestro Fix You</span><span class="en">Our Fix You</span></b><small><span class="es">Video musical</span><span class="en">Music video</span></small></span>
+      </a>
+
+      <a class="video" href="https://youtu.be/2vuC5Xzz3o4" data-goatcounter-click="teaser" target="_blank" rel="noopener">
+        <span class="marco"><img src="/assets/img/galeria-04.webp" width="1400" height="932" alt="" loading="lazy"><span class="play"></span></span>
+        <span class="pie-tarjeta"><b><span class="es">Teaser del espectáculo</span><span class="en">Show teaser</span></b><small>YouTube</small></span>
+      </a>
+
+      <a class="fila" href="https://open.spotify.com data-goatcounter-click="spotify"/artist/2RZcZkCUFz8tquAVdvOmaf" target="_blank" rel="noopener">
+        <span><b><span class="es">Escuchá el EP del elenco</span><span class="en">Listen to the cast EP</span></b><small>Spotify</small></span><i aria-hidden="true"></i>
+      </a>
+      <a class="fila" data-href-es="/" data-goatcounter-click="web" data-href-en="/en/" href="/">
+        <span><b><span class="es">Conocé el espectáculo</span><span class="en">Discover the show</span></b><small>lightswillguideyou.com</small></span><i aria-hidden="true"></i>
+      </a>
+      <a class="fila fila--contratar" data-goatcounter-click="contratar" data-href-es="https://wa.me/50688055245?text=Hola%2C%20quiero%20informaci%C3%B3n%20para%20llevar%20Lights%20Will%20Guide%20You%20a%20mi%20ciudad." data-href-en="https://wa.me/50688055245?text=Hi%2C%20I%27d%20like%20information%20about%20bringing%20Lights%20Will%20Guide%20You%20to%20my%20city." href="https://wa.me/50688055245" target="_blank" rel="noopener">
+        <span><b><span class="es">Llevá el show a tu ciudad</span><span class="en">Bring the show to your city</span></b><small><span class="es">Temporadas, festivales y eventos</span><span class="en">Seasons, festivals and events</span></small></span><i aria-hidden="true"></i>
+      </a>
+    </nav>
+
+    <ul class="redes" aria-label="Redes">
+      <li><a href="https://www.instagram.com/lightswillguideyoushow" data-goatcounter-click="red-instagram" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.youtube.com/@lightswillguideyou" data-goatcounter-click="red-youtube" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://www.tiktok.com/@lightswillguideyoushow" data-goatcounter-click="red-tiktok" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://www.facebook.com/lightswillguideyoushow" data-goatcounter-click="red-facebook" target="_blank" rel="noopener">Facebook</a></li>
+      <li><a href="https://x.com/lwgyshow" data-goatcounter-click="red-x" target="_blank" rel="noopener">X</a></li>
+    </ul>
+    <p class="legal"><span class="es">Espectáculo inspirado en Coldplay, creado en Costa Rica por Andamio Escuela de Movimiento. No está afiliado a Coldplay.</span><span class="en">A show inspired by Coldplay, created in Costa Rica by Andamio Escuela de Movimiento. Not affiliated with Coldplay.</span></p>
+  </main>
+  <script>
+    (function () {
+      var html = document.documentElement;
+      function poner(l) {
+        html.lang = l; html.setAttribute('data-lang', l);
+        try { localStorage.setItem('lwgy-lang', l); } catch (e) {}
+        document.querySelectorAll('[data-href-' + l + ']').forEach(function (a) { a.href = a.getAttribute('data-href-' + l); });
+      }
+      poner(html.getAttribute('data-lang'));
+      document.getElementById('idioma').addEventListener('click', function () { poner(html.getAttribute('data-lang') === 'es' ? 'en' : 'es'); });
+    })();
+  </script>
+  <!-- Contador de visitas y clics (GoatCounter: sin cookies). Panel: https://lightswillguideyou.goatcounter.com -->
+  <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
