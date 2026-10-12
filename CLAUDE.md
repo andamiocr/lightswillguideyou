@@ -12,6 +12,7 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
 - Direcciones internas absolutas con https://www.lightswillguideyou.com/. El estilo familia viene de https://andamiocr.com/andamio-familia/familia.css.
 - "Tu luz" guarda en Google Forms/Sheets (assets/js/main.js, CFG): no cambiar IDs sin pedirlo.
 - Pie legal: inspirado en Coldplay, licencia ACAM, no afiliado a Coldplay. No quitarlo.
+- El nombre del show como marca (encabezados, tarjetas, imágenes) va con las letras del logo oficial y en MAYÚSCULAS: símbolo `#lwgy-palabra` (portada) / `#palabra` (yourlight), archivo `assets/img/lwgy-nombre.svg`. No escribirlo con Fraunces ni otra letra. En el texto corrido sí va normal.
 - Al cambiar contenido importante, actualizar `<lastmod>` en sitemap.xml.
 - Buscar el texto exacto antes de editar; mostrar antes/después; `node --check` si se toca JS.
 - Al terminar, recordarle a José Pablo: Commit + Push en GitHub Desktop (o hacerlo si tenés permiso).

@@ -253,7 +253,7 @@
   }
   function bucle(ts) {
     if (panObj !== null) { pan += (panObj - pan) * .08; if (Math.abs(panObj - pan) < .5) { pan = panObj; panObj = null; } }
-    dibujar(ts);
+    dibujar(ts); flotar(ts);
     if (vivo) requestAnimationFrame(bucle);
   }
   function despertar() { if (QUIETO && !vuelo) { dibujar(performance.now()); return; } if (!vivo) { vivo = true; requestAnimationFrame(bucle); } }
@@ -261,6 +261,38 @@
 
   /* ---------- Vuelo de la luz: del barquito a su lugar en el cielo ---------- */
   var vuelo = null, orbe = $('#orbe');
+
+  /* ---------- El barquito flota en la ola del medio ----------
+     Lee dónde va la ola (se mueve con CSS) y pone el casco un poco por debajo de su superficie,
+     inclinado según la pendiente. Se mueve por dentro del SVG para que se dibuje nítido. */
+  var ola2 = $('.ola--2'), mar = $('.mar'), barcoDiv = $('#barquito'), grupoBarco = $('#barcoSvg .mece'), reflejo = $('#reflejo'), flot = { ok: false };
+  function medirBarco() {
+    if (!grupoBarco || !ola2 || !mar) return;
+    var rm = mar.getBoundingClientRect(), rb = barcoDiv.getBoundingClientRect();
+    flot = { ok: rb.width > 0, x: rb.left - rm.left + rb.width / 2, bw: rb.width, top: rb.top - rm.top, W: ola2.getBoundingClientRect().width,
+      oTop: parseFloat(getComputedStyle(ola2).top) || 22, oAlto: ola2.getBoundingClientRect().height || 70 };
+  }
+  function superficie(x, tx) {
+    var u = ((x - tx) / flot.W * 1200) % 400; if (u < 0) u += 400;
+    var c = u < 200 ? 42 : 10, t = (u % 200) / 200;   // misma curva que el path de .ola--2
+    return flot.oTop + ((1 - t) * (1 - t) * 26 + 2 * t * (1 - t) * c + t * t * 26) * flot.oAlto / 60;
+  }
+  function flotar(ts) {
+    if (!flot.ok) return;
+    var tx = 0, m = /matrix\(([^)]+)\)/.exec(getComputedStyle(ola2).transform);
+    if (m) tx = parseFloat(m[1].split(',')[4]) || 0;
+    var y = superficie(flot.x, tx), d = flot.bw * .12;
+    var ang = Math.atan2(superficie(flot.x + d, tx) - superficie(flot.x - d, tx), 2 * d) * 57.3 * .8 + (QUIETO ? 0 : Math.sin(ts / 1500) * .7);
+    ang = Math.max(-6, Math.min(6, ang));
+    var dy = (y + flot.bw * .075 - (flot.top + flot.bw * .56)) * 200 / flot.bw;   // casco metido en el agua
+    grupoBarco.setAttribute('transform', 'translate(0 ' + dy.toFixed(2) + ') rotate(' + ang.toFixed(2) + ' 100 112)');
+    if (reflejo) {
+      var rw = flot.bw * 1.7, rh = flot.bw * .2;
+      reflejo.style.width = rw + 'px'; reflejo.style.height = rh + 'px';
+      reflejo.style.transform = 'translate(' + (flot.x - rw / 2).toFixed(1) + 'px,' + (y - rh * .3).toFixed(1) + 'px)';
+      reflejo.style.opacity = ((vuelo ? .25 : 1) * (QUIETO ? 1 : .82 + .18 * Math.sin(ts / 650))).toFixed(2);
+    }
+  }
   function lanzar(l) {
     var r = cv.getBoundingClientRect(), o = orbe.getBoundingClientRect();
     var desde = [o.left + o.width / 2 - r.left, o.top + o.height / 2 - r.top];
@@ -454,38 +486,46 @@
       foco(140, -.42, 'rgba(169,139,255,.22)'); foco(940, .42, 'rgba(78,229,229,.16)');
       var sem = hash(l.t) * 2147483646 + 1; function rnd() { sem = (sem * 16807) % 2147483647; return sem / 2147483647; }
       for (var i = 0; i < 46; i++) {
-        var x = 40 + rnd() * 1000, y = 120 + rnd() * 520, R = 10 + rnd() * 9;
+        var x = 40 + rnd() * 1000, y = 110 + rnd() * 450, R = 10 + rnd() * 9;
         g.strokeStyle = 'rgba(248,247,251,.12)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, y - R); g.stroke();
         g.save(); g.translate(x, y); g.scale(.35 + rnd() * .65, 1); trazarEstrella(g, 0, 0, R, 0); g.fillStyle = 'rgba(248,247,251,' + (.55 + rnd() * .4).toFixed(2) + ')'; g.fill(); g.restore();
       }
-      var sx = 540, sy = 560;
+      var sx = 540, sy = 470;
       g.strokeStyle = 'rgba(255,217,61,.6)'; g.lineWidth = 2; g.beginPath(); g.moveTo(sx, 0); g.lineTo(sx, sy - 60); g.stroke();
       var gl = g.createRadialGradient(sx, sy, 0, sx, sy, 230); gl.addColorStop(0, 'rgba(255,217,61,.55)'); gl.addColorStop(1, 'rgba(255,217,61,0)');
       g.fillStyle = gl; g.beginPath(); g.arc(sx, sy, 230, 0, 6.283); g.fill();
       trazarEstrella(g, sx, sy, 78, 0); g.fillStyle = '#FFE680'; g.fill();
       g.save(); trazarEstrella(g, sx, sy, 78, 0); g.clip(); g.fillStyle = 'rgba(224,168,0,.75)'; g.fillRect(sx, sy - 80, 80, 160); g.restore();
       g.textAlign = 'center'; g.fillStyle = '#A9A4C6'; g.font = '500 44px "DM Sans", sans-serif';
-      g.fillText(t('miLuz'), 540, 800);
+      g.fillText(t('miLuz'), 540, 690);
       var tam = 104, lineas; g.fillStyle = '#F8F7FB';
-      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 900); tam -= 6; } while ((lineas.length > 4 || lineas.length * tam * 1.15 > 520) && tam > 52);
-      tam += 6; var y0 = 900 + tam * .8;
+      do { g.font = 'italic 400 ' + tam + 'px Fraunces, Georgia, serif'; lineas = envolver(g, '“' + l.t + '”', 900); tam -= 6; } while ((lineas.length > 4 || lineas.length * tam * 1.15 > 440) && tam > 52);
+      tam += 6; var y0 = 780 + tam * .8;
       lineas.forEach(function (ln, i) { g.fillText(ln, 540, y0 + i * tam * 1.15); });
       g.fillStyle = '#FFD93D'; g.font = '500 42px "DM Sans", sans-serif';
       g.fillText([l.c, nombrePais(l.p)].filter(Boolean).join(', '), 540, y0 + lineas.length * tam * 1.15 + 40);
       // mar
       function ola(y, amp, col, fase) { g.fillStyle = col; g.beginPath(); g.moveTo(0, Hc); for (var x = 0; x <= Wc; x += 20) g.lineTo(x, y + Math.sin(x / 90 + fase) * amp); g.lineTo(Wc, Hc); g.closePath(); g.fill(); }
-      ola(1560, 14, '#17204A', 0);
-      var bx = 300, by = 1588; g.save(); g.translate(bx, by); g.rotate(-.04); g.scale(1.1, 1.1);
+      ola(1390, 14, '#17204A', 0);
+      var bx = 300, by = 1420; g.save(); g.translate(bx, by); g.rotate(-.04); g.scale(1.1, 1.1);
       g.fillStyle = '#FBFAFD'; g.beginPath(); g.moveTo(52 - 100, 78 - 112); g.lineTo(0, 8 - 112); g.lineTo(0, 78 - 112); g.fill();
       g.fillStyle = '#E3DFEC'; g.beginPath(); g.moveTo(0, 8 - 112); g.lineTo(48, 78 - 112); g.lineTo(0, 78 - 112); g.fill();
       g.fillStyle = '#F6F4FA'; g.beginPath(); g.moveTo(-92, 78 - 112); g.lineTo(92, 78 - 112); g.lineTo(62, 0); g.lineTo(-62, 0); g.fill();
       var ob = g.createRadialGradient(-4, -78, 0, 0, -74, 40); ob.addColorStop(0, 'rgba(255,217,61,.8)'); ob.addColorStop(1, 'rgba(255,217,61,0)'); g.fillStyle = ob; g.beginPath(); g.arc(0, -74, 40, 0, 6.283); g.fill();
       g.restore();
-      ola(1590, 18, '#142A55', 1.4); ola(1640, 12, '#0D2147', 2.6);
-      g.fillStyle = '#F8F7FB'; g.font = '400 52px Fraunces, Georgia, serif'; g.fillText(t('pregunta'), 540, 1755);
-      g.fillStyle = '#A9A4C6'; g.font = '500 38px "DM Sans", sans-serif'; g.fillText('lightswillguideyou.com/yourlight', 540, 1830);
+      ola(1412, 18, '#142A55', 1.4); ola(1462, 12, '#0D2147', 2.6);
+      palabra(g, 540, 1528, 640, '#F8F7FB');
+      g.fillStyle = '#F8F7FB'; g.font = '400 46px Fraunces, Georgia, serif'; g.fillText(t('pregunta'), 540, 1640);
+      g.fillStyle = '#A9A4C6'; g.font = '500 34px "DM Sans", sans-serif'; g.fillText('lightswillguideyou.com/yourlight', 540, 1700);
       return new Promise(function (ok) { c.toBlob(function (b) { tarjetaCompartir = b; ok(b); }, 'image/png'); });
     });
+  }
+  // Nombre del show con las letras del logo (sale del símbolo #palabra de la página)
+  function palabra(g, cx, arriba, ancho, color) {
+    var sy = document.getElementById('palabra'); if (!sy || !window.Path2D) return;
+    var vb = sy.getAttribute('viewBox').split(/[\s,]+/).map(Number), k = ancho / vb[2];
+    g.save(); g.translate(cx - ancho / 2, arriba); g.scale(k, k); g.translate(-vb[0], -vb[1]);
+    g.fillStyle = color; g.fill(new Path2D(sy.querySelector('path').getAttribute('d'))); g.restore();
   }
   function descargar(b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'my-light-lights-will-guide-you.png'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
   $('#compartir').addEventListener('click', function () {
@@ -528,14 +568,14 @@
   llenarPaises(); ejemplo(); validar();
   propiasGuardadas().forEach(function (o) { if (o && o.t) agregar({ t: o.t, p: o.p || 'ZZ', c: o.c || '', ts: o.ts || 0, propia: true }); });
   if (DEMO) { demo(); cargado = true; }
-  medir();
+  medir(); medirBarco(); flotar(0);
   pan = panMax ? Math.max(0, Math.min(panMax, proyectar(10, -80)[0] + mapa.base - W * .5)) : 0;
   var det = paisDetectado(); if (det) centrarEn(det, false);
   pintarListas();
   if (!DEMO) cargar();
   setInterval(function () { if (!document.hidden && !DEMO) cargar(); }, 60000);
   var anchoPrev = W;
-  window.addEventListener('resize', function () { if (cv.clientWidth !== anchoPrev || Math.abs(cv.clientHeight - H) > 120) { anchoPrev = cv.clientWidth; medir(); redibujar(); } });
+  window.addEventListener('resize', function () { if (cv.clientWidth !== anchoPrev || Math.abs(cv.clientHeight - H) > 120) { anchoPrev = cv.clientWidth; medir(); redibujar(); } medirBarco(); flotar(performance.now()); });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (e) { if (e[0].isIntersecting) despertar(); else if (!vuelo) vivo = false; }).observe(cv);
   } else despertar();

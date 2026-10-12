@@ -162,10 +162,13 @@ html[data-lang="en"] .lwgy-es { display: none !important; }
 }
 .lwgy__brand { display: inline-flex; align-items: center; gap: .55rem; font: 500 1rem/1 var(--serif); font-variation-settings: 'opsz' 24, 'SOFT' 100; }
 .lwgy__brand .lwgy__star { width: 1rem; height: 1rem; fill: var(--amarillo); stroke: none; filter: drop-shadow(0 0 5px var(--amarillo)); }
-.lwgy__brand-txt { opacity: 0; transform: translateY(4px); transition: opacity .4s, transform .4s; }
+/* Nombre del show con las letras del logo oficial (símbolo #lwgy-palabra), todo en mayúsculas */
+.lwgy__brand-txt { --alto: 13px; display: none; flex: none; height: var(--alto); width: calc(var(--alto) * 18.99); fill: currentColor; opacity: 0; transform: translateY(4px); transition: opacity .4s, transform .4s; }
+/* Solo cuando cabe completo junto al menú; en pantallas angostas queda la estrella (el logo grande ya está en la portada) */
+@media (min-width: 1240px) { .lwgy__brand-txt { display: block; } }
 .lwgy__nav.is-scrolled .lwgy__brand-txt { opacity: 1; transform: none; }
 .lwgy__links { display: none; gap: 1.6rem; font-size: .95rem; }
-.lwgy__links a { opacity: .78; transition: opacity .2s; }
+.lwgy__links a { opacity: .78; white-space: nowrap; transition: opacity .2s; }
 .lwgy__links a:hover { opacity: 1; }
 .lwgy__nav-actions { display: flex; align-items: center; gap: .6rem; }
 .lwgy__lang { display: inline-flex; align-items: center; gap: .3rem; min-height: 2.5rem; padding: 0 .85rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--papel) 35%, transparent); font-size: .85rem; font-weight: 500; }

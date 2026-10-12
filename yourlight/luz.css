@@ -30,8 +30,10 @@ a { color: inherit; }
 /* ---------- Barra ---------- */
 .barra { position: absolute; z-index: 20; inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: center; padding: max(.9rem, env(safe-area-inset-top)) var(--gutter) .9rem; pointer-events: none; }
 .barra > * { pointer-events: auto; }
-.marca { display: inline-flex; align-items: center; gap: .55rem; text-decoration: none; font: 500 .95rem/1 var(--serif); letter-spacing: .01em; }
-.marca svg { width: 1.05rem; height: 1.05rem; fill: var(--orbe); }
+/* El nombre usa las letras del logo oficial (todo en mayúsculas) */
+.marca { --alto: clamp(10.5px, 2.9vw, 14px); display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--papel); }
+.marca-estrella { flex: none; width: .95rem; height: .95rem; fill: var(--orbe); filter: drop-shadow(0 0 4px rgba(255, 217, 61, .6)); }
+.palabra { display: block; height: var(--alto); width: calc(var(--alto) * 18.99); fill: currentColor; }
 .idioma { display: inline-flex; gap: .15rem; padding: .25rem; border: 1px solid var(--hilo); border-radius: 99px; background: rgba(16, 13, 38, .6); color: var(--bruma); font: 600 .78rem/1 var(--sans); cursor: pointer; }
 .idioma span { padding: .4rem .55rem; border-radius: 99px; }
 html[data-lang="es"] .idioma [data-l="es"], html[data-lang="en"] .idioma [data-l="en"] { background: var(--papel); color: var(--tinta); }
@@ -83,12 +85,14 @@ h1 { margin: 0; font: 400 clamp(2.1rem, 8.4vw, 3.6rem)/1 var(--serif); font-vari
 .ola--1 { top: 46px; color: #102552; animation: deriva 18s linear infinite; }
 .mar::after { content: ''; position: absolute; inset: 96px 0 0; background: linear-gradient(#102552, #0A1838 70%); }
 @keyframes deriva { to { transform: translateX(-50%); } }
-.barquito { position: absolute; z-index: 1; left: 50%; top: -38px; width: clamp(64px, 7vw, 100px); margin-left: calc(clamp(64px, 7vw, 100px) / -2); animation: mecer 6s ease-in-out infinite; transform-origin: 50% 90%; }
+/* El barquito va metido en el agua: la ola de atrás queda detrás y las dos de adelante le tapan el casco.
+   Sin z-index para respetar ese orden. luz.js lo sube y baja con la ola por dentro del SVG (nítido en cada cuadro). */
+.barquito { --bw: clamp(76px, 8.5vw, 128px); position: absolute; left: 50%; top: calc(52px - var(--bw) * .56); width: var(--bw); margin-left: calc(var(--bw) / -2); }
 @media (max-width: 959px) { .barquito { left: 72%; } }
-.barquito svg { display: block; width: 100%; height: auto; }
-.orbe { position: absolute; left: 50%; top: 18%; width: 22%; aspect-ratio: 1; margin-left: -11%; border-radius: 50%; transition: opacity .4s;
-  background: radial-gradient(circle at 38% 34%, #FFFBE0, var(--orbe) 45%, #D99A00); box-shadow: 0 0 18px 6px rgba(255, 217, 61, .55), 0 0 60px 18px rgba(255, 217, 61, .2); }
-@keyframes mecer { 0%, 100% { transform: translateY(0) rotate(-2.5deg); } 50% { transform: translateY(-5px) rotate(2.5deg); } }
+.barquito svg { display: block; width: 100%; height: auto; overflow: visible; }
+#orbe { transition: opacity .4s; }
+/* Reflejo dorado de la esfera sobre el agua, justo bajo el barquito */
+.reflejo { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; background: radial-gradient(closest-side, rgba(255, 217, 61, .5), rgba(255, 217, 61, .16) 55%, rgba(255, 217, 61, 0)); }
 
 /* ---------- Panel / formulario ---------- */
 .panel { position: relative; z-index: 6; }
@@ -159,6 +163,7 @@ h2 { margin: 0; font: 400 clamp(1.7rem, 3vw, 2.3rem)/1.1 var(--serif); font-vari
 .ultimas li.propia q { color: var(--orbe); }
 
 .escenario { padding: clamp(3rem, 7vw, 5rem) 0 clamp(3.5rem, 8vw, 6rem); background: linear-gradient(var(--noche), #0A1838); text-align: center; }
+.escenario .logo { display: block; width: clamp(150px, 20vw, 210px); aspect-ratio: 1612 / 1240; margin: 0 auto clamp(1.8rem, 4vw, 2.6rem); fill: var(--papel); }
 .promesa { margin: 0 auto 1.6rem; max-width: 34rem; font: 400 clamp(1.35rem, 2.6vw, 1.85rem)/1.3 var(--serif); font-variation-settings: 'SOFT' 100; text-wrap: balance; }
 .volver { display: inline-flex; padding: .8rem 1.4rem; border-radius: 99px; box-shadow: inset 0 0 0 1px #4A4380; text-decoration: none; font-weight: 600; }
 .volver:hover { box-shadow: inset 0 0 0 1px var(--papel); }
