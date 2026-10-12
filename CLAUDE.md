@@ -15,3 +15,9 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
 - Al cambiar contenido importante, actualizar `<lastmod>` en sitemap.xml.
 - Buscar el texto exacto antes de editar; mostrar antes/después; `node --check` si se toca JS.
 - Al terminar, recordarle a José Pablo: Commit + Push en GitHub Desktop (o hacerlo si tenés permiso).
+
+## Versión en inglés (/en/)
+- `en/index.html` es GENERADO: nunca editarlo a mano. Editar `index.html` y correr `python3 herramientas/generar_en.py`
+  (GitHub Actions también lo regenera solo en cada Push; después hacer Pull antes de seguir editando).
+- Si cambiás el título, la descripción o los alt de los videos en español, actualizá también sus equivalentes en inglés dentro de `herramientas/generar_en.py`.
+- Datos para Google (JSON-LD) viven en el `<script type="application/ld+json">` de index.html: mantener cifras y fechas al día.

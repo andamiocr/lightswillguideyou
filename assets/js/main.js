@@ -98,11 +98,14 @@
      ------------------------------------------------------------- */
   function initIdioma() {
     var btn = $('#lwgyLang');
-    var inicial = 'es';
+    // La página /en/ nace en inglés; la raíz en español.
+    var pagina = html.getAttribute('data-lang') === 'en' ? 'en' : 'es';
+    var inicial = pagina;
     try {
       var q = new URLSearchParams(location.search).get('lang');
       var guardado = localStorage.getItem('lwgy-lang');
-      if (q === 'en' || q === 'es') inicial = q; else if (guardado === 'en' || guardado === 'es') inicial = guardado;
+      if (q === 'en' || q === 'es') inicial = q;
+      else if (pagina === 'es' && (guardado === 'en' || guardado === 'es')) inicial = guardado;
     } catch (e) {}
     function poner(l) {
       lang = l;

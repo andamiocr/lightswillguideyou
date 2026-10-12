@@ -11,12 +11,12 @@
        https://www.lightswillguideyou.com/ cambiá esa ruta en
        canonical, og:url, og:image, twitter:image y en el JSON-LD.
        ========================================================= -->
-  <title>Lights Will Guide You | Tributo a Coldplay — Teatro, Danza y Música</title>
-  <meta name="description" content="Teatro, danza y música en vivo inspirados en Coldplay. 9 funciones y más de 2.500 espectadores en Costa Rica. Abierto a patrocinios, funciones privadas y licencias.">
+  <title>Lights Will Guide You Show | Tributo a Coldplay en teatro, danza y música en vivo</title>
+  <meta name="description" content="Espectáculo familiar de teatro, danza y música en vivo inspirado en Coldplay, creado en Costa Rica: 43 artistas, banda en vivo con flauta, banjo y mandolina. 9 funciones y más de 2.500 espectadores.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://www.lightswillguideyou.com/">
   <link rel="alternate" hreflang="es" href="https://www.lightswillguideyou.com/">
-  <link rel="alternate" hreflang="en" href="https://www.lightswillguideyou.com/?lang=en">
+  <link rel="alternate" hreflang="en" href="https://www.lightswillguideyou.com/en/">
   <link rel="alternate" hreflang="x-default" href="https://www.lightswillguideyou.com/">
 
   <meta property="og:type" content="website">
@@ -48,43 +48,311 @@
   <link rel="stylesheet" href="assets/css/style.css?v=4.1">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "PerformingGroup",
-        "@id": "https://andamiocr.com/#andamio",
-        "name": "Andamio Escuela de Movimiento",
-        "url": "https://andamiocr.com/"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.lightswillguideyou.com/#web",
+      "url": "https://www.lightswillguideyou.com/",
+      "name": "Lights Will Guide You",
+      "alternateName": [
+        "Lights Will Guide You Show",
+        "LWGY"
+      ],
+      "inLanguage": [
+        "es",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://andamiocr.com/#andamio"
+      }
+    },
+    {
+      "@type": [
+        "PerformingGroup",
+        "Organization"
+      ],
+      "@id": "https://andamiocr.com/#andamio",
+      "name": "Andamio Escuela de Movimiento",
+      "url": "https://andamiocr.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "San José",
+        "addressCountry": "CR"
       },
-      {
-        "@type": "CreativeWork",
-        "@id": "https://www.lightswillguideyou.com/#obra",
-        "name": "Lights Will Guide You",
-        "description": "Espectáculo de teatro, danza y música en vivo inspirado en la magia de Coldplay.",
-        "url": "https://www.lightswillguideyou.com/",
-        "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
-        "inLanguage": "es",
-        "genre": ["Teatro", "Danza", "Música en vivo"],
-        "creator": [
-          {"@type": "Person", "name": "Melania Fernández"},
-          {"@type": "Person", "name": "José Pablo García"}
-        ],
-        "producer": {"@id": "https://andamiocr.com/#andamio"},
+      "sameAs": [
+        "https://www.instagram.com/andamiocr"
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.lightswillguideyou.com/#obra",
+      "name": "Lights Will Guide You",
+      "alternateName": [
+        "Lights Will Guide You Show",
+        "LWGY"
+      ],
+      "description": "Espectáculo familiar de teatro, danza y música en vivo inspirado en las canciones de Coldplay. Creado en Costa Rica por Andamio Escuela de Movimiento, con 43 artistas en escena y banda en vivo.",
+      "url": "https://www.lightswillguideyou.com/",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "inLanguage": [
+        "es",
+        "en"
+      ],
+      "countryOfOrigin": {
+        "@type": "Country",
+        "name": "Costa Rica"
+      },
+      "dateCreated": "2023",
+      "genre": [
+        "Teatro",
+        "Danza",
+        "Teatro musical",
+        "Música en vivo",
+        "Espectáculo familiar"
+      ],
+      "keywords": "Coldplay, tributo a Coldplay, espectáculo Coldplay, Coldplay para niños, teatro musical, danza, Costa Rica, Fix You, Coldplay theatre show, Coldplay tribute",
+      "about": {
+        "@type": "MusicGroup",
+        "name": "Coldplay",
         "sameAs": [
-          "https://www.instagram.com/lightswillguideyoushow",
-          "https://www.facebook.com/lightswillguideyoushow",
-          "https://www.youtube.com/@lightswillguideyou",
-          "https://open.spotify.com/artist/2RZcZkCUFz8tquAVdvOmaf"
+          "https://en.wikipedia.org/wiki/Coldplay",
+          "https://www.coldplay.com/"
         ]
       },
-      {"@type": "TheaterEvent", "name": "Lights Will Guide You", "startDate": "2023-05-20", "eventStatus": "https://schema.org/EventScheduled", "workPerformed": {"@id": "https://www.lightswillguideyou.com/#obra"}, "performer": {"@id": "https://andamiocr.com/#andamio"}, "location": {"@type": "Place", "name": "Teatro Eugene O'Neill", "address": {"@type": "PostalAddress", "addressLocality": "San José", "addressCountry": "CR"}}},
-      {"@type": "TheaterEvent", "name": "Lights Will Guide You", "startDate": "2023-05-21", "eventStatus": "https://schema.org/EventScheduled", "workPerformed": {"@id": "https://www.lightswillguideyou.com/#obra"}, "performer": {"@id": "https://andamiocr.com/#andamio"}, "location": {"@type": "Place", "name": "Teatro Eugene O'Neill", "address": {"@type": "PostalAddress", "addressLocality": "San José", "addressCountry": "CR"}}},
-      {"@type": "TheaterEvent", "name": "Lights Will Guide You", "startDate": "2024-04-26", "eventStatus": "https://schema.org/EventScheduled", "workPerformed": {"@id": "https://www.lightswillguideyou.com/#obra"}, "performer": {"@id": "https://andamiocr.com/#andamio"}, "location": {"@type": "Place", "name": "Teatro Eugene O'Neill", "address": {"@type": "PostalAddress", "addressLocality": "San José", "addressCountry": "CR"}}},
-      {"@type": "TheaterEvent", "name": "Lights Will Guide You", "startDate": "2024-04-27", "eventStatus": "https://schema.org/EventScheduled", "workPerformed": {"@id": "https://www.lightswillguideyou.com/#obra"}, "performer": {"@id": "https://andamiocr.com/#andamio"}, "location": {"@type": "Place", "name": "Teatro Eugene O'Neill", "address": {"@type": "PostalAddress", "addressLocality": "San José", "addressCountry": "CR"}}},
-      {"@type": "TheaterEvent", "name": "Lights Will Guide You", "startDate": "2024-04-28", "eventStatus": "https://schema.org/EventScheduled", "workPerformed": {"@id": "https://www.lightswillguideyou.com/#obra"}, "performer": {"@id": "https://andamiocr.com/#andamio"}, "location": {"@type": "Place", "name": "Teatro Eugene O'Neill", "address": {"@type": "PostalAddress", "addressLocality": "San José", "addressCountry": "CR"}}}
-    ]
-  }
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "Familias / Families"
+      },
+      "creator": [
+        {
+          "@type": "Person",
+          "name": "Melania Fernández",
+          "jobTitle": "Codirectora y coreógrafa"
+        },
+        {
+          "@type": "Person",
+          "name": "José Pablo García",
+          "jobTitle": "Codirector, guionista y cantante"
+        }
+      ],
+      "contributor": [
+        {
+          "@type": "Person",
+          "name": "Brandon Olsen",
+          "jobTitle": "Dirección musical"
+        },
+        {
+          "@type": "Person",
+          "name": "Adriana Álvarez",
+          "jobTitle": "Actriz protagonista"
+        }
+      ],
+      "producer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "sameAs": [
+        "https://www.instagram.com/lightswillguideyoushow",
+        "https://www.facebook.com/lightswillguideyoushow",
+        "https://www.tiktok.com/@lightswillguideyoushow",
+        "https://www.youtube.com/@lightswillguideyou",
+        "https://x.com/lwgyshow",
+        "https://open.spotify.com/artist/2RZcZkCUFz8tquAVdvOmaf"
+      ]
+    },
+    {
+      "@type": "MusicGroup",
+      "@id": "https://www.lightswillguideyou.com/#banda",
+      "name": "Lights Will Guide You",
+      "description": "Banda en vivo del espectáculo Lights Will Guide You: canciones de Coldplay reinterpretadas con flauta, banjo y mandolina.",
+      "genre": [
+        "Pop",
+        "Rock alternativo",
+        "Acústico"
+      ],
+      "url": "https://www.lightswillguideyou.com/",
+      "sameAs": [
+        "https://open.spotify.com/artist/2RZcZkCUFz8tquAVdvOmaf",
+        "https://www.youtube.com/@lightswillguideyou"
+      ]
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You",
+      "startDate": "2023-05-20",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Eugene O'Neill",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Barrio Dent",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      }
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You",
+      "startDate": "2023-05-21",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Eugene O'Neill",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Barrio Dent",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      }
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You",
+      "startDate": "2024-04-26",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Eugene O'Neill",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Barrio Dent",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      },
+      "sponsor": {
+        "@type": "Organization",
+        "name": "Tropical Play"
+      }
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You",
+      "startDate": "2024-04-27",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Eugene O'Neill",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Barrio Dent",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      },
+      "sponsor": {
+        "@type": "Organization",
+        "name": "Tropical Play"
+      }
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You",
+      "startDate": "2024-04-28",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Eugene O'Neill",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Barrio Dent",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      },
+      "sponsor": {
+        "@type": "Organization",
+        "name": "Tropical Play"
+      }
+    },
+    {
+      "@type": "TheaterEvent",
+      "name": "Lights Will Guide You — función privada",
+      "startDate": "2024-06-06",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": "https://www.lightswillguideyou.com/assets/img/og-image.jpg",
+      "workPerformed": {
+        "@id": "https://www.lightswillguideyou.com/#obra"
+      },
+      "performer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "organizer": {
+        "@id": "https://andamiocr.com/#andamio"
+      },
+      "location": {
+        "@type": "PerformingArtsTheater",
+        "name": "Teatro Nacional de Costa Rica",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenida 2",
+          "addressLocality": "San José",
+          "addressCountry": "CR"
+        }
+      }
+    }
+  ]
+}
   </script>
 
   <script>
@@ -479,14 +747,14 @@
             <!-- Los videos de Vimeo solo se cargan al tocar (sitio más rápido) -->
             <figure class="lwgy__clip">
               <button class="lwgy__facade" type="button" data-vimeo="981490894" aria-label="Reproducir escena Amsterdam">
-                <img src="assets/img/video-amsterdam.webp" width="1000" height="562" loading="lazy" alt="">
+                <img src="assets/img/video-amsterdam.webp" width="1000" height="562" loading="lazy" alt="Escena Amsterdam de Lights Will Guide You, show inspirado en Coldplay">
                 <span class="lwgy__play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z" fill="currentColor"/></svg></i><span class="lwgy-es">Ver escena</span><span class="lwgy-en">Watch scene</span></span>
               </button>
               <figcaption><span class="lwgy-es">Escena</span><span class="lwgy-en">Scene</span>: Amsterdam</figcaption>
             </figure>
             <figure class="lwgy__clip">
               <button class="lwgy__facade" type="button" data-vimeo="981468605" aria-label="Reproducir escena O (Fly On)">
-                <img src="assets/img/video-flyon.webp" width="1000" height="562" loading="lazy" alt="">
+                <img src="assets/img/video-flyon.webp" width="1000" height="562" loading="lazy" alt="Escena O (Fly On) de Lights Will Guide You con danza aérea">
                 <span class="lwgy__play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z" fill="currentColor"/></svg></i><span class="lwgy-es">Ver escena</span><span class="lwgy-en">Watch scene</span></span>
               </button>
               <figcaption><span class="lwgy-es">Escena</span><span class="lwgy-en">Scene</span>: O (Fly On)</figcaption>
@@ -1014,6 +1282,6 @@
     </div>
   </dialog>
 
-  <script src="assets/js/main.js?v=3.8" defer></script>
+  <script src="assets/js/main.js?v=3.9" defer></script>
 </body>
 </html>

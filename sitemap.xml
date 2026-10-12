@@ -3,7 +3,15 @@
   <url>
     <loc>https://www.lightswillguideyou.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lightswillguideyou.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.lightswillguideyou.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lightswillguideyou.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lightswillguideyou.com/"/>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://www.lightswillguideyou.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lightswillguideyou.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lightswillguideyou.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.lightswillguideyou.com/"/>
     <lastmod>2026-10-11</lastmod>
   </url>
 </urlset>
