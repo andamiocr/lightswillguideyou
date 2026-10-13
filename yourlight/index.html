@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..600,0..100&display=swap">
-  <link rel="stylesheet" href="luz.css?v=4">
+  <link rel="stylesheet" href="luz.css?v=5">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebPage","name":"Who is the light that guides you?","url":"https://www.lightswillguideyou.com/yourlight/","inLanguage":["en","es"],"isPartOf":{"@id":"https://www.lightswillguideyou.com/#web"},"about":{"@id":"https://www.lightswillguideyou.com/#obra"}}
   </script>
@@ -129,16 +129,34 @@
         </form>
 
         <div class="listo" id="listo" hidden>
-          <p class="listo-t"><span id="listoTexto"></span></p>
-          <p class="listo-s"><span class="es">Compartila en tus historias para que tu luz brille más lejos:</span><span class="en">Share it to your Stories so your light shines further:</span></p>
+          <p class="vuelta" id="vuelta" hidden><span class="es">Ya estás fuera de Instagram. Ahora sí, compartila.</span><span class="en">You're out of Instagram. Now you can share it.</span></p>
+          <div class="listo-cabeza">
+            <div>
+              <p class="listo-t"><span id="listoTexto"></span></p>
+              <p class="listo-s"><span class="es">Llevala a tus historias para que tu luz brille más lejos.</span><span class="en">Take it to your Stories so your light shines further.</span></p>
+            </div>
+            <button class="mini" id="mini" type="button" hidden><img id="miniImg" alt="" width="54" height="96"></button>
+          </div>
+          <button class="boton boton--ancho" id="compartir" type="button"><span id="compartirTxt"><span class="es">Compartir en historias</span><span class="en">Share to Stories</span></span></button>
+          <p class="nota-app" id="notaApp" hidden></p>
+
+          <p class="pasos-t"><span class="es">Después, en Instagram:</span><span class="en">Then, in Instagram:</span></p>
           <ol class="pasos">
-            <li><span class="es">Mencioná a <b>@lightswillguideyoushow</b>: compartimos las historias que nos etiquetan.</span><span class="en">Mention <b>@lightswillguideyoushow</b>: we reshare the stories that tag us.</span></li>
-            <li><span class="es">Si tu luz es una persona, etiquetala. Que sepa que te guía.</span><span class="en">If your light is a person, tag them. Let them know they guide you.</span></li>
-            <li><span class="es">Agregá el sticker de enlace con la dirección de esta página.</span><span class="en">Add a link sticker with this page's address.</span> <button class="enlace" id="copiar" type="button"><span class="es">Copiar enlace</span><span class="en">Copy link</span></button></li>
+            <li>
+              <svg class="tel" viewBox="0 0 36 56" aria-hidden="true"><rect x="1" y="1" width="34" height="54" rx="7" class="tel-c"/><rect x="11" y="7" width="14" height="21" rx="2" class="tel-img"/><path d="M18 12.5l1.6 3.4 3.6.4-2.7 2.4.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.7-2.4 3.6-.4z" class="tel-oro"/><path d="M1 35h34v13a7 7 0 0 1-7 7H8a7 7 0 0 1-7-7z" class="tel-hoja"/><circle cx="9" cy="45" r="3" class="tel-punto"/><circle cx="18" cy="45" r="4.2" class="tel-anillo"/><circle cx="27" cy="45" r="3" class="tel-punto"/></svg>
+              <span><span class="es">Elegí <b>Instagram</b> y después <b>Historia</b>.</span><span class="en">Choose <b>Instagram</b>, then <b>Story</b>.</span></span>
+            </li>
+            <li>
+              <svg class="tel" viewBox="0 0 36 56" aria-hidden="true"><rect x="1" y="1" width="34" height="54" rx="7" class="tel-c"/><rect x="24" y="6" width="7" height="7" rx="2" class="tel-linea"/><rect x="5" y="22" width="26" height="11" rx="5.5" class="tel-pastilla"/><path d="M12.6 29.4l-.9.9a1.9 1.9 0 0 1-2.7-2.7l1.5-1.5a1.9 1.9 0 0 1 2.7 0M14.4 25.6l.9-.9a1.9 1.9 0 0 1 2.7 2.7l-1.5 1.5a1.9 1.9 0 0 1-2.7 0" class="tel-cadena"/><rect x="19" y="26.5" width="9" height="2" rx="1" class="tel-texto"/></svg>
+              <span><span class="es">Tocá el ícono de stickers, elegí <b>Enlace</b> y pegá.</span><span class="en">Tap the sticker icon, choose <b>Link</b> and paste.</span> <button class="enlace" id="copiar" type="button"><span class="es">Copiar enlace</span><span class="en">Copy link</span></button></span>
+            </li>
+            <li>
+              <svg class="tel" viewBox="0 0 36 56" aria-hidden="true"><rect x="1" y="1" width="34" height="54" rx="7" class="tel-c"/><circle cx="18" cy="16" r="6" class="tel-linea"/><rect x="5" y="31" width="26" height="11" rx="5.5" class="tel-oro"/><text x="18" y="39.7" text-anchor="middle" class="tel-arroba">@</text></svg>
+              <span><span class="es">Etiquetá a <b>@lightswillguideyoushow</b> (y a tu luz, si es una persona). Compartimos las historias que nos etiquetan.</span><span class="en">Tag <b>@lightswillguideyoushow</b> (and your light, if it's a person). We reshare the Stories that tag us.</span></span>
+            </li>
           </ol>
           <div class="acciones">
-            <button class="boton" id="compartir" type="button"><span class="es">Compartir en historias</span><span class="en">Share to Stories</span></button>
-            <button class="boton boton--linea" id="descargar" type="button"><span class="es">Descargar</span><span class="en">Download</span></button>
+            <button class="boton boton--linea" id="descargar" type="button"><span class="es">Guardar imagen</span><span class="en">Save image</span></button>
             <a class="boton boton--linea" id="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
           </div>
           <a class="seguir" id="seguir" href="https://www.instagram.com/lightswillguideyoushow" target="_blank" rel="noopener"><span class="es">Seguí el show en Instagram</span><span class="en">Follow the show on Instagram</span></a>
@@ -179,9 +197,25 @@
     <p><span class="es">Lights Will Guide You es un espectáculo de teatro, danza y música en vivo inspirado en Coldplay, creado en Costa Rica por Andamio Escuela de Movimiento. No está afiliado a Coldplay ni a sus representantes.</span><span class="en">Lights Will Guide You is a theatre, dance and live music show inspired by Coldplay, created in Costa Rica by Andamio Escuela de Movimiento. It is not affiliated with Coldplay or its representatives.</span></p>
   </footer>
 
+  <!-- Imagen en grande (para guardarla manteniendo el dedo encima) -->
+  <div class="visor" id="visor" hidden role="dialog" aria-modal="true" aria-labelledby="visorT">
+    <div class="visor-caja">
+      <p class="visor-t" id="visorT"></p>
+      <img class="visor-img" id="visorImg" alt="" width="1080" height="1920">
+      <p class="visor-s" id="visorS"></p>
+      <div class="visor-acciones">
+        <a class="boton" id="visorFuera" href="#" hidden></a>
+        <button class="boton" id="visorCompartir" type="button" hidden><span class="es">Compartir</span><span class="en">Share</span></button>
+        <button class="boton boton--linea" id="visorDescargar" type="button" hidden><span class="es">Descargar</span><span class="en">Download</span></button>
+        <button class="boton boton--linea" id="visorCerrar" type="button"><span class="es">Cerrar</span><span class="en">Close</span></button>
+      </div>
+    </div>
+  </div>
+  <p class="brindis" id="brindis" role="status" aria-live="polite"></p>
+
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="mapa.js?v=1"></script>
-  <script src="luz.js?v=3"></script>
+  <script src="luz.js?v=4"></script>
 </body>
 </html>

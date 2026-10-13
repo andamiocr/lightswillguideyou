@@ -23,6 +23,8 @@
       luzOn: 'Encendé la luz', luzOff: 'Apagar la luz',
       enviar: 'Encender mi luz', enviando: 'Encendiendo…',
       errorEnvio: 'No se pudo enviar. Revisá tu conexión e intentá de nuevo.',
+      filtro: 'Probá con otras palabras. No publicamos enlaces, correos, teléfonos ni insultos.',
+      limite: 'Hoy ya colgaste 10 estrellas desde este teléfono. Mañana podés colgar más.',
       masOpciones: 'Más opciones', copiar: 'Copiar enlace', copiado: 'Enlace copiado',
       luces: function (n) { return '<b>' + n.toLocaleString('es-CR') + '</b>' + (n === 1 ? 'luz encendida' : 'luces encendidas'); },
       primera: 'Todavía no hay luces. Encendé la primera.',
@@ -58,6 +60,8 @@
       luzOn: 'Turn on the light', luzOff: 'Turn off the light',
       enviar: 'Light my star', enviando: 'Lighting…',
       errorEnvio: "It couldn't be sent. Check your connection and try again.",
+      filtro: 'Try other words. We do not publish links, emails, phone numbers or insults.',
+      limite: 'You have hung 10 stars from this device today. You can hang more tomorrow.',
       masOpciones: 'More options', copiar: 'Copy link', copiado: 'Link copied',
       luces: function (n) { return '<b>' + n.toLocaleString('en-US') + '</b>' + (n === 1 ? 'light on' : 'lights on'); },
       primera: 'No lights yet. Light the first one.',
@@ -515,11 +519,47 @@
       if (p.toUpperCase() === 'ZZ') return '';
       try { return new Intl.DisplayNames([lang], { type: 'region' }).of(p.toUpperCase()); } catch (e) { return p; }
     }
-    function aceptable(s) {
-      if (/https?:|www\.|\.com\b|\.net\b|@|\d[\d\s-]{6,}\d/i.test(s)) return false;
-      var n = ' ' + s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ') + ' ';
-      return !/ (puta|putas|puto|putos|mierda[a-z]*|verga[a-z]*|cono|pendej[a-z]*|hijueputa[a-z]*|malparid[a-z]*|fuck[a-z]*|shit[a-z]*|bitch[a-z]*|cunt[a-z]*|nigg[a-z]*|fagg[a-z]*|porn[a-z]*|sexo|sex|xxx) /.test(n.replace(/\s+/g, '  '));
+    // Filtro: mismo que yourlight/luz.js y que el robot de la hoja (herramientas/robot-tuluz.gs).
+    var PALABRAS = ['puta*', 'puto', 'putos', 'mierd*', 'verga', 'vergas', 'pija', 'pijas', 'cono', 'pendej*', 'hijueputa*', 'hijoeputa*', 'hijo de puta*', 'malparid*', 'culero*', 'culiao', 'culiado*', 'culear*', 'culiar*', 'cabron', 'cabrona*', 'cabrones', 'chingad*', 'chinga tu madre', 'concha de tu madre', 'conchatumadre', 'conchesumadre', 'ctm', 'csm', 'hdp', 'ptm', 'gonorrea', 'mamaguevo*', 'mamahuevo*', 'mamabicho*', 'maricon*', 'sudaca*', 'negrata*', 'mongolic*', 'subnormal*', 'sidos*', 'singar', 'singao', 'pinga', 'tetas', 'tetona*', 'pene', 'penes', 'chupala', 'chupamela', 'follar', 'follame', 'follando', 'matate', 'suicidate', 'fuck*', 'motherfuck*', 'shit*', 'bitch*', 'cunt*', 'nigg*', 'fagg*', 'whore*', 'slut*', 'asshole*', 'dickhead*', 'retard*', 'twat*', 'wanker*', 'pussy', 'kys', 'kill yourself', 'nazi*', 'hitler', 'heil', 'kkk', 'porn*', 'sexo', 'sex', 'xxx', 'nude', 'nudes', 'onlyfans', 'casino', 'viagra', 'bitcoin', 'punto com', 'dot com'];
+    function limpiar(s) {
+      s = String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      s = s.replace(/[4@]/g, 'a').replace(/3/g, 'e').replace(/[1!|]/g, 'i').replace(/0/g, 'o').replace(/[5$]/g, 's').replace(/7/g, 't');
+      s = s.replace(/[^a-z]+/g, ' ').trim();
+      return s.replace(/(^| )((?:[a-z] ){2,}[a-z])(?= |$)/g, function (m, a, b) { return a + b.replace(/ /g, ''); });
     }
+    function armarFiltro(lista) {
+      var partes = [];
+      lista.forEach(function (w) {
+        w = String(w || '').trim(); if (!w) return;
+        var pref = /\*$/.test(w), base = limpiar(w.replace(/\*+$/, ''));
+        if (!base) return;
+        [base, base.replace(/([a-z])\1+/g, '$1')].forEach(function (v, i) {
+          if (i && (v === base || v.length < 3)) return; // «kkk» no puede volverse «k»
+          var r = v.replace(/ /g, ' ?');
+          partes.push(base.length >= 7 && base.indexOf(' ') < 0 ? '[a-z]*' + r + '[a-z]*' : r + (pref ? '[a-z]*' : ''));
+        });
+      });
+      return partes.length ? new RegExp('(^| )(' + partes.join('|') + ')(?= |$)') : null;
+    }
+    var MALAS = armarFiltro(PALABRAS);
+    function tieneMala(s) { var a = limpiar(s); return !!MALAS && (MALAS.test(a) || MALAS.test(a.replace(/([a-z])\1+/g, '$1'))); }
+    function tieneContacto(s) {
+      s = String(s || '');
+      if (/https?:|www\.|\.(com|net|org|io|ly|xyz|link)\b|t\.me\/|@/i.test(s)) return true;
+      // 8 cifras o más seguidas parecen un teléfono (pero "1945-2020" son años y sí se permiten)
+      return /(\d[\s.\-]?){8,}/.test(s.replace(/\b(1[89]|20)\d\d\s*[-–]\s*(1[89]|20)\d\d\b/g, ''));
+    }
+    function aceptable(s) { return !tieneContacto(s) && !tieneMala(s); }
+    // Código anónimo del navegador + zona horaria (los usa el robot de la hoja para notar abusos)
+    function datosIdioma() {
+      var d = '', z = '';
+      try { d = localStorage.getItem('lwgy-dispositivo') || ''; if (!/^[a-z0-9]{6,12}$/.test(d)) { d = (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)).slice(0, 8); localStorage.setItem('lwgy-dispositivo', d); } } catch (e) { d = ''; }
+      try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+      return lang + ' · ' + (d || '-') + ' · ' + (z || '-');
+    }
+    function hoy() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+    function cuentaHoy() { try { var o = JSON.parse(localStorage.getItem('lwgy-hoy') || '{}'); return o.d === hoy() ? +o.n || 0 : 0; } catch (e) { return 0; } }
+    function sumarHoy() { try { localStorage.setItem('lwgy-hoy', JSON.stringify({ d: hoy(), n: cuentaHoy() + 1 })); } catch (e) {} }
 
     function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
     function azar(seed) { return function () { seed = (seed + 0x6D2B79F5) | 0; var r = Math.imul(seed ^ (seed >>> 15), 1 | seed); r ^= r + Math.imul(r ^ (r >>> 7), 61 | r); return ((r ^ (r >>> 14)) >>> 0) / 4294967296; }; }
@@ -673,10 +713,13 @@
     if (enviar) enviar.addEventListener('click', function () {
       var texto = input.value.trim().replace(/^(mi\s+luz\s+es|my\s+light\s+is)\s*[:,.…-]*\s*/i, '');
       if (!texto) return;
+      if (!aceptable(texto)) { aviso.textContent = t('filtro'); return; }
+      if (cuentaHoy() >= 10) { aviso.textContent = t('limite'); return; }
       var p = pais.value || '';
       enviar.disabled = true; enviar.textContent = t('enviando'); input.blur();
       function exito() {
         try { localStorage.setItem(CLAVE, JSON.stringify({ t: texto, p: p })); } catch (e) {}
+        sumarHoy();
         if (navigator.vibrate) navigator.vibrate(40);
         agregar(texto, p, true);
         pintarContador(); despertar();
@@ -691,7 +734,7 @@
       var d = new URLSearchParams();
       d.append(CFG.ENTRY_LUZ, texto);
       if (CFG.ENTRY_PAIS && p) d.append(CFG.ENTRY_PAIS, p);
-      if (CFG.ENTRY_IDIOMA) d.append(CFG.ENTRY_IDIOMA, lang);
+      if (CFG.ENTRY_IDIOMA) d.append(CFG.ENTRY_IDIOMA, datosIdioma());
       fetch('https://docs.google.com/forms/d/e/' + CFG.FORM_ID + '/formResponse', {
         method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: d.toString()
       }).then(exito).catch(function () {

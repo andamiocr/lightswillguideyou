@@ -33,7 +33,20 @@
       tuLuz: 'Tu luz', miLuz: 'La luz que me guía es…', pregunta: '¿Quién es la luz que te guía?',
       tipo: ['Un espectáculo de teatro, danza', 'y música en vivo inspirado en Coldplay'], cta: 'Colgá tu estrella en lightswillguideyou.com/tuluz', copiado: '¡Enlace copiado!',
       wa: function (t) { return 'Mi luz es "' + t + '". Colgué mi estrella en el cielo de Lights Will Guide You. ¿Quién es la tuya? '; },
-      compartirTxt: '¿Quién es la luz que te guía? Colgá tu estrella:'
+      compartirTxt: '¿Quién es la luz que te guía? Colgá tu estrella:',
+      limite: function (n) { return 'Hoy ya colgaste ' + n + ' estrellas desde este teléfono. Mañana podés colgar más.'; },
+      compartir: 'Compartir en historias',
+      abrirFuera: function (nav) { return nav ? 'Abrir en ' + nav + ' para compartir' : 'Abrir en el navegador para compartir'; },
+      notaApp: function (app, nav) { return 'Dentro de ' + app + ' no se pueden guardar imágenes. En ' + (nav || 'tu navegador') + ' tu estrella ya va a estar lista.'; },
+      guardar: 'Guardar imagen', verImagen: 'Ver la imagen',
+      copiadoSticker: 'Enlace copiado. En Instagram, pegalo en el sticker «Enlace».', copiadoCorto: '✓ Copiado',
+      visorT: 'Tu estrella para historias',
+      visorIOS: 'Mantené el dedo sobre la imagen y elegí «Guardar en Fotos».',
+      visorAndroid: 'Mantené el dedo sobre la imagen y elegí «Descargar imagen».',
+      visorOtro: 'Mantené el dedo sobre la imagen (o hacé clic derecho) para guardarla.',
+      visorDespues: 'Después abrí Instagram, creá una historia y elegila de tu galería.',
+      noSeAbrio: function (nav) { return '¿No se abrió ' + (nav || 'tu navegador') + '? Tocá ••• arriba a la derecha y elegí «Abrir en el navegador». O guardá la imagen aquí mismo.'; },
+      compartirCorto: 'Compartir', cerrar: 'Cerrar', descargar: 'Descargar'
     },
     en: {
       elegir: 'Choose your country', sinPais: 'somewhere in the world',
@@ -50,7 +63,20 @@
       tuLuz: 'Your light', miLuz: 'The light that guides me is…', pregunta: 'Who is the light that guides you?',
       tipo: ['A theatre, dance and live music show', 'inspired by Coldplay'], cta: 'Hang your star at lightswillguideyou.com/yourlight', copiado: 'Link copied!',
       wa: function (t) { return 'My light is "' + t + '". I hung my star in the Lights Will Guide You sky. Who is yours? '; },
-      compartirTxt: 'Who is the light that guides you? Hang your star:'
+      compartirTxt: 'Who is the light that guides you? Hang your star:',
+      limite: function (n) { return 'You have hung ' + n + ' stars from this device today. You can hang more tomorrow.'; },
+      compartir: 'Share to Stories',
+      abrirFuera: function (nav) { return nav ? 'Open in ' + nav + ' to share' : 'Open in your browser to share'; },
+      notaApp: function (app, nav) { return app + "'s browser can't save images. In " + (nav || 'your browser') + ' your star will be ready.'; },
+      guardar: 'Save image', verImagen: 'See the image',
+      copiadoSticker: 'Link copied. In Instagram, paste it into the "Link" sticker.', copiadoCorto: '✓ Copied',
+      visorT: 'Your star for Stories',
+      visorIOS: 'Press and hold the image, then choose "Save to Photos".',
+      visorAndroid: 'Press and hold the image, then choose "Download image".',
+      visorOtro: 'Press and hold (or right-click) the image to save it.',
+      visorDespues: 'Then open Instagram, create a Story and pick it from your gallery.',
+      noSeAbrio: function (nav) { return "Didn't " + (nav || 'your browser') + ' open? Tap ••• at the top right and choose "Open in browser". Or save the image right here.'; },
+      compartirCorto: 'Share', cerrar: 'Close', descargar: 'Download'
     }
   };
   var t = function (k) { return T[lang][k]; };
@@ -72,14 +98,60 @@
     return '';
   }
 
-  /* ---------- Filtro básico (la moderación real es la columna Ocultar) ---------- */
-  // Palabras completas (o comienzos de palabra con *). Así "computadora" o "conocer" no se bloquean.
-  var MALAS = new RegExp('(^| )(' + ['puta', 'putas', 'puto', 'putos', 'mierda*', 'verga*', 'pija', 'cono', 'pendej*', 'hijueputa*', 'hijoeputa*', 'malparid*', 'culero*', 'fuck*', 'shit*', 'bitch*', 'cunt*', 'nigg*', 'fagg*', 'pussy', 'dick', 'porn*', 'sexo', 'sex', 'xxx']
-    .map(function (w) { return w.slice(-1) === '*' ? w.slice(0, -1) + '[a-z]*' : w; }).join('|') + ')( |$)');
-  function aceptable(s) {
-    if (/https?:|www\.|\.com\b|\.net\b|@|\d[\d\s-]{6,}\d/i.test(s)) return false;
-    return !MALAS.test(norm(s));
+  /* ---------- Filtro (primer freno; el robot de la hoja revisa todo de nuevo) ----------
+     Misma lista y mismas reglas que herramientas/robot-tuluz.gs (pestaña "Palabras").
+     Palabra sola = palabra completa. Con * al final = cualquier final (mierd* → mierda, mierdas…).
+     Detecta palabras disfrazadas: p.u.t.a, put4, mieeerda, m i e r d a. */
+  var PALABRAS = ['puta*', 'puto', 'putos', 'mierd*', 'verga', 'vergas', 'pija', 'pijas', 'cono', 'pendej*', 'hijueputa*', 'hijoeputa*', 'hijo de puta*', 'malparid*', 'culero*', 'culiao', 'culiado*', 'culear*', 'culiar*', 'cabron', 'cabrona*', 'cabrones', 'chingad*', 'chinga tu madre', 'concha de tu madre', 'conchatumadre', 'conchesumadre', 'ctm', 'csm', 'hdp', 'ptm', 'gonorrea', 'mamaguevo*', 'mamahuevo*', 'mamabicho*', 'maricon*', 'sudaca*', 'negrata*', 'mongolic*', 'subnormal*', 'sidos*', 'singar', 'singao', 'pinga', 'tetas', 'tetona*', 'pene', 'penes', 'chupala', 'chupamela', 'follar', 'follame', 'follando', 'matate', 'suicidate', 'fuck*', 'motherfuck*', 'shit*', 'bitch*', 'cunt*', 'nigg*', 'fagg*', 'whore*', 'slut*', 'asshole*', 'dickhead*', 'retard*', 'twat*', 'wanker*', 'pussy', 'kys', 'kill yourself', 'nazi*', 'hitler', 'heil', 'kkk', 'porn*', 'sexo', 'sex', 'xxx', 'nude', 'nudes', 'onlyfans', 'casino', 'viagra', 'bitcoin', 'punto com', 'dot com'];
+  function limpiar(s) {
+    s = String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    s = s.replace(/[4@]/g, 'a').replace(/3/g, 'e').replace(/[1!|]/g, 'i').replace(/0/g, 'o').replace(/[5$]/g, 's').replace(/7/g, 't');
+    s = s.replace(/[^a-z]+/g, ' ').trim();
+    return s.replace(/(^| )((?:[a-z] ){2,}[a-z])(?= |$)/g, function (m, a, b) { return a + b.replace(/ /g, ''); });
   }
+  function armarFiltro(lista) {
+    var partes = [];
+    lista.forEach(function (w) {
+      w = String(w || '').trim(); if (!w) return;
+      var pref = /\*$/.test(w), base = limpiar(w.replace(/\*+$/, ''));
+      if (!base) return;
+      [base, base.replace(/([a-z])\1+/g, '$1')].forEach(function (v, i) {
+        if (i && (v === base || v.length < 3)) return; // «kkk» no puede volverse «k»
+        var r = v.replace(/ /g, ' ?');
+        partes.push(base.length >= 7 && base.indexOf(' ') < 0 ? '[a-z]*' + r + '[a-z]*' : r + (pref ? '[a-z]*' : ''));
+      });
+    });
+    return partes.length ? new RegExp('(^| )(' + partes.join('|') + ')(?= |$)') : null;
+  }
+  var MALAS = armarFiltro(PALABRAS);
+  function tieneMala(s) { var a = limpiar(s); return !!MALAS && (MALAS.test(a) || MALAS.test(a.replace(/([a-z])\1+/g, '$1'))); }
+  function tieneContacto(s) {
+    s = String(s || '');
+    if (/https?:|www\.|\.(com|net|org|io|ly|xyz|link)\b|t\.me\/|@/i.test(s)) return true;
+    // 8 cifras o más seguidas parecen un teléfono (pero "1945-2020" son años y sí se permiten)
+    return /(\d[\s.\-]?){8,}/.test(s.replace(/\b(1[89]|20)\d\d\s*[-–]\s*(1[89]|20)\d\d\b/g, ''));
+  }
+  function aceptable(s) { return !tieneContacto(s) && !tieneMala(s); }
+
+  /* ---------- Límite por teléfono y código anónimo ----------
+     Cada navegador recibe un código al azar (no dice quién es la persona). Viaja junto al idioma
+     ("es · k7f3q2ab · America/Costa_Rica") para que el robot de la hoja note abusos. */
+  var MAX_DIA = 10;
+  var DISP = (function () { try { var d = localStorage.getItem('lwgy-dispositivo') || ''; if (!/^[a-z0-9]{6,12}$/.test(d)) { d = (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)).slice(0, 8); localStorage.setItem('lwgy-dispositivo', d); } return d; } catch (e) { return ''; } })();
+  var ZONA = (function () { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; } })();
+  function hoy() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function cuentaHoy() { try { var o = JSON.parse(localStorage.getItem('lwgy-hoy') || '{}'); return o.d === hoy() ? +o.n || 0 : 0; } catch (e) { return 0; } }
+  function sumarHoy() { try { localStorage.setItem('lwgy-hoy', JSON.stringify({ d: hoy(), n: cuentaHoy() + 1 })); } catch (e) {} }
+  function datosIdioma() { return lang + ' · ' + (DISP || '-') + ' · ' + (ZONA || '-'); }
+
+  /* ---------- ¿Estamos dentro de Instagram, Facebook o TikTok? ----------
+     Sus navegadores internos no dejan guardar ni compartir imágenes. Ofrecemos abrir la página
+     en Safari o Chrome con la estrella ya lista (?mia=…). */
+  var UA = navigator.userAgent || '';
+  var IOS = /iPhone|iPad|iPod/i.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var ANDROID = /Android/i.test(UA);
+  var APP = /Instagram/i.test(UA) ? 'ig' : /Barcelona/i.test(UA) ? 'threads' : /FBAN|FBAV|FB_IAB|FBIOS|FB4A/i.test(UA) ? 'fb' : /BytedanceWebview|musical_ly|TikTok/i.test(UA) ? 'tiktok' : '';
+  var NAV = IOS ? 'Safari' : ANDROID ? 'Chrome' : '';
 
   /* ---------- Estado ---------- */
   var luces = [];            // {t, p, c, ts, propia, mx, my, fase, giro, nace}
@@ -444,15 +516,17 @@
     if (!tx) { aviso.textContent = t('faltaTexto'); luz.focus(); return; }
     if (!p) { aviso.textContent = t('faltaPais'); sel.focus(); return; }
     if (!aceptable(tx) || (c && !aceptable(c))) { aviso.textContent = t('filtro'); return; }
+    if (cuentaHoy() >= MAX_DIA) { aviso.textContent = t('limite')(MAX_DIA); contar('limite-diario'); return; }
     var ult = 0; try { ult = +localStorage.getItem(CLAVE + '-t') || 0; } catch (er) {}
     if (Date.now() - ult < 30000) { aviso.textContent = t('espera'); return; }
     enviar.disabled = true; aviso.textContent = '';
     var d = new URLSearchParams();
-    d.append(CFG.ENTRY.luz, tx); d.append(CFG.ENTRY.pais, p); if (c) d.append(CFG.ENTRY.ciudad, c); d.append(CFG.ENTRY.idioma, lang);
+    d.append(CFG.ENTRY.luz, tx); d.append(CFG.ENTRY.pais, p); if (c) d.append(CFG.ENTRY.ciudad, c); d.append(CFG.ENTRY.idioma, datosIdioma());
     var envio = DEMO || !CFG.FORM_ID ? Promise.resolve() :
       fetch('https://docs.google.com/forms/d/e/' + CFG.FORM_ID + '/formResponse', { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: d.toString() });
     envio.then(function () {
       try { localStorage.setItem(CLAVE + '-t', String(Date.now())); } catch (er) {}
+      sumarHoy();
       var o = agregar({ t: tx, p: p, c: c, ts: Date.now(), propia: true });
       guardarPropia(o); ultimaPropia = o;
       ubicarTodas(); pintarListas();
@@ -461,12 +535,28 @@
       setTimeout(function () { lanzar(o); }, window.innerWidth < 960 ? 650 : 50);
       if (navigator.vibrate) navigator.vibrate(30);
       form.reset(); llenarPaises(); sel.value = p; validar(); cuenta.textContent = '';
+      tarjetaCompartir = null; $('#vuelta').hidden = true;
       form.hidden = true; listo.hidden = false; pintarListo(); contar('estrella-colgada');
-      tarjetaCompartir = null;
     }).catch(function () { enviar.disabled = false; aviso.textContent = t('errorEnvio'); });
   });
-  function contar(nombre) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: nombre, title: nombre, event: true }); } catch (e) {} }
-  function pintarListo() { if (ultimaPropia) $('#listoTexto').textContent = t('listo')(nombrePais(ultimaPropia.p), ultimaPropia.p); actualizarWa(); }
+  var colaConteo = [];
+  function contar(nombre) {
+    try {
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: nombre, title: nombre, event: true });
+      else if (colaConteo.push(nombre) === 1) window.addEventListener('load', function () { setTimeout(function () { var c = colaConteo; colaConteo = []; c.forEach(contar); }, 800); });
+    } catch (e) {}
+  }
+  function dos(k, a, b) { var v = function (l) { var x = T[l][k]; return typeof x === 'function' ? x(a, b) : x; }; return '<span class="es">' + v('es') + '</span><span class="en">' + v('en') + '</span>'; }
+  var NOMBRE_APP = { ig: 'Instagram', threads: 'Threads', fb: 'Facebook', tiktok: 'TikTok' };
+  function pintarListo() {
+    if (ultimaPropia) $('#listoTexto').textContent = t('listo')(nombrePais(ultimaPropia.p), ultimaPropia.p);
+    actualizarWa();
+    var nota = $('#notaApp');
+    if (APP) { $('#compartirTxt').innerHTML = dos('abrirFuera', NAV); nota.innerHTML = dos('notaApp', NOMBRE_APP[APP], NAV); nota.hidden = false; }
+    else { $('#compartirTxt').innerHTML = dos('compartir'); nota.hidden = true; }
+    // La imagen se prepara de una vez: así "Compartir" abre al instante (Safari exige que sea inmediato)
+    setTimeout(function () { crearImagen().then(ponerMini, function () {}); }, 350);
+  }
   $('#otra').addEventListener('click', function () { listo.hidden = true; form.hidden = false; luz.focus(); });
 
   /* ---------- Imagen para compartir (1080 × 1920, historias) ---------- */
@@ -551,24 +641,95 @@
     g.fillStyle = color; g.fill(new Path2D(sy.querySelector('path').getAttribute('d'))); g.restore();
   }
   function descargar(b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'my-light-lights-will-guide-you.png'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+  function enlaceSticker() { return lang === 'es' ? 'https://www.lightswillguideyou.com/tuluz/' : CFG.URL; }
+
+  /* Miniatura de la tarjeta + versión grande (para guardarla manteniendo el dedo encima) */
+  var dataTarjeta = '';
+  function ponerMini(b) {
+    if (!b || !window.FileReader) return;
+    var r = new FileReader();
+    r.onload = function () { dataTarjeta = r.result; var m = $('#miniImg'); m.src = dataTarjeta; m.alt = t('verImagen'); $('#mini').hidden = false; if (!$('#visor').hidden) $('#visorImg').src = dataTarjeta; };
+    r.readAsDataURL(b);
+  }
+  var visor = $('#visor'), focoPrevio = null;
+  function abrirVisor(fallo) {
+    contar(fallo ? 'no-se-abrio-navegador' : 'ver-imagen');
+    $('#visorT').innerHTML = dos('visorT');
+    $('#visorS').innerHTML = (fallo ? dos('noSeAbrio', NAV) + ' ' : '') + dos(IOS ? 'visorIOS' : ANDROID ? 'visorAndroid' : 'visorOtro') + ' ' + dos('visorDespues');
+    var vc = $('#visorCompartir'), vf = $('#visorFuera'), vd = $('#visorDescargar');
+    vf.hidden = !APP; if (APP) { vf.innerHTML = dos('abrirFuera', NAV); vf.href = urlFuera(); }
+    vc.hidden = !!APP || !(navigator.canShare && window.File && navigator.canShare({ files: [new File([new Blob(['x'], { type: 'image/png' })], 'x.png', { type: 'image/png' })] }));
+    vd.hidden = !!APP || IOS || ANDROID;
+    $('#visorImg').src = dataTarjeta || ''; $('#visorImg').alt = t('visorT') + (ultimaPropia ? ': ' + ultimaPropia.t : '');
+    if (!dataTarjeta) crearImagen().then(ponerMini, function () {});
+    focoPrevio = document.activeElement; visor.hidden = false; document.body.classList.add('con-visor');
+    $('#visorCerrar').focus();
+  }
+  function cerrarVisor() { visor.hidden = true; document.body.classList.remove('con-visor'); if (focoPrevio && focoPrevio.focus) focoPrevio.focus(); }
+  $('#visorCerrar').addEventListener('click', cerrarVisor);
+  visor.addEventListener('click', function (e) { if (e.target === visor) cerrarVisor(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !visor.hidden) cerrarVisor(); });
+  $('#mini').addEventListener('click', function () { abrirVisor(false); });
+  $('#visorCompartir').addEventListener('click', function () { compartirImagen(); });
+  $('#visorDescargar').addEventListener('click', function () { contar('descargar-imagen'); crearImagen().then(descargar); });
+  $('#visorFuera').addEventListener('click', function () { contar('abrir-fuera'); });
+
+  /* Abrir esta página afuera (Safari o Chrome) con la estrella lista para compartir */
+  function urlFuera() {
+    var l = ultimaPropia || {};
+    var destino = CFG.URL + '?lang=' + lang + '&mia=' + encodeURIComponent(l.t || '') + '&p=' + encodeURIComponent(l.p || '') + (l.c ? '&c=' + encodeURIComponent(l.c) : '') + '&ts=' + Date.now().toString(36);
+    if (ANDROID) return 'intent://' + destino.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(destino) + ';end';
+    if (APP === 'ig') return 'instagram://extbrowser/?url=' + encodeURIComponent(destino);
+    if (APP === 'threads') return 'barcelona://extbrowser/?url=' + encodeURIComponent(destino);
+    return 'x-safari-' + destino;
+  }
+  function abrirFuera() {
+    contar('abrir-fuera');
+    var salio = false, marcar = function () { salio = true; };
+    window.addEventListener('pagehide', marcar, { once: true });
+    window.addEventListener('blur', marcar, { once: true });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) salio = true; }, { once: true });
+    location.href = urlFuera();
+    // Si a los 3 segundos seguimos aquí, el truco no funcionó: plan B, guardar la imagen aquí mismo
+    setTimeout(function () { if (!salio && !document.hidden) abrirVisor(true); }, 3000);
+  }
+
+  /* Copiar el enlace sin preguntar (para pegarlo en el sticker «Enlace») */
+  var brindis = $('#brindis'), tBrindis = 0;
+  function avisar(txt) { brindis.textContent = txt; brindis.classList.add('is-on'); clearTimeout(tBrindis); tBrindis = setTimeout(function () { brindis.classList.remove('is-on'); }, 4200); }
+  function marcarCopiado() { var b = $('#copiar'); b.innerHTML = dos('copiadoCorto'); b.classList.add('is-copiado'); }
+  function copiarEnlace(silencio) {
+    var u = enlaceSticker();
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(u).then(function () { marcarCopiado(); if (silencio) avisar(t('copiadoSticker')); else avisar(t('copiado')); return true; }, function () { if (!silencio) prompt('', u); return false; });
+    if (!silencio) prompt('', u);
+    return Promise.resolve(false);
+  }
+
+  function compartirImagen() {
+    function enviarArchivo(b) {
+      var f = window.File ? new File([b], 'my-light.png', { type: 'image/png' }) : null;
+      if (f && navigator.canShare && navigator.canShare({ files: [f] })) {
+        return navigator.share({ files: [f], text: t('compartirTxt') + ' ' + CFG.URL }).then(function () { contar('compartido'); }, function (e) { if (e && e.name === 'NotAllowedError') abrirVisor(false); });
+      }
+      if (IOS || ANDROID) abrirVisor(false); else descargar(b);
+    }
+    // Si la imagen ya está hecha, se comparte en el mismo toque (si no, Safari lo bloquea)
+    if (tarjetaCompartir) enviarArchivo(tarjetaCompartir);
+    else crearImagen().then(function (b) { ponerMini(b); enviarArchivo(b); });
+  }
   $('#compartir').addEventListener('click', function () {
+    if (APP) { abrirFuera(); return; }
     contar('compartir-historia');
-    crearImagen().then(function (b) {
-      var f = new File([b], 'my-light.png', { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], text: t('compartirTxt') + ' ' + CFG.URL }).catch(function () {});
-      descargar(b);
-    });
+    copiarEnlace(true);
+    compartirImagen();
   });
-  $('#descargar').addEventListener('click', function () { contar('descargar-imagen'); crearImagen().then(descargar); });
+  $('#descargar').addEventListener('click', function () {
+    if (APP || IOS || ANDROID) { abrirVisor(false); return; }
+    contar('descargar-imagen'); crearImagen().then(descargar);
+  });
   $('#whatsapp').addEventListener('click', function () { contar('whatsapp'); });
   $('#seguir').addEventListener('click', function () { contar('seguir-instagram'); });
-  $('#copiar').addEventListener('click', function () {
-    contar('copiar-enlace');
-    var b = this, u = CFG.URL;
-    function ok() { var o = b.innerHTML; b.textContent = t('copiado'); setTimeout(function () { b.innerHTML = o; }, 1800); }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(ok, function () { prompt('', u); });
-    else prompt('', u);
-  });
+  $('#copiar').addEventListener('click', function () { contar('copiar-enlace'); copiarEnlace(false); });
   function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + CFG.URL + (lang === 'es' ? '?lang=es' : '')); }
 
   /* ---------- Idioma ---------- */
@@ -600,10 +761,27 @@
   /* ---------- Arranque ---------- */
   llenarPaises(); ejemplo(); validar();
   propiasGuardadas().forEach(function (o) { if (o && o.t) agregar({ t: o.t, p: o.p || 'ZZ', c: o.c || '', ts: o.ts || 0, propia: true }); });
+  // Llegó desde el navegador de Instagram con su estrella (?mia=…): la mostramos lista para compartir.
+  // No se vuelve a enviar a la hoja (ya se envió desde Instagram).
+  var llegoDe = (function () {
+    var q = new URLSearchParams(location.search), tx = (q.get('mia') || '').slice(0, 90);
+    if (!tx) return '';
+    var ts = parseInt(q.get('ts') || '', 36), p = (q.get('p') || '').toUpperCase(), c = (q.get('c') || '').slice(0, 40);
+    try { history.replaceState(null, '', location.pathname + '?lang=' + lang); } catch (e) {}
+    if (!ts || Math.abs(Date.now() - ts) > 6 * 36e5 || !aceptable(tx) || (c && !aceptable(c))) return '';
+    if (!M.c[p]) p = 'ZZ';
+    var ya = propiasGuardadas().some(function (o) { return o && o.t === tx && o.p === p; });
+    var o = agregar({ t: tx, p: p, c: c, ts: ts, propia: true });
+    if (!ya) guardarPropia(o);
+    ultimaPropia = o; form.hidden = true; listo.hidden = false; $('#vuelta').hidden = false;
+    pintarListo(); contar('llego-desde-app');
+    return p;
+  })();
   if (DEMO) { demo(); cargado = true; }
   medir(); medirBarco(); flotar(0);
   pan = panMax ? Math.max(0, Math.min(panMax, proyectar(10, -80)[0] + mapa.base - W * .5)) : 0;
-  var det = paisDetectado(); if (det) centrarEn(det, false);
+  var det = llegoDe || paisDetectado(); if (det) centrarEn(det, false);
+  if (llegoDe) setTimeout(function () { listo.scrollIntoView({ behavior: 'auto', block: 'center' }); }, 300);
   pintarListas();
   if (!DEMO) cargar();
   setInterval(function () { if (!document.hidden && !DEMO) cargar(); }, 60000);
