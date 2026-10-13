@@ -18,8 +18,10 @@
   .actualizar { border:1px solid var(--linea); background:var(--papel); border-radius:99px; padding:8px 16px; font-weight:600; }
   .frase { background:var(--tinta); color:#fff; border-radius:16px; padding:16px 18px; font:400 1.12rem/1.45 var(--serif); margin:0 0 16px; }
   .frase b { color:#FFD93D; font-weight:500; }
+  .frase > span { display:block; } .frase > span + span { margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,.15); }
+  .frase .cambio.sube { color:#7BE0A8; } .frase .cambio.baja { color:#FF9A93; }
   .tarjetas { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
-  .tarjeta { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:16px; cursor:pointer; text-align:left; border-top:4px solid var(--c); }
+  .tarjeta { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:16px; cursor:pointer; text-align:left; border-top:4px solid var(--c); display:flex; flex-direction:column; justify-content:flex-start; font:inherit; color:inherit; }
   .tarjeta.activa { box-shadow:0 0 0 2px var(--c); }
   .tarjeta h2 { margin:0; font:600 1rem/1.2 var(--sans); }
   .tarjeta .web { color:var(--gris); font-size:.8rem; }
@@ -147,17 +149,18 @@ function lista(items, max, vacio) {
 }
 
 function pintar() {
-  var d = DATOS, tot = { hoy: 0, ayer: 0, sem: 0, semAnt: 0 }, mejor = null, rs = [];
+  var d = DATOS, rs = [];
   document.getElementById('cuando').textContent = 'Datos de hoy, ' + d.generado + ' · se guardan 20 min';
-  d.sitios.forEach(function (s, i) { var r = resumen(s); rs[i] = r; ['hoy', 'ayer', 'sem', 'semAnt'].forEach(function (k) { tot[k] += r[k]; }); if (!mejor || r.ayer > mejor.r.ayer) mejor = { s: s, r: r }; });
-  // Frase de resumen
-  var lwgy = d.sitios[0], acc = hits(lwgy, true, 1), estrellas = acc.filter(function (a) { return a.nombre === ACCIONES['estrella-colgada']; })[0];
-  var fuentesAyer = agrupar((lwgy.fuentes && lwgy.fuentes.stats) || [], function (x) { return bonitoFuente(x.name); });
-  var frase = 'Ayer tuviste <b>' + n(tot.ayer) + ' visitas</b> en total' + (tot.ayer ? ', sobre todo en <b>' + esc(mejor.s.nombre) + '</b>' : '') + '. ' +
-    'Esta semana: <b>' + n(tot.sem) + '</b> ' + (tot.semAnt ? '(' + (tot.sem >= tot.semAnt ? 'más' : 'menos') + ' que la semana pasada)' : '') + '. ' +
-    'Hoy van <b>' + n(tot.hoy) + '</b>.' +
-    (fuentesAyer.length ? ' La gente llega más que todo desde <b>' + esc(fuentesAyer[0].nombre) + '</b>.' : '') +
-    (estrellas ? ' Hoy se colgaron <b>' + n(estrellas.n) + ' estrellas</b>.' : '');
+  d.sitios.forEach(function (s, i) { rs[i] = resumen(s); });
+  // Una frase por sitio: cada uno es un universo aparte
+  var frase = d.sitios.map(function (s, i) {
+    var r = rs[i], fu = agrupar((s.fuentes && s.fuentes.stats) || [], function (x) { return bonitoFuente(x.name); });
+    var pg = hits(s, false, 1), est = hits(s, true, 1).filter(function (a) { return a.nombre === ACCIONES['estrella-colgada']; })[0];
+    if (s.error && !s.total) return '<span><b>' + esc(s.nombre) + ':</b> sin datos todavía.</span>';
+    return '<span><b>' + esc(s.nombre) + ':</b> ayer ' + n(r.ayer) + ' visitas, hoy van ' + n(r.hoy) + '. Semana: ' + n(r.sem) + ' ' + cambio(r.sem, r.semAnt) +
+      (pg.length ? '. Hoy lo más visto: ' + esc(pg[0].nombre) : '') + (fu.length ? '. Llegan sobre todo desde ' + esc(fu[0].nombre) : '') +
+      (est ? '. Hoy se colgaron ' + n(est.n) + ' estrellas' : '') + '.</span>';
+  }).join('');
   var h = '<p class="frase">' + frase + '</p><div class="tarjetas">';
   d.sitios.forEach(function (s, i) {
     var r = rs[i], top = Math.max.apply(null, r.a.slice(-30).map(function (x) { return x.n; }).concat([1]));
