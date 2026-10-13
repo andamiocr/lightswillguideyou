@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;500&display=swap">
   <link rel="stylesheet" href="https://andamiocr.com/andamio-familia/familia.css?v=5">
   <style>@media (max-width: 479px) { .lwgy__brand-txt { display: none; } }</style>
-  <link rel="stylesheet" href="/assets/css/style.css?v=4.4">
+  <link rel="stylesheet" href="/assets/css/style.css?v=4.5">
 
   <script type="application/ld+json">
 {
@@ -461,12 +461,12 @@
         <svg class="lwgy__brand-txt" aria-hidden="true" focusable="false"><use href="#lwgy-palabra"/></svg>
       </a>
     </div>
+    <!-- Escritorio: los mismos actos del programa (mismo número y color); el resto, en «Menú» -->
     <nav class="lwgy__links" aria-label="Secciones">
-      <a href="#historia"><span class="lwgy-es">La historia</span><span class="lwgy-en">The story</span></a>
-      <a href="#elenco"><span class="lwgy-es">Elenco</span><span class="lwgy-en">Company</span></a>
-      <a href="#trayectoria"><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Track record</span></a>
-      <a href="#equipo"><span class="lwgy-es">Equipo</span><span class="lwgy-en">Team</span></a>
-      <a href="#sumate"><span class="lwgy-es">Sumate</span><span class="lwgy-en">Join us</span></a>
+      <a href="#historia" style="--k:var(--cian)"><b>I</b><span class="lwgy-es">La historia</span><span class="lwgy-en">The story</span></a>
+      <a href="#elenco" style="--k:var(--magenta)"><b>III</b><span class="lwgy-es">El elenco</span><span class="lwgy-en">The company</span></a>
+      <a href="#trayectoria" style="--k:var(--ambar)"><b>V</b><span class="lwgy-es">Trayectoria</span><span class="lwgy-en">Track record</span></a>
+      <a href="#equipo" style="--k:var(--cian)"><b>VII</b><span class="lwgy-es">Equipo creativo</span><span class="lwgy-en">Creative team</span></a>
     </nav>
     <div class="lwgy__nav-actions">
       <button class="lwgy__lang" id="lwgyLang" type="button" aria-label="Read in English">
@@ -475,7 +475,7 @@
       <a class="lwgy__btn lwgy__btn--luz lwgy__nav-cta" data-mail="patrocinio" href="mailto:josepablo@persona.cr">
         <span class="lwgy-es">Patrocinar</span><span class="lwgy-en">Sponsor</span>
       </a>
-      <!-- En celular y tablet: abre el "programa de mano" -->
+      <!-- Abre el menú completo (celular, tablet y computadora) -->
       <button class="lwgy__menu-btn" id="lwgyMenuBtn" type="button" aria-expanded="false" aria-controls="lwgyMenu">
         <span class="lwgy__menu-ico" aria-hidden="true"><i></i><i></i></span>
         <span class="lwgy-es">Menú</span><span class="lwgy-en">Menu</span>
@@ -483,7 +483,7 @@
     </div>
   </header>
 
-  <!-- ===================== PROGRAMA DE MANO (menú en celular y tablet) =====================
+  <!-- ===================== MENÚ (el mismo en celular, tablet y computadora) =====================
        Baja como un telón; cada sección es un acto, como en el programa de una función. -->
   <dialog class="lwgy__programa" id="lwgyMenu" aria-labelledby="lwgyMenuT">
     <div class="lwgy__programa-luz" aria-hidden="true"></div>
@@ -496,7 +496,7 @@
     </div>
     <div class="lwgy__programa-in">
       <div class="lwgy__programa-top">
-        <p class="lwgy__programa-kicker" id="lwgyMenuT"><span class="lwgy-es">Programa de mano</span><span class="lwgy-en">Playbill</span></p>
+        <p class="lwgy__programa-kicker" id="lwgyMenuT"><span class="lwgy-es">Menú</span><span class="lwgy-en">Menu</span></p>
         <button class="lwgy__redondo" type="button" data-cerrar aria-label="Cerrar menú"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8"/></svg></button>
       </div>
       <nav aria-label="Secciones">

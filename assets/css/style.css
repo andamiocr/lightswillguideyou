@@ -167,9 +167,12 @@ html[data-lang="en"] .lwgy-es { display: none !important; }
 /* Solo cuando cabe completo junto al menú; en pantallas angostas queda la estrella (el logo grande ya está en la portada) */
 @media (min-width: 1240px) { .lwgy__brand-txt { display: block; } }
 .lwgy__nav.is-scrolled .lwgy__brand-txt { opacity: 1; transform: none; }
-.lwgy__links { display: none; gap: 1.6rem; font-size: .95rem; }
-.lwgy__links a { opacity: .78; white-space: nowrap; transition: opacity .2s; }
-.lwgy__links a:hover { opacity: 1; }
+.lwgy__links { display: none; gap: 1.5rem; }
+/* Igual que los actos del menú: número en su color + nombre en Fraunces */
+.lwgy__links a { display: inline-flex; align-items: baseline; gap: .45rem; opacity: .82; white-space: nowrap; transition: opacity .2s, color .2s;
+  font: 400 1.02rem/1 var(--serif); font-variation-settings: 'opsz' 24, 'SOFT' 100; }
+.lwgy__links b { font: 600 .62rem/1 var(--sans); letter-spacing: .14em; color: var(--k); }
+.lwgy__links a:hover, .lwgy__links a:focus-visible { opacity: 1; color: var(--k); }
 .lwgy__nav-actions { display: flex; align-items: center; gap: .6rem; }
 .lwgy__lang { display: inline-flex; align-items: center; gap: .3rem; min-height: 2.5rem; padding: 0 .85rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--papel) 35%, transparent); font-size: .85rem; font-weight: 500; }
 .lwgy__lang b { font-weight: 700; }
@@ -491,8 +494,8 @@ html[data-lang="en"] .lwgy-es { display: none !important; }
   .lwgy__legal { grid-column: 1 / -1; }
   .lwgy__barra { display: none; }
 }
+@media (min-width: 1240px) { .lwgy__links { display: flex; } }
 @media (min-width: 960px) {
-  .lwgy__links { display: flex; }
   .lwgy__logo { width: clamp(20rem, 30vw, 27rem); margin-top: 1rem; }
   .lwgy__historia-grid { grid-template-columns: 1.05fr .95fr; gap: 4rem; align-items: start; }
   .lwgy__historia-foto { margin-top: 6rem; }
@@ -724,7 +727,6 @@ html.lwgy-menu-abierto { overflow: hidden; }
 .lwgy__programa-pie { margin-top: auto; display: flex; flex-wrap: wrap; gap: .6rem; opacity: 0; animation: lwgy-acto-entra .8s var(--suave) .9s both; }
 .lwgy__programa-pie .lwgy__btn { flex: 1 1 10rem; }
 @media (max-width: 719px) { .lwgy__nav-cta { display: none; } }
-@media (min-width: 960px) { .lwgy__menu-btn { display: none; } }
 
 /* ---------- 2. El teaser de fondo ---------- */
 .lwgy__teaser {
