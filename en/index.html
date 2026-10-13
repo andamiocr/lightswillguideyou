@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;500&display=swap">
   <link rel="stylesheet" href="https://andamiocr.com/andamio-familia/familia.css?v=5">
   <style>@media (max-width: 479px) { .lwgy__brand-txt { display: none; } }</style>
-  <link rel="stylesheet" href="/assets/css/style.css?v=4.3">
+  <link rel="stylesheet" href="/assets/css/style.css?v=4.4">
 
   <script type="application/ld+json">
 {
@@ -1168,7 +1168,7 @@
         <p class="lwgy__head" data-head><svg class="lwgy__star" aria-hidden="true"><use href="#lwgy-estrella"/></svg>
           <span class="lwgy-es">Tu luz</span><span class="lwgy-en">Your light</span></p>
         <h2 class="lwgy__h2"><span class="lwgy-es">¿Quién es la luz que te guía?</span><span class="lwgy-en">Who is the light that guides you?</span></h2>
-        <p class="lwgy__p"><span class="lwgy-es">Una persona, un recuerdo, una canción. Escribilo y encendé una estrella en este cielo.</span><span class="lwgy-en">A person, a memory, a song. Write it down and light a star in this sky.</span></p>
+        <p class="lwgy__p"><span class="lwgy-es">Una persona, un recuerdo, una canción. Escribilo y colgá tu estrella en el mapa del mundo.</span><span class="lwgy-en">A person, a memory, a song. Write it down and hang your star on the world map.</span></p>
       </div>
 
       <div class="lwgy__firmamento" id="lwgyFirmamento">
@@ -1177,36 +1177,12 @@
       </div>
       <p class="lwgy__pista"><span class="lwgy-es">Tocá una estrella para leerla.</span><span class="lwgy-en">Tap a star to read it.</span></p>
       <p class="lwgy__contador" id="lwgyContador" aria-live="polite"></p>
-      <p class="lwgy__mundo"><a class="lwgy-es" href="/yourlight/?lang=es">Ver las estrellas de todo el mundo en el mapa</a><a class="lwgy-en" href="/yourlight/?lang=en">See stars from all over the world on the map</a></p>
       <ul class="lwgy__sr" id="lwgyLucesLista" aria-label="Luces encendidas"></ul>
-
-      <div class="lwgy__wrap">
-        <div class="lwgy__luz-form" id="lwgyLuzForm">
-          <div class="lwgy__campo">
-            <label for="lwgyLuzInput"><span class="lwgy-es">Mi luz es…</span><span class="lwgy-en">My light is…</span></label>
-            <input id="lwgyLuzInput" type="text" maxlength="60" autocomplete="off" enterkeyhint="send" placeholder="mi mamá">
-            <span class="lwgy__cuenta" id="lwgyCuenta"></span>
-          </div>
-          <div class="lwgy__campo">
-            <label for="lwgyPais"><span class="lwgy-es">¿Desde dónde? (opcional)</span><span class="lwgy-en">Where are you? (optional)</span></label>
-            <select id="lwgyPais">
-              <option value="">—</option>
-              <option value="CR">Costa Rica</option><option value="AR">Argentina</option><option value="CL">Chile</option><option value="CO">Colombia</option>
-              <option value="GT">Guatemala</option><option value="MX">México</option><option value="PE">Perú</option><option value="ES">España</option>
-              <option value="US">Estados Unidos</option><option value="">Otro / Other</option>
-            </select>
-          </div>
-          <button class="lwgy__btn lwgy__btn--luz" id="lwgyLuzEnviar" type="button" disabled data-i18n="enviar">Encender mi luz</button>
-          <p class="lwgy__aviso" id="lwgyLuzAviso" aria-live="polite"></p>
-          <p class="lwgy__fuente"><span class="lwgy-es">Es anónimo. Las luces que faltan el respeto se retiran.</span><span class="lwgy-en">It's anonymous. Lights that disrespect others are removed.</span></p>
-        </div>
-        <div class="lwgy__estado" id="lwgyLuzGracias">
-          <b><span class="lwgy-es">Tu luz ya está encendida.</span><span class="lwgy-en">Your light is on.</span></b>
-          <span><span class="lwgy-es">Es la estrella que acaba de aparecer. Gracias por sumarla.</span><span class="lwgy-en">It's the star that just appeared. Thank you for adding it.</span></span>
-          <button class="lwgy__btn lwgy__btn--linea" type="button" data-compartir><span class="lwgy-es">Invitá a alguien a encender la suya</span><span class="lwgy-en">Invite someone to light theirs</span></button>
-          <p class="lwgy__mundo"><a class="lwgy-es" href="/yourlight/?lang=es">Ver mi estrella en el mapa del mundo</a><a class="lwgy-en" href="/yourlight/?lang=en">See my star on the world map</a></p>
-        </div>
-      </div>
+      <p class="lwgy__luz-cta">
+        <a class="lwgy__btn lwgy__btn--luz lwgy-es" href="/yourlight/?lang=es" data-goatcounter-click="portada-tu-luz">Colgá tu estrella en el mapa</a>
+        <a class="lwgy__btn lwgy__btn--luz lwgy-en" href="/yourlight/?lang=en" data-goatcounter-click="portada-tu-luz">Hang your star on the map</a>
+      </p>
+      <p class="lwgy__fuente lwgy__luz-nota"><span class="lwgy-es">Es anónimo. Cada estrella cuelga sobre el país de quien la escribe.</span><span class="lwgy-en">It's anonymous. Each star hangs over the writer's country.</span></p>
 
       <!-- Cierre: una joven sostiene su luz y mira hacia la frase final -->
       <div class="lwgy__final" data-revela>
@@ -1338,7 +1314,7 @@
     </div>
   </dialog>
 
-  <script src="/assets/js/main.js?v=4.1" defer></script>
+  <script src="/assets/js/main.js?v=4.2" defer></script>
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

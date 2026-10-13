@@ -27,7 +27,7 @@
       limite: 'Hoy ya colgaste 10 estrellas desde este teléfono. Mañana podés colgar más.',
       masOpciones: 'Más opciones', copiar: 'Copiar enlace', copiado: 'Enlace copiado',
       luces: function (n) { return '<b>' + n.toLocaleString('es-CR') + '</b>' + (n === 1 ? 'luz encendida' : 'luces encendidas'); },
-      primera: 'Todavía no hay luces. Encendé la primera.',
+      primera: 'Todavía no hay luces. Colgá la primera.',
       tuLuz: 'Tu luz', delShow: 'Del espectáculo',
       semillas: ['El asombro', 'La imaginación', 'El amor', 'La esperanza', 'La resiliencia', 'La magia de lo cotidiano', 'El propósito', 'La música en vivo'],
       langLabel: 'Read in English',
@@ -64,7 +64,7 @@
       limite: 'You have hung 10 stars from this device today. You can hang more tomorrow.',
       masOpciones: 'More options', copiar: 'Copy link', copiado: 'Link copied',
       luces: function (n) { return '<b>' + n.toLocaleString('en-US') + '</b>' + (n === 1 ? 'light on' : 'lights on'); },
-      primera: 'No lights yet. Light the first one.',
+      primera: 'No lights yet. Hang the first one.',
       tuLuz: 'Your light', delShow: 'From the show',
       semillas: ['Wonder', 'Imagination', 'Love', 'Hope', 'Resilience', 'Everyday magic', 'Purpose', 'Live music'],
       langLabel: 'Leer en español',
@@ -692,7 +692,7 @@
     medir();
     luces.forEach(ubicar);
     // Formulario
-    function mostrarGracias() { form.style.display = 'none'; gracias.style.display = 'block'; }
+    function mostrarGracias() { if (form) form.style.display = 'none'; if (gracias) gracias.style.display = 'block'; }
     try {
       var g = JSON.parse(localStorage.getItem(CLAVE) || 'null');
       if (g && g.t) { var l0 = agregar(g.t, g.p, true); l0.nace = 0; mostrarGracias(); }
