@@ -90,7 +90,7 @@ function prepararPestanas(ss) {
     a.getRange(1, 1, 7, 3).setValues([
       ['Ajuste', 'Valor', 'Qué hace'],
       ['Modo revisión', 'NO', 'SÍ = cada estrella nueva espera tu aprobación (dice «en revisión» en Ocultar). Para aprobarlas todas: menú ⭐ Tu luz → Mostrar las que esperan revisión. Cada persona igual ve su propia estrella.'],
-      ['Máximo de estrellas por teléfono al día', 10, 'Desde la estrella número 11 del mismo teléfono en un día, se ocultan solas.'],
+      ['Máximo de estrellas por teléfono al día', 5, 'Desde la estrella número 6 del mismo teléfono en un día, se ocultan solas.'],
       ['Freno automático: estrellas en 10 minutos', 40, 'Si llegan más que esto en 10 minutos, las nuevas esperan tu revisión y te aviso. Si vas a pedirle al público que cuelgue estrellas en vivo, subilo ese día (por ejemplo, a 1000).'],
       ['Avisarme por correo cuando oculte algo', 'SÍ', 'Máximo un correo por hora, con todo lo que oculté.'],
       ['Resumen diario por correo (8 a. m.)', 'SÍ', 'Solo llega si hubo estrellas nuevas o hay estrellas esperando revisión.'],
@@ -158,6 +158,7 @@ function motivoAbuso(info, datos, fila, cols, aj, ss) {
     if (limpiar(o.luz) === texto && info.fecha - o.fecha < 864e5 && info.fecha >= o.fecha) repetida = true;
   }
   if (repetida) return 'auto: repetida';
+  if (info.segundos >= 0 && info.segundos < 2) return 'auto: escrita en menos de 2 segundos (posible bot)';
   if (hoyN >= aj.maximo) return 'auto: más de ' + aj.maximo + ' en un día';
   return '';
 }
@@ -330,7 +331,8 @@ function leerFila(r, cols) {
     ciudad: String(r[cols.ciudad] || '').trim(),
     idioma: partes[0] || '',
     disp: disp,
-    zona: partes[2] && partes[2] !== '-' ? partes[2] : ''
+    zona: partes[2] && partes[2] !== '-' ? partes[2] : '',
+    segundos: /^\d+s$/.test(partes[3] || '') ? parseInt(partes[3], 10) : -1
   };
 }
 
@@ -340,13 +342,13 @@ function zonaValida(z, ss) {
 }
 
 function leerAjustes(ss) {
-  var aj = { revision: false, maximo: 10, freno: 40, aviso: true, resumen: true, correo: '' };
+  var aj = { revision: false, maximo: 5, freno: 40, aviso: true, resumen: true, correo: '' };
   var a = ss.getSheetByName('Ajustes');
   if (!a) return aj;
   a.getDataRange().getValues().forEach(function (f) {
     var k = normal(f[0]), v = f[1];
     if (/^modo revision/.test(k)) aj.revision = siNo(v, false);
-    else if (/^maximo/.test(k)) aj.maximo = Math.max(1, parseInt(v, 10) || 10);
+    else if (/^maximo/.test(k)) aj.maximo = Math.max(1, parseInt(v, 10) || 5);
     else if (/^freno/.test(k)) aj.freno = Math.max(5, parseInt(v, 10) || 40);
     else if (/^avisarme/.test(k)) aj.aviso = siNo(v, true);
     else if (/^resumen/.test(k)) aj.resumen = siNo(v, true);

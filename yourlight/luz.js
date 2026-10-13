@@ -136,13 +136,17 @@
   /* ---------- Límite por teléfono y código anónimo ----------
      Cada navegador recibe un código al azar (no dice quién es la persona). Viaja junto al idioma
      ("es · k7f3q2ab · America/Costa_Rica") para que el robot de la hoja note abusos. */
-  var MAX_DIA = 10;
+  var MAX_DIA = 5;
   var DISP = (function () { try { var d = localStorage.getItem('lwgy-dispositivo') || ''; if (!/^[a-z0-9]{6,12}$/.test(d)) { d = (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)).slice(0, 8); localStorage.setItem('lwgy-dispositivo', d); } return d; } catch (e) { return ''; } })();
   var ZONA = (function () { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; } })();
   function hoy() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
   function cuentaHoy() { try { var o = JSON.parse(localStorage.getItem('lwgy-hoy') || '{}'); return o.d === hoy() ? +o.n || 0 : 0; } catch (e) { return 0; } }
   function sumarHoy() { try { localStorage.setItem('lwgy-hoy', JSON.stringify({ d: hoy(), n: cuentaHoy() + 1 })); } catch (e) {} }
-  function datosIdioma() { return lang + ' · ' + (DISP || '-') + ' · ' + (ZONA || '-'); }
+  /* Protecciones contra bots: una trampa invisible (una persona nunca la llena) y cuántos
+     segundos tardó en escribir (viaja al final: "es · k7f3q2ab · America/Costa_Rica · 14s"). */
+  var EMPEZO = 0;
+  function segundos() { return EMPEZO ? Math.round((Date.now() - EMPEZO) / 1000) : 0; }
+  function datosIdioma() { return lang + ' · ' + (DISP || '-') + ' · ' + (ZONA || '-') + ' · ' + segundos() + 's'; }
 
   /* ---------- ¿Estamos dentro de Instagram, Facebook o TikTok? ----------
      Sus navegadores internos no dejan guardar ni compartir imágenes. Ofrecemos abrir la página
@@ -503,7 +507,7 @@
     sel.value = actual && M.c[actual] ? actual : '';
   }
   function validar() { enviar.disabled = !luz.value.trim(); }
-  luz.addEventListener('input', function () { var n = luz.value.length; cuenta.textContent = n > 60 ? n + '/90' : ''; aviso.textContent = ''; validar(); });
+  luz.addEventListener('input', function () { if (!EMPEZO) EMPEZO = Date.now(); var n = luz.value.length; cuenta.textContent = n > 60 ? n + '/90' : ''; aviso.textContent = ''; validar(); });
   luz.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!enviar.disabled) form.requestSubmit ? form.requestSubmit() : enviar.click(); } });
   var ej = 0;
   function ejemplo() { luz.placeholder = t('ejemplos')[ej % t('ejemplos').length]; }
@@ -513,6 +517,9 @@
     e.preventDefault();
     var tx = luz.value.replace(/\s+/g, ' ').trim().replace(/^(mi\s+luz\s+es|my\s+light\s+is)\s*[:,.…-]*\s*/i, '').slice(0, 90);
     var p = sel.value, c = ciudad.value.replace(/\s+/g, ' ').trim().slice(0, 40);
+    var trampa = document.getElementById('sitio');
+    if (trampa && trampa.value) { form.reset(); return; }                 // lo llenó un bot: no se envía
+    if (EMPEZO && Date.now() - EMPEZO < 2000) { aviso.textContent = t('espera'); return; }
     if (!tx) { aviso.textContent = t('faltaTexto'); luz.focus(); return; }
     if (!p) { aviso.textContent = t('faltaPais'); sel.focus(); return; }
     if (!aceptable(tx) || (c && !aceptable(c))) { aviso.textContent = t('filtro'); return; }
@@ -534,7 +541,7 @@
       if (window.innerWidth < 960) document.getElementById('lienzo').scrollIntoView({ behavior: QUIETO ? 'auto' : 'smooth', block: 'start' });
       setTimeout(function () { lanzar(o); }, window.innerWidth < 960 ? 650 : 50);
       if (navigator.vibrate) navigator.vibrate(30);
-      form.reset(); llenarPaises(); sel.value = p; validar(); cuenta.textContent = '';
+      form.reset(); EMPEZO = 0; llenarPaises(); sel.value = p; validar(); cuenta.textContent = '';
       tarjetaCompartir = null; $('#vuelta').hidden = true;
       form.hidden = true; listo.hidden = false; pintarListo(); contar('estrella-colgada');
     }).catch(function () { enviar.disabled = false; aviso.textContent = t('errorEnvio'); });

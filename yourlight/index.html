@@ -117,6 +117,10 @@
               <input id="ciudad" name="ciudad" type="text" maxlength="40" autocomplete="address-level2">
             </label>
           </div>
+          <!-- Trampa para bots: invisible para las personas. No borrar. -->
+          <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+            <label>Sitio web <input id="sitio" name="sitio" type="text" tabindex="-1" autocomplete="off"></label>
+          </div>
           <button class="boton" id="enviar" type="submit" disabled>
             <svg aria-hidden="true"><use href="#estrella"/></svg>
             <span class="es">Colgar mi estrella</span><span class="en">Hang my star</span>
@@ -216,6 +220,6 @@
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="mapa.js?v=1"></script>
-  <script src="luz.js?v=4"></script>
+  <script src="luz.js?v=5"></script>
 </body>
 </html>
