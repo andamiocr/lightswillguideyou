@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root { --fondo:#F6F5FA; --papel:#FFFFFF; --tinta:#16132F; --gris:#6B6785; --linea:#E6E3F0; --sube:#1E8A5A; --baja:#C2413B; --serif:'Fraunces',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--fondo); color:var(--tinta); font:400 15px/1.5 var(--sans); -webkit-font-smoothing:antialiased; }
+  .envoltura { max-width:1080px; margin:0 auto; padding:20px 16px 60px; }
+  header { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  h1 { margin:0; font:500 2rem/1 var(--serif); letter-spacing:-.01em; }
+  .cuando { color:var(--gris); font-size:.85rem; margin-top:6px; }
+  button { font:inherit; cursor:pointer; }
+  .actualizar { border:1px solid var(--linea); background:var(--papel); border-radius:99px; padding:8px 16px; font-weight:600; }
+  .frase { background:var(--tinta); color:#fff; border-radius:16px; padding:16px 18px; font:400 1.12rem/1.45 var(--serif); margin:0 0 16px; }
+  .frase b { color:#FFD93D; font-weight:500; }
+  .tarjetas { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .tarjeta { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:16px; cursor:pointer; text-align:left; border-top:4px solid var(--c); }
+  .tarjeta.activa { box-shadow:0 0 0 2px var(--c); }
+  .tarjeta h2 { margin:0; font:600 1rem/1.2 var(--sans); }
+  .tarjeta .web { color:var(--gris); font-size:.8rem; }
+  .cifras { display:flex; gap:18px; margin:12px 0 8px; }
+  .cifra small { display:block; color:var(--gris); font-size:.75rem; }
+  .cifra b { font:500 1.9rem/1 var(--serif); }
+  .cifra.chica b { font-size:1.3rem; }
+  .cambio { font-size:.82rem; font-weight:600; }
+  .sube { color:var(--sube); } .baja { color:var(--baja); } .igual { color:var(--gris); }
+  .barritas { display:flex; align-items:flex-end; gap:2px; height:44px; margin-top:6px; }
+  .barritas i { flex:1; background:var(--c); opacity:.35; border-radius:2px 2px 0 0; min-height:2px; }
+  .barritas i.hoy { opacity:1; }
+  .detalle { margin-top:22px; }
+  .detalle > h2 { font:500 1.5rem/1.1 var(--serif); margin:0 0 4px; }
+  .detalle > p { margin:0 0 14px; color:var(--gris); font-size:.88rem; }
+  .rejilla { display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:12px; }
+  .caja { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:16px; }
+  .caja h3 { margin:0 0 2px; font:600 .98rem/1.3 var(--sans); }
+  .caja .nota { margin:0 0 10px; color:var(--gris); font-size:.8rem; }
+  .ancha { grid-column:1 / -1; }
+  .lista { list-style:none; margin:0; padding:0; }
+  .lista li { position:relative; display:flex; justify-content:space-between; gap:10px; padding:7px 8px; border-radius:8px; font-size:.9rem; }
+  .lista li + li { margin-top:3px; }
+  .lista li .fondo { position:absolute; inset:0; border-radius:8px; background:var(--c); opacity:.12; transform-origin:left; }
+  .lista li span, .lista li b { position:relative; }
+  .lista li span small { color:var(--gris); margin-left:6px; font-size:.75rem; }
+  .lista li b { font-variant-numeric:tabular-nums; }
+  .vacio { color:var(--gris); font-size:.86rem; }
+  .grafico { display:flex; align-items:flex-end; gap:3px; height:150px; padding-top:18px; }
+  .grafico div { flex:1; position:relative; background:var(--c); opacity:.75; border-radius:3px 3px 0 0; min-height:2px; }
+  .grafico div:hover { opacity:1; }
+  .grafico div.hoy { opacity:1; }
+  .grafico div span { position:absolute; top:-17px; left:50%; transform:translateX(-50%); font-size:.68rem; color:var(--gris); white-space:nowrap; }
+  .ejes { display:flex; justify-content:space-between; color:var(--gris); font-size:.72rem; margin-top:4px; }
+  .selector { display:inline-flex; background:var(--fondo); border-radius:99px; padding:3px; margin-bottom:8px; }
+  .selector button { border:0; background:none; padding:4px 12px; border-radius:99px; font-size:.8rem; color:var(--gris); }
+  .selector button.si { background:var(--papel); color:var(--tinta); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+  .error { background:#FDECEA; color:#8A2A24; border-radius:10px; padding:8px 10px; font-size:.82rem; margin-top:8px; }
+  .cargando { text-align:center; padding:80px 0; color:var(--gris); font:italic 400 1.2rem var(--serif); }
+  .ayuda { margin-top:26px; color:var(--gris); font-size:.8rem; line-height:1.5; }
+  @media (max-width:520px) { h1 { font-size:1.6rem; } .cifra b { font-size:1.6rem; } }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header>
+    <div><h1>Mis visitas</h1><div class="cuando" id="cuando">Cargando…</div></div>
+    <button class="actualizar" id="actualizar" type="button">Actualizar</button>
+  </header>
+  <div id="contenido"><p class="cargando">Juntando los datos de tus 3 sitios…</p></div>
+</div>
+<script>
+var DATOS = null, ACTIVO = 0, RANGO = 7;
+var PAGINAS = { '/': 'Portada', '/en/': 'Portada (inglés)', '/en': 'Portada (inglés)', '/yourlight/': 'Tu luz · mapa de estrellas', '/tuluz/': 'Tu luz (enlace corto)', '/links/': 'Links de la bio', '/info/': 'Info · bio de Andamio', '/stillstanding/': 'STILL STANDING', '/checkin/': 'Check-in', '/404.html': 'Página no encontrada' };
+var ACCIONES = {
+  'estrella-colgada': 'Colgaron una estrella', 'compartir-historia': 'Tocaron «Compartir en historias»', 'compartido': 'Compartieron su estrella', 'descargar-imagen': 'Descargaron la imagen',
+  'ver-imagen': 'Abrieron la imagen en grande', 'whatsapp': 'Compartieron por WhatsApp', 'seguir-instagram': 'Fueron a seguir el show en Instagram', 'copiar-enlace': 'Copiaron el enlace',
+  'limite-diario': 'Llegaron al límite de 10 estrellas', 'abrir-fuera': 'Intentaron salir de Instagram', 'llego-desde-app': 'Salieron de Instagram con éxito', 'no-se-abrio-navegador': 'No pudieron salir de Instagram',
+  'portada-tu-luz': 'Portada → botón Tu luz', 'tu-luz': 'Links → Tu luz', 'fix-you': 'Links → Fix You', 'teaser': 'Links → Teaser', 'spotify': 'Links → Spotify', 'spotify-app': 'Links → abrir Spotify',
+  'web': 'Links → sitio web', 'contratar': 'Links → Contratar el show'
+};
+function bonitoPagina(p) { if (PAGINAS[p]) return PAGINAS[p]; return p; }
+function bonitoAccion(p) {
+  if (ACCIONES[p]) return ACCIONES[p];
+  var m = /^red-(.+)$/.exec(p); if (m) return 'Links → ' + m[1].charAt(0).toUpperCase() + m[1].slice(1);
+  m = /^(clic|info-clic): ?(.+)$/.exec(p); if (m) return 'Clic en «' + m[2] + '»';
+  return p;
+}
+function bonitoFuente(n) {
+  n = String(n || '').toLowerCase();
+  if (!n || n === '(unknown)' || n === 'unknown') return 'Directo (escribieron la dirección o desde una app)';
+  if (/instagram/.test(n)) return 'Instagram';
+  if (/facebook|fb\.|^m\.facebook/.test(n)) return 'Facebook';
+  if (/google/.test(n)) return 'Google';
+  if (/whatsapp|wa\.me/.test(n)) return 'WhatsApp';
+  if (/tiktok/.test(n)) return 'TikTok';
+  if (/youtube|youtu\.be/.test(n)) return 'YouTube';
+  if (/bing/.test(n)) return 'Bing';
+  if (/t\.co$|twitter|x\.com/.test(n)) return 'X (Twitter)';
+  if (/linktr/.test(n)) return 'Linktree';
+  if (/threads/.test(n)) return 'Threads';
+  if (/lightswillguideyou/.test(n)) return 'Desde el mismo sitio del show';
+  if (/andamiocr/.test(n)) return 'Desde andamiocr.com';
+  if (/persona\.cr/.test(n)) return 'Desde persona.cr';
+  return n;
+}
+var NOMPAIS = (function () { try { var d = new Intl.DisplayNames(['es'], { type: 'region' }); return function (c) { try { return d.of(c) || c; } catch (e) { return c; } }; } catch (e) { return function (c) { return c; }; } })();
+function bonitoPais(it) { var id = String(it.id || '').split('-')[0].toUpperCase(); if (!id || id === '(UNKNOWN)') return 'Desconocido'; return /^[A-Z]{2}$/.test(id) ? NOMPAIS(id) : (it.name || id); }
+function bonitoAparato(it) {
+  var s = String(it.id || it.name || '').toLowerCase();
+  if (/phone|tel/.test(s)) return 'Teléfono'; if (/tablet/.test(s)) return 'Tablet'; if (/desktop|computer|hd/.test(s)) return 'Computadora'; return 'Desconocido';
+}
+function n(x) { return (x || 0).toLocaleString('es-CR'); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function cambio(a, b) {
+  if (!b && !a) return '<span class="cambio igual">igual</span>';
+  if (!b) return '<span class="cambio sube">nuevo</span>';
+  var p = Math.round((a - b) / b * 100);
+  return p > 0 ? '<span class="cambio sube">↑ ' + p + '%</span>' : p < 0 ? '<span class="cambio baja">↓ ' + Math.abs(p) + '%</span>' : '<span class="cambio igual">igual</span>';
+}
+function serie(s) { return (s.total && s.total.stats ? s.total.stats : []).map(function (d) { return { dia: d.day, n: d.daily || 0 }; }); }
+function suma(a, desde, hasta) { var t = 0; for (var i = Math.max(0, desde); i < Math.min(a.length, hasta); i++) t += a[i].n; return t; }
+function resumen(s) {
+  var a = serie(s), L = a.length;
+  return { hoy: L ? a[L - 1].n : 0, ayer: L > 1 ? a[L - 2].n : 0, sem: suma(a, L - 7, L), semAnt: suma(a, L - 14, L - 7), mes: suma(a, L - 30, L), mesAnt: suma(a, L - 60, L - 30), a: a };
+}
+function hits(s, eventos, dias) {
+  var h = (s.paginas && s.paginas.hits) || [];
+  return h.filter(function (x) { return !!x.event === eventos; }).map(function (x) {
+    var st = x.stats || [], c = dias >= 30 ? (x.count || 0) : st.slice(-dias).reduce(function (t, d) { return t + (d.daily || 0); }, 0);
+    return { nombre: eventos ? bonitoAccion(x.path) : bonitoPagina(x.path), extra: eventos ? '' : x.path, n: c };
+  }).filter(function (x) { return x.n > 0; }).sort(function (a, b) { return b.n - a.n; });
+}
+function agrupar(items, f) {
+  var m = {}; items.forEach(function (it) { var k = f(it); m[k] = (m[k] || 0) + (it.count || 0); });
+  return Object.keys(m).map(function (k) { return { nombre: k, n: m[k] }; }).sort(function (a, b) { return b.n - a.n; });
+}
+function lista(items, max, vacio) {
+  items = items.slice(0, max || 10);
+  if (!items.length) return '<p class="vacio">' + (vacio || 'Todavía no hay datos.') + '</p>';
+  var top = items[0].n || 1;
+  return '<ul class="lista">' + items.map(function (it) {
+    return '<li><i class="fondo" style="transform:scaleX(' + (it.n / top).toFixed(3) + ')"></i><span>' + esc(it.nombre) + (it.extra && it.extra !== it.nombre ? '<small>' + esc(it.extra) + '</small>' : '') + '</span><b>' + n(it.n) + '</b></li>';
+  }).join('') + '</ul>';
+}
+
+function pintar() {
+  var d = DATOS, tot = { hoy: 0, ayer: 0, sem: 0, semAnt: 0 }, mejor = null, rs = [];
+  document.getElementById('cuando').textContent = 'Datos de hoy, ' + d.generado + ' · se guardan 20 min';
+  d.sitios.forEach(function (s, i) { var r = resumen(s); rs[i] = r; ['hoy', 'ayer', 'sem', 'semAnt'].forEach(function (k) { tot[k] += r[k]; }); if (!mejor || r.ayer > mejor.r.ayer) mejor = { s: s, r: r }; });
+  // Frase de resumen
+  var lwgy = d.sitios[0], acc = hits(lwgy, true, 1), estrellas = acc.filter(function (a) { return a.nombre === ACCIONES['estrella-colgada']; })[0];
+  var fuentesAyer = agrupar((lwgy.fuentes && lwgy.fuentes.stats) || [], function (x) { return bonitoFuente(x.name); });
+  var frase = 'Ayer tuviste <b>' + n(tot.ayer) + ' visitas</b> en total' + (tot.ayer ? ', sobre todo en <b>' + esc(mejor.s.nombre) + '</b>' : '') + '. ' +
+    'Esta semana: <b>' + n(tot.sem) + '</b> ' + (tot.semAnt ? '(' + (tot.sem >= tot.semAnt ? 'más' : 'menos') + ' que la semana pasada)' : '') + '. ' +
+    'Hoy van <b>' + n(tot.hoy) + '</b>.' +
+    (fuentesAyer.length ? ' La gente llega más que todo desde <b>' + esc(fuentesAyer[0].nombre) + '</b>.' : '') +
+    (estrellas ? ' Hoy se colgaron <b>' + n(estrellas.n) + ' estrellas</b>.' : '');
+  var h = '<p class="frase">' + frase + '</p><div class="tarjetas">';
+  d.sitios.forEach(function (s, i) {
+    var r = rs[i], top = Math.max.apply(null, r.a.slice(-30).map(function (x) { return x.n; }).concat([1]));
+    h += '<button class="tarjeta' + (i === ACTIVO ? ' activa' : '') + '" style="--c:' + s.color + '" data-i="' + i + '" type="button"><h2>' + esc(s.nombre) + '</h2><span class="web">' + esc(s.web) + '</span>' +
+      '<div class="cifras"><div class="cifra"><small>Hoy</small><b>' + n(r.hoy) + '</b></div><div class="cifra chica"><small>Ayer</small><b>' + n(r.ayer) + '</b></div><div class="cifra chica"><small>7 días</small><b>' + n(r.sem) + '</b> ' + cambio(r.sem, r.semAnt) + '</div></div>' +
+      '<div class="barritas" title="Últimos 30 días">' + r.a.slice(-30).map(function (x, k, arr) { return '<i class="' + (k === arr.length - 1 ? 'hoy' : '') + '" style="height:' + Math.max(3, x.n / top * 100) + '%"></i>'; }).join('') + '</div>' +
+      (s.error ? '<div class="error">' + esc(s.error) + '</div>' : '') + '</button>';
+  });
+  h += '</div>' + detalle(d.sitios[ACTIVO], rs[ACTIVO]) +
+    '<p class="ayuda">«Visitas» = personas distintas por día (GoatCounter no usa cookies, así que es un cálculo aproximado). Las fuentes, países y aparatos son de los últimos 7 días. Tocá una tarjeta para ver el detalle de ese sitio.</p>';
+  document.getElementById('contenido').innerHTML = h;
+  Array.prototype.forEach.call(document.querySelectorAll('.tarjeta'), function (b) { b.onclick = function () { ACTIVO = +b.getAttribute('data-i'); pintar(); }; });
+  Array.prototype.forEach.call(document.querySelectorAll('.selector button'), function (b) { b.onclick = function () { RANGO = +b.getAttribute('data-r'); pintar(); }; });
+}
+
+function detalle(s, r) {
+  if (!s.total) return '<section class="detalle"><h2>' + esc(s.nombre) + '</h2><p>No pude traer los datos de este sitio.</p></section>';
+  var a = r.a.slice(-30), top = Math.max.apply(null, a.map(function (x) { return x.n; }).concat([1]));
+  var sel = '<div class="selector"><button data-r="1" class="' + (RANGO === 1 ? 'si' : '') + '">Hoy</button><button data-r="7" class="' + (RANGO === 7 ? 'si' : '') + '">7 días</button><button data-r="30" class="' + (RANGO === 30 ? 'si' : '') + '">30 días</button></div>';
+  var nomR = RANGO === 1 ? 'hoy' : 'los últimos ' + RANGO + ' días';
+  var fecha = function (x) { var p = x.dia.split('-'); return +p[2] + '/' + +p[1]; };
+  var h = '<section class="detalle" style="--c:' + s.color + '"><h2>' + esc(s.nombre) + '</h2><p>' + esc(s.web) + ' · 30 días: ' + n(r.mes) + ' visitas ' + cambio(r.mes, r.mesAnt) + ' frente a los 30 anteriores</p><div class="rejilla">';
+  h += '<div class="caja ancha"><h3>Visitas por día</h3><p class="nota">Últimos 30 días. La barra más fuerte es hoy.</p><div class="grafico">' +
+    a.map(function (x, k) { return '<div class="' + (k === a.length - 1 ? 'hoy' : '') + '" style="height:' + Math.max(1.5, x.n / top * 100) + '%" title="' + fecha(x) + ': ' + x.n + ' visitas">' + (x.n === top && x.n ? '<span>' + x.n + '</span>' : '') + '</div>'; }).join('') +
+    '</div><div class="ejes"><span>' + (a[0] ? fecha(a[0]) : '') + '</span><span>' + (a.length > 15 ? fecha(a[15]) : '') + '</span><span>hoy</span></div></div>';
+  h += '<div class="caja"><h3>Páginas más vistas</h3><p class="nota">' + sel + '</p>' + lista(hits(s, false, RANGO), 10, 'Nadie visitó en ' + nomR + '.') + '</div>';
+  h += '<div class="caja"><h3>Lo que hizo la gente</h3><p class="nota">' + sel + '</p>' + lista(hits(s, true, RANGO), 14, 'Ningún clic contado en ' + nomR + '.') + '</div>';
+  h += '<div class="caja"><h3>De dónde llegan</h3><p class="nota">Últimos 7 días</p>' + lista(agrupar((s.fuentes && s.fuentes.stats) || [], function (x) { return bonitoFuente(x.name); }), 8) +
+    '<p class="nota" style="margin-top:12px">Hoy</p>' + lista(agrupar((s.fuentesHoy && s.fuentesHoy.stats) || [], function (x) { return bonitoFuente(x.name); }), 4, 'Todavía nadie hoy.') + '</div>';
+  h += '<div class="caja"><h3>Países</h3><p class="nota">Últimos 7 días</p>' + lista(agrupar((s.paises && s.paises.stats) || [], bonitoPais), 10) + '</div>';
+  h += '<div class="caja"><h3>Teléfono o computadora</h3><p class="nota">Últimos 7 días</p>' + lista(agrupar((s.aparatos && s.aparatos.stats) || [], bonitoAparato), 4) +
+    '<p class="nota" style="margin-top:12px">Sistema</p>' + lista(agrupar((s.sistemas && s.sistemas.stats) || [], function (x) { return x.name || 'Otro'; }), 5) +
+    '<p class="nota" style="margin-top:12px">Navegador</p>' + lista(agrupar((s.navegadores && s.navegadores.stats) || [], function (x) { return x.name || 'Otro'; }), 5) + '</div>';
+  return h + '</div></section>';
+}
+
+function cargar(forzar) {
+  document.getElementById('cuando').textContent = 'Cargando…';
+  google.script.run.withSuccessHandler(function (j) { DATOS = JSON.parse(j); pintar(); })
+    .withFailureHandler(function (e) { document.getElementById('contenido').innerHTML = '<p class="error">No se pudo cargar: ' + esc(e && e.message) + '</p>'; })
+    .datos(!!forzar);
+}
+document.getElementById('actualizar').onclick = function () { cargar(true); };
+cargar(false);
+</script>
+</body>
+</html>
