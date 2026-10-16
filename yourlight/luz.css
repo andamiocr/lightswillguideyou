@@ -159,7 +159,7 @@ h2 { margin: 0; font: 400 clamp(1.7rem, 3vw, 2.3rem)/1.1 var(--serif); font-vari
 .ultimas li { break-inside: avoid; margin: 0 0 1.6rem; }
 .ultimas q { display: block; font: italic 400 1.2rem/1.3 var(--serif); quotes: '“' '”'; overflow-wrap: anywhere; }
 .ultimas small { display: block; margin-top: .35rem; color: var(--bruma); font-size: .82rem; }
-.ultimas li.propia q { color: var(--orbe); }
+.ultimas li.propia { --c: var(--orbe); }
 
 .escenario { padding: clamp(3rem, 7vw, 5rem) 0 clamp(3.5rem, 8vw, 6rem); background: linear-gradient(var(--noche), #0A1838); text-align: center; }
 .escenario .logo { display: block; width: clamp(150px, 20vw, 210px); aspect-ratio: 1612 / 1240; margin: 0 auto clamp(1.8rem, 4vw, 2.6rem); fill: var(--papel); }
@@ -261,15 +261,10 @@ body.con-visor { overflow: hidden; }
 
 /* Últimas luces: cada una con su color */
 .ultimas li { --c: var(--papel); }
-.ultimas q { color: var(--c); }
-.ultimas li.propia q { color: var(--orbe); }
-
-/* Luces sin nombre */
-.sin-nombre { margin-bottom: 3rem; }
-.chispas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
-.chispas li { --c: var(--orbe); padding: .5rem .95rem .55rem; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 12%, transparent);
-  color: var(--c); font: italic 400 1.08rem/1.25 var(--serif); box-shadow: 0 0 18px color-mix(in srgb, var(--c) 18%, transparent); overflow-wrap: anywhere; }
-.chispas li::before { content: '✦ '; font-style: normal; }
+.ultimas q { display: inline-block; max-width: 100%; color: var(--c); padding: .5rem 1rem .55rem; border-radius: 1.4rem; font-size: 1.12rem;
+  border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 11%, transparent); box-shadow: 0 0 18px color-mix(in srgb, var(--c) 16%, transparent); }
+.ultimas small { margin: .45rem 0 0 1rem; }
+.ultimas li.propia { --c: var(--orbe); }
 
 /* Abajo: arcoíris de luz y una multitud con pulseras de colores */
 .escenario { position: relative; overflow: hidden; isolation: isolate; padding-bottom: clamp(6rem, 14vw, 9rem); }

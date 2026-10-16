@@ -566,14 +566,6 @@
       var sm = document.createElement('small'); sm.textContent = [l.c, nombrePais(l.p)].filter(Boolean).join(', ');
       li.append(q, sm); ultimas.appendChild(li);
     });
-    // Luces sin nombre: las respuestas que no son una persona ni una mascota
-    var vistos = {}, abs = luces.filter(function (l) { var k = norm(l.t); if (vistos[k] || !esAbstracta(l.t)) return false; vistos[k] = 1; return true; }).sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8);
-    $('#sinNombre').hidden = abs.length < 2;
-    var ch = $('#chispas'); ch.innerHTML = '';
-    abs.forEach(function (l, i) {
-      var li = document.createElement('li'); li.textContent = l.t; li.style.setProperty('--c', COLOR_LUZ[(i + 2) % COLOR_LUZ.length]);
-      li.title = [l.c, nombrePais(l.p)].filter(Boolean).join(', '); ch.appendChild(li);
-    });
   }
 
   /* ---------- Cargar desde Google Sheets ---------- */
