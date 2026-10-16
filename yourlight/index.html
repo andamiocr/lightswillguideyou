@@ -10,9 +10,9 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Lights Will Guide You Show">
   <meta property="og:title" content="Who is the light that guides you?">
-  <meta property="og:description" content="Hang your star over your country in the Lights Will Guide You sky. ¿Quién es la luz que te guía?">
+  <meta property="og:description" content="A person, a dream, a song, a memory… whatever lights you up. Hang your star over your country in the Lights Will Guide You sky.">
   <meta property="og:url" content="https://www.lightswillguideyou.com/yourlight/">
-  <meta property="og:image" content="https://www.lightswillguideyou.com/yourlight/og.jpg">
+  <meta property="og:image" content="https://www.lightswillguideyou.com/yourlight/og-en.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..600,0..100&display=swap">
-  <link rel="stylesheet" href="luz.css?v=5">
+  <link rel="stylesheet" href="luz.css?v=6">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebPage","name":"Who is the light that guides you?","url":"https://www.lightswillguideyou.com/yourlight/","inLanguage":["en","es"],"isPartOf":{"@id":"https://www.lightswillguideyou.com/#web"},"about":{"@id":"https://www.lightswillguideyou.com/#obra"}}
   </script>
@@ -71,13 +71,23 @@
 
       <div class="cabecera">
         <h1 id="titulo"><span class="es">¿Quién es la luz que te&nbsp;guía?</span><span class="en">Who is the light that guides&nbsp;you?</span></h1>
+        <p class="abanico">
+          <span class="es">Puede ser una persona, un sueño, una canción, un recuerdo, un lugar… lo que te ilumina.</span>
+          <span class="en">It can be a person, a dream, a song, a memory, a place… whatever lights you up.</span>
+        </p>
         <p class="bajada">
           <span class="es">Cada estrella de este cielo es la respuesta de alguien. Escribí la tuya y colgala sobre tu país.</span>
           <span class="en">Every star in this sky is someone's answer. Write yours and hang it over your country.</span>
         </p>
         <p class="contador" id="contador" aria-live="polite"></p>
       </div>
-      <p class="pista" id="pista"><span class="es">Deslizá para recorrer el mundo. Tocá una estrella para leerla.</span><span class="en">Swipe to travel the world. Tap a star to read it.</span></p>
+      <div class="zoom" id="zoom">
+        <button type="button" id="zoomMas" aria-label="Acercar / Zoom in">+</button>
+        <button type="button" id="zoomMenos" aria-label="Alejar / Zoom out" disabled>&minus;</button>
+        <button type="button" class="zoom-mundo" id="zoomMundo" hidden><span class="es">Ver todo el mundo</span><span class="en">See the whole world</span></button>
+        <p class="zoom-pais" id="zoomPais" aria-live="polite"></p>
+      </div>
+      <p class="pista" id="pista"><span class="es">Tocá un país para acercarte. Tocá una estrella para leerla.</span><span class="en">Tap a country to zoom in. Tap a star to read it.</span></p>
 
       <div class="mar" aria-hidden="true">
         <svg class="ola ola--3" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0 30 Q75 14 150 30 T300 30 T450 30 T600 30 T750 30 T900 30 T1050 30 T1200 30 V60 H0Z"/></svg>
@@ -177,6 +187,11 @@
           <ol class="ranking" id="ranking"></ol>
         </div>
         <div>
+          <div class="sin-nombre" id="sinNombre" hidden>
+            <h2><span class="es">Luces sin nombre</span><span class="en">Lights without a name</span></h2>
+            <p class="nota"><span class="es">No todas las luces son personas.</span><span class="en">Not every light is a person.</span></p>
+            <ul class="chispas" id="chispas"></ul>
+          </div>
           <h2><span class="es">Las últimas luces</span><span class="en">The latest lights</span></h2>
           <ul class="ultimas" id="ultimas"></ul>
         </div>
@@ -184,6 +199,8 @@
     </section>
 
     <section class="escenario">
+      <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="multitud" id="multitud" aria-hidden="true"></div>
       <div class="envoltura">
         <svg class="logo" role="img" aria-label="Lights Will Guide You"><use href="#logo"/></svg>
         <p class="promesa">
@@ -220,6 +237,6 @@
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="mapa.js?v=1"></script>
-  <script src="luz.js?v=5"></script>
+  <script src="luz.js?v=6"></script>
 </body>
 </html>

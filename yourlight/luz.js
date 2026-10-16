@@ -24,7 +24,7 @@
       vacio: 'Todavía no hay luces. Colgá la primera.',
       rankVacio: 'Cuando se cuelguen las primeras luces, aquí vas a ver qué país brilla más.',
       ultVacio: 'Las primeras luces van a aparecer aquí.',
-      ejemplos: ['mi mamá', 'la canción que me sacó adelante', 'mi hija', 'mi abuelo, que ya no está', 'mi mejor amiga', 'la música', 'mi perro Toby'],
+      ejemplos: ['mi mamá', 'mis sueños', 'la canción que me sacó adelante', 'el mar', 'mi hija', 'volver a empezar', 'mi abuelo, que ya no está', 'la música', 'las ganas de seguir', 'mi perro Toby', 'un recuerdo de mi infancia', 'mi mejor amiga'],
       faltaTexto: 'Escribí quién es tu luz.', faltaPais: 'Elegí desde qué país la colgás.',
       filtro: 'Probá con otras palabras. No publicamos enlaces, correos, teléfonos ni insultos.',
       espera: 'Esperá unos segundos antes de colgar otra estrella.',
@@ -32,6 +32,7 @@
       listo: function (p) { return 'Tu estrella ya cuelga sobre ' + p + '.'; },
       tuLuz: 'Tu luz', miLuz: 'La luz que me guía es…', pregunta: '¿Quién es la luz que te guía?',
       tipo: ['Un espectáculo de teatro, danza', 'y música en vivo inspirado en Coldplay'], cta: 'Colgá tu estrella en lightswillguideyou.com/tuluz', copiado: '¡Enlace copiado!',
+      nLuces: function (n) { return n === 1 ? '1 luz' : n + ' luces'; }, verPais: 'Ver este país en el mapa',
       wa: function (t) { return 'Mi luz es "' + t + '". Colgué mi estrella en el cielo de Lights Will Guide You. ¿Quién es la tuya? '; },
       compartirTxt: '¿Quién es la luz que te guía? Colgá tu estrella:',
       limite: function (n) { return 'Hoy ya colgaste ' + n + ' estrellas desde este teléfono. Mañana podés colgar más.'; },
@@ -54,7 +55,7 @@
       vacio: 'No lights yet. Hang the first one.',
       rankVacio: 'Once the first lights are hung, you will see which country shines brightest here.',
       ultVacio: 'The first lights will appear here.',
-      ejemplos: ['my mom', 'the song that got me through', 'my daughter', 'my grandpa, who is gone now', 'my best friend', 'music', 'my dog Toby'],
+      ejemplos: ['my mom', 'my dreams', 'the song that got me through', 'the ocean', 'my daughter', 'starting over', 'my grandpa, who is gone now', 'music', 'the will to keep going', 'my dog Toby', 'a childhood memory', 'my best friend'],
       faltaTexto: 'Write who your light is.', faltaPais: 'Choose the country you are hanging it from.',
       filtro: 'Try other words. We do not publish links, emails, phone numbers or insults.',
       espera: 'Wait a few seconds before hanging another star.',
@@ -62,6 +63,7 @@
       listo: function (p, c) { return 'Your star now hangs over ' + (CON_THE.indexOf(c) > -1 ? 'the ' : '') + p + '.'; },
       tuLuz: 'Your light', miLuz: 'The light that guides me is…', pregunta: 'Who is the light that guides you?',
       tipo: ['A theatre, dance and live music show', 'inspired by Coldplay'], cta: 'Hang your star at lightswillguideyou.com/yourlight', copiado: 'Link copied!',
+      nLuces: function (n) { return n === 1 ? '1 light' : n + ' lights'; }, verPais: 'See this country on the map',
       wa: function (t) { return 'My light is "' + t + '". I hung my star in the Lights Will Guide You sky. Who is yours? '; },
       compartirTxt: 'Who is the light that guides you? Hang your star:',
       limite: function (n) { return 'You have hung ' + n + ' stars from this device today. You can hang more tomorrow.'; },
@@ -188,26 +190,28 @@
     if (movil) mh = Math.min(mh, W * 1.15);
     var mw = mh * A;
     if (!movil && mw > W * 0.96) { mw = W * 0.96; mh = mw / A; }
-    mapa.w = mw; mapa.h = mh; mapa.celda = mw / M.cols;
-    mapa.y = Math.max(arriba, marTop - H * 0.02 - mh);
+    var f = mapa.w ? focoActual() : null;
+    mapa.w0 = mw; mapa.h0 = mh; mapa.y0 = Math.max(arriba, marTop - H * 0.02 - mh);
+    mapa.w = mw; mapa.h = mh; mapa.celda = mw / M.cols; mapa.y = mapa.y0;
     var pad = 28;
     panMax = Math.max(0, mw + pad * 2 - W);
     mapa.base = panMax ? pad : (W - mw) / 2;
     pan = Math.min(pan, panMax);
-    pintarCapas(); ubicarTodas();
+    pintarCapas();
+    if (Z > 1 && f) aplicarZoom(f.u, f.v); else ubicarTodas();
   }
 
   function pintarCapas() {
     // Puntos de tierra
     capaMapa = document.createElement('canvas');
-    capaMapa.width = Math.ceil(mapa.w * DPR); capaMapa.height = Math.ceil(mapa.h * DPR);
+    capaMapa.width = Math.ceil(mapa.w0 * DPR); capaMapa.height = Math.ceil(mapa.h0 * DPR);
     var g = capaMapa.getContext('2d'); g.scale(DPR, DPR);
-    var bits = atob(M.land), cel = mapa.celda, r = Math.max(.7, cel * .2);
+    var bits = atob(M.land), cel = mapa.w0 / M.cols, r = Math.max(.7, cel * .2);
     g.fillStyle = 'rgba(169,164,198,.20)';
     for (var i = 0, n = M.cols * M.rows; i < n; i++) {
       if (bits.charCodeAt(i >> 3) & (1 << (i & 7))) {
         var c = i % M.cols, f = (i / M.cols) | 0;
-        g.beginPath(); g.arc((c + .5) * cel, (f + .5) * cel * (mapa.h / mapa.w) * A, r, 0, 6.283); g.fill();
+        g.beginPath(); g.arc((c + .5) * cel, (f + .5) * cel * (mapa.h0 / mapa.w0) * A, r, 0, 6.283); g.fill();
       }
     }
     // Polvo de estrellas reales, muy tenue
@@ -277,7 +281,19 @@
     cx.clearRect(0, 0, W, H);
     if (capaFondo) cx.drawImage(capaFondo, 0, 0, W, H);
     var ox = origenX(), oy = mapa.y;
-    cx.drawImage(capaMapa, ox, oy, mapa.w, mapa.h);
+    var corte = Z > 1.001 ? mapa.y0 - 12 : -1e9;
+    if (Z <= 1.001) cx.drawImage(capaMapa, ox, oy, mapa.w, mapa.h);
+    else {
+      // Con zoom: se dibujan solo los puntos de tierra que caben en pantalla
+      var cel = mapa.celda, rr = Math.min(3.4, Math.max(.7, cel * .2)), k0 = mapa.h / M.rows;
+      cx.fillStyle = 'rgba(169,164,198,.22)'; cx.beginPath();
+      for (var ti = 0; ti < TIERRA.length; ti++) {
+        var px = ox + (TIERRA[ti][0] + .5) * cel; if (px < -4 || px > W + 4) continue;
+        var py = oy + (TIERRA[ti][1] + .5) * k0; if (py < corte || py > H + 4) continue;
+        cx.moveTo(px + rr, py); cx.arc(px, py, rr, 0, 6.283);
+      }
+      cx.fill();
+    }
     ultimaPos.length = 0;
     // Hilos
     cx.lineWidth = 1;
@@ -286,7 +302,7 @@
     var pos = [];
     for (var i = 0; i < luces.length; i++) {
       var l = luces[i], hx = ox + l.mx, L = oy + l.my;
-      if (hx < -30 || hx > W + 30) { pos.push(null); continue; }
+      if (hx < -30 || hx > W + 30 || L < corte) { pos.push(null); continue; }
       var th = QUIETO ? 0 : Math.sin(s * .9 * l.vel + l.fase) * 0.012;
       var x = hx + Math.sin(th) * L, y = Math.cos(th) * L, gotas = 1, alfa = 1;
       if (l.nace != null) {
@@ -331,10 +347,11 @@
   }
   function bucle(ts) {
     if (panObj !== null) { pan += (panObj - pan) * .08; if (Math.abs(panObj - pan) < .5) { pan = panObj; panObj = null; } }
+    if (animZ) pasoZoom(ts);
     dibujar(ts); flotar(ts);
     if (vivo) requestAnimationFrame(bucle);
   }
-  function despertar() { if (QUIETO && !vuelo) { dibujar(performance.now()); return; } if (!vivo) { vivo = true; requestAnimationFrame(bucle); } }
+  function despertar() { if (QUIETO && !vuelo && !animZ) { dibujar(performance.now()); return; } if (!vivo) { vivo = true; requestAnimationFrame(bucle); } }
   function redibujar() { if (QUIETO || !vivo) dibujar(performance.now()); }
 
   /* ---------- Vuelo de la luz: del barquito a su lugar en el cielo ---------- */
@@ -416,25 +433,95 @@
 
   /* ---------- Arrastrar para recorrer el mundo ---------- */
   var arr = null, pista = $('#pista');
-  cv.addEventListener('pointerdown', function (e) { arr = { x: e.clientX, y: e.clientY, pan: pan, mov: false, id: e.pointerId }; panObj = null; });
+  cv.addEventListener('pointerdown', function (e) { arr = { x: e.clientX, y: e.clientY, pan: pan, my: mapa.y, mov: false, id: e.pointerId }; panObj = null; });
   cv.addEventListener('pointermove', function (e) {
     var r = cv.getBoundingClientRect();
     if (arr && arr.id === e.pointerId) {
-      var dx = e.clientX - arr.x;
-      if (!arr.mov && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(e.clientY - arr.y)) { arr.mov = true; cv.classList.add('is-arrastre'); try { cv.setPointerCapture(e.pointerId); } catch (er) {} if (pista) pista.classList.add('is-fuera'); mostrar(null); }
-      if (arr.mov) { pan = Math.max(0, Math.min(panMax, arr.pan - dx)); redibujar(); }
+      var dx = e.clientX - arr.x, dy = e.clientY - arr.y;
+      if (!arr.mov && (Z > 1.001 ? Math.hypot(dx, dy) > 6 : Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy))) { arr.mov = true; cv.classList.add('is-arrastre'); try { cv.setPointerCapture(e.pointerId); } catch (er) {} if (pista) pista.classList.add('is-fuera'); mostrar(null); }
+      if (arr.mov) {
+        pan = Math.max(0, Math.min(panMax, arr.pan - dx));
+        if (Z > 1.001) { mapa.y = Math.max(mapa.y0 + mapa.h0 - mapa.h, Math.min(mapa.y0, arr.my + dy)); ubicarTodas(); }
+        redibujar();
+      }
       return;
     }
     if (e.pointerType === 'mouse') { var p = buscar(e.clientX - r.left, e.clientY - r.top, 14); cv.style.cursor = p ? 'pointer' : ''; if ((p && p[2]) !== marcada) mostrar(p); }
   });
   function soltar(e) {
     if (!arr) return;
-    if (!arr.mov) { var r = cv.getBoundingClientRect(); mostrar(buscar(e.clientX - r.left, e.clientY - r.top, e.pointerType === 'mouse' ? 14 : 26)); }
+    if (!arr.mov) {
+      var r = cv.getBoundingClientRect(), tx = e.clientX - r.left, ty = e.clientY - r.top;
+      var est = buscar(tx, ty, e.pointerType === 'mouse' ? 14 : 26);
+      mostrar(est);
+      if (!est) { var pp = paisEn(tx, ty); if (pp && (pp !== paisZoom || Z < 2.5)) acercarPais(pp); }
+    }
     cv.classList.remove('is-arrastre'); arr = null;
   }
   cv.addEventListener('pointerup', soltar);
   cv.addEventListener('pointercancel', function () { cv.classList.remove('is-arrastre'); arr = null; });
   cv.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && !arr) mostrar(null); });
+  /* ---------- Zoom: tocar un país o usar los botones ---------- */
+  var TIERRA = [];
+  (function () { var bits = atob(M.land); for (var i = 0, n = M.cols * M.rows; i < n; i++) if (bits.charCodeAt(i >> 3) & (1 << (i & 7))) TIERRA.push([i % M.cols, (i / M.cols) | 0]); })();
+  var Z = 1, ZMAX = 6, animZ = null, paisZoom = null;
+  var zMas = $('#zoomMas'), zMenos = $('#zoomMenos'), zMundo = $('#zoomMundo'), zPais = $('#zoomPais');
+  function focoActual() {
+    return { u: (pan + W / 2 - mapa.base) / mapa.w, v: Z > 1.001 ? (mapa.y0 + mapa.h0 / 2 - mapa.y) / mapa.h : .5 };
+  }
+  function aplicarZoom(u, v) {
+    var mw = mapa.w0 * Z, mh = mapa.h0 * Z, pad = 28;
+    mapa.w = mw; mapa.h = mh; mapa.celda = mw / M.cols;
+    panMax = Math.max(0, mw + pad * 2 - W);
+    mapa.base = panMax ? pad : (W - mw) / 2;
+    pan = Math.max(0, Math.min(panMax, u * mw + mapa.base - W / 2));
+    mapa.y = Z > 1.001 ? Math.max(mapa.y0 + mapa.h0 - mh, Math.min(mapa.y0, mapa.y0 + mapa.h0 / 2 - v * mh)) : mapa.y0;
+    ubicarTodas();
+  }
+  function zoomA(z, u, v) {
+    z = Math.max(1, Math.min(ZMAX, z));
+    var f = focoActual();
+    if (u == null) { u = f.u; v = f.v; }
+    if (z <= 1.001) v = .5;
+    mostrar(null);
+    if (QUIETO) { Z = z; aplicarZoom(u, v); finZoom(); redibujar(); return; }
+    animZ = { t0: performance.now(), z0: Z, z1: z, u0: f.u, v0: f.v, u1: u, v1: v };
+    despertar();
+  }
+  function pasoZoom(ts) {
+    var k = Math.min(1, (ts - animZ.t0) / 650), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    Z = animZ.z0 * Math.pow(animZ.z1 / animZ.z0, e);
+    aplicarZoom(animZ.u0 + (animZ.u1 - animZ.u0) * e, animZ.v0 + (animZ.v1 - animZ.v0) * e);
+    if (k >= 1) { Z = animZ.z1; animZ = null; finZoom(); }
+  }
+  function finZoom() {
+    var dentro = Z > 1.001;
+    if (!dentro) { Z = 1; paisZoom = null; }
+    cv.style.touchAction = dentro ? 'none' : '';
+    zMenos.disabled = !dentro; zMas.disabled = Z >= ZMAX - .01; zMundo.hidden = !dentro;
+    if (paisZoom && dentro) {
+      var n = luces.filter(function (l) { return l.p === paisZoom; }).length;
+      zPais.textContent = nombrePais(paisZoom) + (n ? ' · ' + t('nLuces')(n) : '');
+    } else zPais.textContent = '';
+    if (pista && dentro) pista.classList.add('is-fuera');
+  }
+  function paisEn(px, py) {
+    var lng = M.lon0 + (px - origenX()) / mapa.w * (M.lon1 - M.lon0), lat = M.lat0 - (py - mapa.y) / mapa.h * (M.lat0 - M.lat1);
+    if (lat > M.lat0 + 5 || lat < M.lat1 - 5) return null;
+    var mejor = null, d = 9 / Math.sqrt(Z), c = Math.cos(lat * Math.PI / 180);
+    Object.keys(M.c).forEach(function (k) { if (k === 'ZZ') return; var dd = Math.hypot((M.c[k][1] - lng) * c, M.c[k][0] - lat); if (dd < d) { d = dd; mejor = k; } });
+    return mejor;
+  }
+  function acercarPais(p) {
+    if (!M.c[p]) return;
+    paisZoom = p; contar('zoom-pais');
+    var ll = M.c[p];
+    zoomA(Math.max(Z * 1.6, 3.2), (ll[1] - M.lon0) / (M.lon1 - M.lon0), (M.lat0 - ll[0]) / (M.lat0 - M.lat1));
+  }
+  zMas.addEventListener('click', function () { paisZoom = null; zoomA(Z * 1.8); contar('zoom-mas'); });
+  zMenos.addEventListener('click', function () { zoomA(Z / 1.8); });
+  zMundo.addEventListener('click', function () { paisZoom = null; zoomA(1); });
+
   function centrarEn(p, suave) {
     if (!panMax || !p || !M.c[p]) return;
     var x = proyectar(M.c[p][0], M.c[p][1])[0] + mapa.base;
@@ -444,6 +531,14 @@
 
   /* ---------- Listas, contador, ranking ---------- */
   var contador = $('#contador'), ranking = $('#ranking'), ultimas = $('#ultimas');
+  var COLOR_LUZ = ['#4EE5E5', '#FF3D7F', '#FFD93D', '#C7FF3D', '#A98BFF', '#FF8A3D'];
+  var PERSONA = /(?:^|[^a-záéíóúñü])(mam[aá]s?|mami|mama|madre|pap[aá]s?|papi|padre|padres|hij[oa]s?|abuel[oa]s?|abu|herman[oa]s?|espos[oa]|novi[oa]|pareja|amig[oa]s?|mejor amig[oa]|t[ií][oa]s?|prim[oa]s?|sobrin[oa]s?|niet[oa]s?|familia|beb[eé]|profe|profesor[a]?|maestr[oa]|entrenador[a]?|teacher|coach|perr[oa]s?|perrit[oa]|gat[oa]s?|gatit[oa]|mascota|mom|mum|mommy|mother|dad|daddy|father|parents|son|daughter|kids?|children|grand\w*|brother|sister|siblings?|wife|husband|boyfriend|girlfriend|partner|friends?|aunt|uncle|cousin|nephew|niece|family|baby|dog|puppy|cat|kitty|pet)(?![a-záéíóúñü])/i;
+  function esAbstracta(tx) {
+    tx = String(tx || '').trim();
+    if (tx.length < 3 || PERSONA.test(tx)) return false;
+    if (/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){0,2}$/.test(tx)) return false;   // parece un nombre propio
+    return true;
+  }
   function pintarListas() {
     var porPais = {}; luces.forEach(function (l) { if (l.p !== 'ZZ') porPais[l.p] = (porPais[l.p] || 0) + 1; });
     var paises = Object.keys(porPais);
@@ -457,15 +552,27 @@
       var c = document.createElement('span'); c.className = 'n'; c.textContent = porPais[p].toLocaleString(lang);
       var b = document.createElement('i'); b.className = 'barra-luz'; b.style.transform = 'scaleX(' + Math.max(.04, porPais[p] / max).toFixed(3) + ')';
       li.append(n, c, b); ranking.appendChild(li);
+      li.tabIndex = 0; li.className = 'con-zoom'; li.title = t('verPais');
+      var ir = function () { $('#escena').scrollIntoView({ behavior: QUIETO ? 'auto' : 'smooth', block: 'start' }); setTimeout(function () { acercarPais(p); }, QUIETO ? 0 : 450); };
+      li.addEventListener('click', ir); li.addEventListener('keydown', function (e) { if (e.key === 'Enter') ir(); });
     });
     ultimas.innerHTML = '';
     var ult = luces.slice().sort(function (a, b) { return b.ts - a.ts; }).slice(0, 12);
     if (!ult.length) { var u = document.createElement('li'); u.textContent = t('ultVacio'); u.style.color = 'var(--bruma)'; ultimas.appendChild(u); }
-    ult.forEach(function (l) {
+    ult.forEach(function (l, i) {
       var li = document.createElement('li'); if (l.propia) li.className = 'propia';
+      li.style.setProperty('--c', COLOR_LUZ[i % COLOR_LUZ.length]);
       var q = document.createElement('q'); q.textContent = l.t;
       var sm = document.createElement('small'); sm.textContent = [l.c, nombrePais(l.p)].filter(Boolean).join(', ');
       li.append(q, sm); ultimas.appendChild(li);
+    });
+    // Luces sin nombre: las respuestas que no son una persona ni una mascota
+    var vistos = {}, abs = luces.filter(function (l) { var k = norm(l.t); if (vistos[k] || !esAbstracta(l.t)) return false; vistos[k] = 1; return true; }).sort(function (a, b) { return b.ts - a.ts; }).slice(0, 8);
+    $('#sinNombre').hidden = abs.length < 2;
+    var ch = $('#chispas'); ch.innerHTML = '';
+    abs.forEach(function (l, i) {
+      var li = document.createElement('li'); li.textContent = l.t; li.style.setProperty('--c', COLOR_LUZ[(i + 2) % COLOR_LUZ.length]);
+      li.title = [l.c, nombrePais(l.p)].filter(Boolean).join(', '); ch.appendChild(li);
     });
   }
 
@@ -716,7 +823,7 @@
     function enviarArchivo(b) {
       var f = window.File ? new File([b], 'my-light.png', { type: 'image/png' }) : null;
       if (f && navigator.canShare && navigator.canShare({ files: [f] })) {
-        return navigator.share({ files: [f], text: t('compartirTxt') + ' ' + CFG.URL }).then(function () { contar('compartido'); }, function (e) { if (e && e.name === 'NotAllowedError') abrirVisor(false); });
+        return navigator.share({ files: [f], text: t('compartirTxt') + ' ' + enlaceSticker() }).then(function () { contar('compartido'); }, function (e) { if (e && e.name === 'NotAllowedError') abrirVisor(false); });
       }
       if (IOS || ANDROID) abrirVisor(false); else descargar(b);
     }
@@ -737,7 +844,7 @@
   $('#whatsapp').addEventListener('click', function () { contar('whatsapp'); });
   $('#seguir').addEventListener('click', function () { contar('seguir-instagram'); });
   $('#copiar').addEventListener('click', function () { contar('copiar-enlace'); copiarEnlace(false); });
-  function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + CFG.URL + (lang === 'es' ? '?lang=es' : '')); }
+  function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + enlaceSticker()); }
 
   /* ---------- Idioma ---------- */
   function ponerIdioma(l) {
@@ -751,8 +858,8 @@
 
   /* ---------- Demo (?demo=1): estrellas inventadas solo en este navegador ---------- */
   function demo() {
-    var frases = { es: ['mi mamá', 'mi abuela Rosa', 'la canción que me sacó adelante', 'mi hija Valentina', 'mi papá, que me enseñó a cantar', 'mis amigos de siempre', 'la música', 'mi hermano', 'mi perro Toby', 'Fix You en el peor año de mi vida', 'mi esposa', 'mi profe de danza'],
-      en: ['my mom', 'my grandma', 'the song that got me through', 'my little girl', 'my dad', 'my best friend', 'music', 'my brother', 'my dog', 'Fix You, every single time', 'my wife', 'my teacher'] };
+    var frases = { es: ['mi mamá', 'mi abuela Rosa', 'la canción que me sacó adelante', 'mi hija Valentina', 'mi papá, que me enseñó a cantar', 'mis amigos de siempre', 'la música', 'mi hermano', 'mi perro Toby', 'Fix You en el peor año de mi vida', 'mi esposa', 'mi profe de danza', 'mis sueños', 'volver a empezar', 'el mar de mi pueblo', 'las ganas de seguir'],
+      en: ['my mom', 'my grandma', 'the song that got me through', 'my little girl', 'my dad', 'my best friend', 'music', 'my brother', 'my dog', 'Fix You, every single time', 'my wife', 'my teacher', 'my dreams', 'starting over', 'the ocean'] };
     var pesos = { AR: 70, MX: 60, CO: 45, CL: 38, CR: 55, PE: 25, GT: 18, ES: 22, US: 30, BR: 15, GB: 14, DE: 6, FR: 5, IT: 5, JP: 4, AU: 4, CA: 7, EC: 8, UY: 9, VE: 7, PA: 6, SV: 5, HN: 4, NI: 3, BO: 3, PY: 3, DO: 4, PR: 3, PH: 3, IN: 3, KR: 2, NL: 2, PT: 3, ZA: 1, NZ: 1 };
     var ciudades = { AR: ['Buenos Aires', 'Córdoba', 'Rosario'], MX: ['CDMX', 'Guadalajara', 'Monterrey'], CR: ['San José', 'Heredia', 'Cartago'], CO: ['Bogotá', 'Medellín'], CL: ['Santiago'], US: ['New York', 'Los Angeles', 'Chicago'] };
     var n = 0;
@@ -785,6 +892,49 @@
     return p;
   })();
   if (DEMO) { demo(); cargado = true; }
+  /* ---------- El barquito: al tocarlo, la luz suelta chispas de colores ---------- */
+  if (barcoDiv) {
+    barcoDiv.setAttribute('role', 'button'); barcoDiv.tabIndex = 0;
+    barcoDiv.setAttribute('aria-label', lang === 'es' ? 'Encender la luz del barquito' : 'Light up the little boat');
+    var chispear = function () {
+      contar('barquito');
+      if (orbe.animate) orbe.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.45)', filter: 'brightness(1.4)' }, { transform: 'scale(1)' }], { duration: 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      if (QUIETO) return;
+      for (var i = 0; i < 26; i++) {
+        var c = document.createElement('i'), a = -Math.PI / 2 + (Math.random() - .5) * 2.6, d = 50 + Math.random() * 120;
+        c.className = 'chispa' + (i % 4 === 0 ? ' chispa--estrella' : '');
+        c.style.setProperty('--dx', (Math.cos(a) * d).toFixed(1) + 'px');
+        c.style.setProperty('--dy', (Math.sin(a) * d - 20).toFixed(1) + 'px');
+        c.style.setProperty('--c', COLOR_LUZ[i % COLOR_LUZ.length]);
+        c.style.setProperty('--t', (900 + Math.random() * 900).toFixed(0) + 'ms');
+        c.style.setProperty('--s', (.5 + Math.random() * .9).toFixed(2));
+        c.style.animationDelay = (Math.random() * 160).toFixed(0) + 'ms';
+        barcoDiv.appendChild(c);
+        setTimeout(function (el) { return function () { el.remove(); }; }(c), 2200);
+      }
+    };
+    barcoDiv.addEventListener('click', chispear);
+    barcoDiv.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chispear(); } });
+  }
+  /* ---------- Abajo: una multitud con pulseras de luz, como en un concierto ---------- */
+  (function () {
+    var m = $('#multitud'); if (!m) return;
+    var semilla = 11; function rnd() { semilla = (semilla * 16807) % 2147483647; return semilla / 2147483647; }
+    for (var i = 0; i < 140; i++) {
+      var p = document.createElement('i'), y = rnd();
+      p.style.left = (rnd() * 100).toFixed(2) + '%'; p.style.bottom = (y * 78).toFixed(1) + '%';
+      p.style.setProperty('--c', COLOR_LUZ[(rnd() * COLOR_LUZ.length) | 0]);
+      p.style.setProperty('--s', (1.4 - y * .7).toFixed(2));
+      p.style.animationDelay = (-rnd() * 6).toFixed(2) + 's'; p.style.animationDuration = (2.4 + rnd() * 3).toFixed(2) + 's';
+      m.appendChild(p);
+    }
+  })();
+
+  (function () {
+    var e = $('.escenario'); if (!e) return;
+    if (!('IntersectionObserver' in window)) { e.classList.add('is-visto'); return; }
+    var io = new IntersectionObserver(function (x) { if (x[0].isIntersecting) { e.classList.add('is-visto'); io.disconnect(); } }, { threshold: .25 }); io.observe(e);
+  })();
   medir(); medirBarco(); flotar(0);
   pan = panMax ? Math.max(0, Math.min(panMax, proyectar(10, -80)[0] + mapa.base - W * .5)) : 0;
   var det = llegoDe || paisDetectado(); if (det) centrarEn(det, false);

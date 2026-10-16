@@ -224,3 +224,72 @@ body.con-visor { overflow: hidden; }
   opacity: 0; transform: translate(-50%, -140%); transition: transform .35s var(--suave), opacity .35s; pointer-events: none; }
 .brindis.is-on { opacity: 1; transform: translate(-50%, 0); }
 @media (prefers-reduced-motion: reduce) { .brindis, .mini { transition: none; } }
+
+/* ==========================================================
+   v6 — abanico de respuestas, zoom, chispas, colores, arcoíris
+   ========================================================== */
+/* La línea que abre la pregunta a todo tipo de luces */
+.abanico { margin: .75rem 0 0; max-width: 30rem; font: 500 clamp(.98rem, 2.5vw, 1.08rem)/1.45 var(--sans); letter-spacing: .005em; text-wrap: balance;
+  background: linear-gradient(90deg, #4EE5E5, #A98BFF 45%, #FF3D7F 80%, #FF8A3D); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.abanico + .bajada { margin-top: .5rem; }
+
+/* Zoom del mapa */
+.zoom { position: absolute; z-index: 6; left: var(--gutter); bottom: calc(20% + .9rem); display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; max-width: calc(100% - 2 * var(--gutter)); pointer-events: none; }
+@media (min-width: 960px) { .zoom { bottom: calc(32% + 1rem); } }
+.zoom button { pointer-events: auto; min-width: 2.6rem; height: 2.6rem; padding: 0 .9rem; border: 1px solid #3A3466; border-radius: 99px; background: rgba(16, 13, 38, .82); color: var(--papel); font: 500 1.35rem/1 var(--sans); cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: border-color .2s, opacity .2s; }
+.zoom button:hover:not(:disabled) { border-color: var(--orbe); }
+.zoom button:disabled { opacity: .35; cursor: default; }
+.zoom .zoom-mundo { font-size: .85rem; font-weight: 600; }
+.zoom-pais { flex-basis: 100%; margin: .1rem 0 0 .2rem; font: italic 400 1.05rem/1.2 var(--serif); color: var(--orbe); text-shadow: 0 1px 10px rgba(16, 13, 38, 1); min-height: 1.2em; }
+.zoom-pais:empty { display: none; }
+.ranking li.con-zoom { cursor: pointer; }
+.ranking li.con-zoom:hover > span:first-child { text-decoration: underline; text-underline-offset: 3px; }
+
+/* El barquito se puede tocar: suelta chispas de colores */
+.barquito { pointer-events: auto; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.barquito:focus-visible { outline-offset: 6px; }
+#orbe { transform-box: fill-box; transform-origin: center; }
+.chispa { position: absolute; left: 50%; top: 34%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c), 0 0 22px var(--c); pointer-events: none; opacity: 0;
+  animation: chispa var(--t, 1.2s) cubic-bezier(.16, .84, .44, 1) forwards; }
+.chispa--estrella { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 0; clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%); }
+@keyframes chispa {
+  0% { opacity: 0; transform: translate(0, 0) scale(.2); }
+  12% { opacity: 1; }
+  70% { opacity: .9; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(var(--s)) rotate(160deg); }
+}
+
+/* Últimas luces: cada una con su color */
+.ultimas li { --c: var(--papel); }
+.ultimas q { color: var(--c); }
+.ultimas li.propia q { color: var(--orbe); }
+
+/* Luces sin nombre */
+.sin-nombre { margin-bottom: 3rem; }
+.chispas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+.chispas li { --c: var(--orbe); padding: .5rem .95rem .55rem; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 12%, transparent);
+  color: var(--c); font: italic 400 1.08rem/1.25 var(--serif); box-shadow: 0 0 18px color-mix(in srgb, var(--c) 18%, transparent); overflow-wrap: anywhere; }
+.chispas li::before { content: '✦ '; font-style: normal; }
+
+/* Abajo: arcoíris de luz y una multitud con pulseras de colores */
+.escenario { position: relative; overflow: hidden; isolation: isolate; padding-bottom: clamp(6rem, 14vw, 9rem); }
+.escenario .envoltura { position: relative; z-index: 2; }
+.aurora { position: absolute; z-index: 0; inset: 0; pointer-events: none; overflow: hidden; }
+.aurora i { position: absolute; width: 70vmax; height: 38vmax; border-radius: 50%; filter: blur(70px); opacity: .32; mix-blend-mode: screen; animation: deriva-aurora 22s ease-in-out infinite alternate; }
+.aurora i:nth-child(1) { left: -20%; bottom: -12%; background: radial-gradient(closest-side, #4EE5E5, transparent); }
+.aurora i:nth-child(2) { left: 22%; bottom: -20%; background: radial-gradient(closest-side, #A98BFF, transparent); animation-duration: 28s; animation-delay: -8s; }
+.aurora i:nth-child(3) { right: -25%; bottom: -10%; background: radial-gradient(closest-side, #FF3D7F, transparent); animation-duration: 25s; animation-delay: -14s; opacity: .26; }
+@keyframes deriva-aurora { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(6%, -6%) scale(1.12); } 100% { transform: translate(-5%, 3%) scale(.95); } }
+.escenario .logo { filter: drop-shadow(0 0 18px rgba(16, 13, 38, .9)); }
+.promesa, .volver { text-shadow: 0 1px 14px rgba(16, 13, 38, 1); }
+.volver { background: rgba(16, 13, 38, .6); }
+.multitud { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: clamp(5rem, 12vw, 8rem); pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 45%); mask-image: linear-gradient(transparent, #000 45%); }
+.multitud i { position: absolute; width: calc(5px * var(--s)); height: calc(5px * var(--s)); border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c), 0 0 16px var(--c); animation: pulsera 3s ease-in-out infinite; }
+@keyframes pulsera { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora i { animation: none; }
+  .multitud i { animation: none; opacity: .7; }
+  .chispa { display: none; }
+}
