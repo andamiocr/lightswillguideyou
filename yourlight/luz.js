@@ -783,7 +783,7 @@
   /* Abrir esta página afuera (Safari o Chrome) con la estrella lista para compartir */
   function urlFuera() {
     var l = ultimaPropia || {};
-    var destino = CFG.URL + '?lang=' + lang + '&mia=' + encodeURIComponent(l.t || '') + '&p=' + encodeURIComponent(l.p || '') + (l.c ? '&c=' + encodeURIComponent(l.c) : '') + '&ts=' + Date.now().toString(36);
+    var destino = 'https://www.lightswillguideyou.com' + rutaIdioma(lang) + '?mia=' + encodeURIComponent(l.t || '') + '&p=' + encodeURIComponent(l.p || '') + (l.c ? '&c=' + encodeURIComponent(l.c) : '') + '&ts=' + Date.now().toString(36);
     if (ANDROID) return 'intent://' + destino.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(destino) + ';end';
     if (APP === 'ig') return 'instagram://extbrowser/?url=' + encodeURIComponent(destino);
     if (APP === 'threads') return 'barcelona://extbrowser/?url=' + encodeURIComponent(destino);
@@ -838,13 +838,25 @@
   $('#copiar').addEventListener('click', function () { contar('copiar-enlace'); copiarEnlace(false); });
   function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + enlaceSticker()); }
 
-  /* ---------- Idioma ---------- */
+  /* ---------- Idioma ----------
+     Cada idioma tiene su propia dirección: español = /tuluz/, inglés = /yourlight/.
+     Se cambia la dirección sin recargar y se quita ?lang= (los demás parámetros se quedan). */
+  function rutaIdioma(l) { return l === 'es' ? '/tuluz/' : '/yourlight/'; }
+  function limpiarDireccion(quitar) {
+    try {
+      var q = new URLSearchParams(location.search);
+      ['lang'].concat(quitar || []).forEach(function (k) { q.delete(k); });
+      var s = q.toString();
+      history.replaceState(null, '', rutaIdioma(lang) + (s ? '?' + s : '') + location.hash);
+    } catch (e) {}
+  }
   function ponerIdioma(l) {
     lang = l; html.lang = l; html.setAttribute('data-lang', l);
     try { localStorage.setItem('lwgy-lang', l); } catch (e) {}
     document.querySelectorAll('[data-href-' + l + ']').forEach(function (a) { a.href = a.getAttribute('data-href-' + l); });
     llenarPaises(); ejemplo(); pintarListas(); if (!listo.hidden) pintarListo(); tarjetaCompartir = null;
     if (marcada) mostrar(null);
+    limpiarDireccion();
   }
   $('#idioma').addEventListener('click', function () { ponerIdioma(lang === 'es' ? 'en' : 'es'); });
 
@@ -865,6 +877,7 @@
   }
 
   /* ---------- Arranque ---------- */
+  limpiarDireccion();
   llenarPaises(); ejemplo(); validar();
   propiasGuardadas().forEach(function (o) { if (o && o.t) agregar({ t: o.t, p: o.p || 'ZZ', c: o.c || '', ts: o.ts || 0, propia: true }); });
   // Llegó desde el navegador de Instagram con su estrella (?mia=…): la mostramos lista para compartir.
@@ -873,7 +886,7 @@
     var q = new URLSearchParams(location.search), tx = (q.get('mia') || '').slice(0, 90);
     if (!tx) return '';
     var ts = parseInt(q.get('ts') || '', 36), p = (q.get('p') || '').toUpperCase(), c = (q.get('c') || '').slice(0, 40);
-    try { history.replaceState(null, '', location.pathname + '?lang=' + lang); } catch (e) {}
+    limpiarDireccion(['mia', 'p', 'c', 'ts']);
     if (!ts || Math.abs(Date.now() - ts) > 6 * 36e5 || !aceptable(tx) || (c && !aceptable(c))) return '';
     if (!M.c[p]) p = 'ZZ';
     var ya = propiasGuardadas().some(function (o) { return o && o.t === tx && o.p === p; });

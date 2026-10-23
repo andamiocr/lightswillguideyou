@@ -1,0 +1,24 @@
+# Regenera tuluz/index.html (Tu luz en español) cada vez que cambia yourlight/index.html.
+name: Generar Tu luz en español
+on:
+  push:
+    branches: [main]
+    paths: ['yourlight/index.html', 'herramientas/generar_tuluz.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 herramientas/generar_tuluz.py
+      - name: Guardar si cambió
+        run: |
+          if [ -n "$(git status --porcelain tuluz/)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add tuluz/index.html
+            git commit -m "Actualizar Tu luz en español (automático)"
+            git push
+          fi

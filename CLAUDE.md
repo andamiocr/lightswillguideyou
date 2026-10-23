@@ -24,8 +24,8 @@ Sitio oficial del show (www.lightswillguideyou.com), de Andamio Escuela de Movim
 - Datos para Google (JSON-LD) viven en el `<script type="application/ld+json">` de index.html: mantener cifras y fechas al día.
 
 ## Tu luz / Your light (/yourlight/)
-- Página propia en `yourlight/` (index.html, luz.css, luz.js, mapa.js, og.jpg). `/tuluz/` solo redirige a `/yourlight/?lang=es`.
-- Un solo archivo para los dos idiomas: elige solo (?lang=es|en › elección guardada › idioma del teléfono) y tiene botón ES/EN.
+- Página propia en `yourlight/` (index.html, luz.css, luz.js, mapa.js, og.jpg). `/tuluz/` es la misma página en español: `tuluz/index.html` es GENERADO desde `yourlight/index.html` con `python3 herramientas/generar_tuluz.py` (GitHub Actions también lo regenera en cada Push); nunca editarlo a mano. Cada idioma tiene su dirección: español = /tuluz/, inglés = /yourlight/; al cambiar de idioma la dirección cambia sola y se quita `?lang=`.
+- Un solo archivo para los dos idiomas: elige solo (?lang=es|en › la dirección /tuluz/ › elección guardada › idioma del teléfono) y tiene botón ES/EN.
 - Formulario de Google (respuesta corta): Luz, País, Ciudad, Idioma. El país se guarda como código de 2 letras (CR, MX, US…).
 - La hoja se lee pública (gviz). Moderación al revés: todo se publica; una X (o cualquier valor) en la columna "Ocultar" (antes "Aprobar") retira la luz.
 - Robot de la hoja: `herramientas/robot-tuluz.gs` (Apps Script pegado dentro de la hoja, Extensiones → Apps Script). Revisa cada estrella al llegar y escribe el motivo en "Ocultar" (nunca borra): palabras de la pestaña "Palabras" (también disfrazadas), enlaces/teléfonos, repetidas (mismo texto + mismo teléfono en 24 h), más de 10 por teléfono al día, freno automático (más de 40 en 10 min → "en revisión") y modo revisión. Pestañas "Ajustes" y "Registro". Correo de aviso (máx. 1 por hora) y resumen diario 8 a. m. Si se cambia el código, José Pablo tiene que volver a pegarlo en la hoja (y correr «instalar» si cambian los disparadores).

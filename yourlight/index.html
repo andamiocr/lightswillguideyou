@@ -21,19 +21,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..600,0..100&display=swap">
-  <link rel="stylesheet" href="luz.css?v=7">
+  <link rel="stylesheet" href="/yourlight/luz.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebPage","name":"Who is the light that guides you?","url":"https://www.lightswillguideyou.com/yourlight/","inLanguage":["en","es"],"isPartOf":{"@id":"https://www.lightswillguideyou.com/#web"},"about":{"@id":"https://www.lightswillguideyou.com/#obra"}}
   </script>
   <script>
-    /* Idioma: ?lang=es|en  >  elección guardada  >  idioma del teléfono/navegador */
+    /* Idioma: ?lang=es|en  >  la dirección (/tuluz/ = español)  >  elección guardada  >  idioma del teléfono/navegador */
     (function () {
       var l = 'en';
       try {
         var q = new URLSearchParams(location.search).get('lang');
         var g = localStorage.getItem('lwgy-lang');
         var nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
-        l = (q === 'es' || q === 'en') ? q : (g === 'es' || g === 'en') ? g : (/^es\b/i.test(nav) ? 'es' : 'en');
+        var ruta = /^\/tuluz(\/|$)/.test(location.pathname) ? 'es' : '';
+        l = (q === 'es' || q === 'en') ? q : ruta ? ruta : (g === 'es' || g === 'en') ? g : (/^es\b/i.test(nav) ? 'es' : 'en');
       } catch (e) {}
       document.documentElement.lang = l; document.documentElement.setAttribute('data-lang', l);
     })();
@@ -231,7 +232,7 @@
 
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-  <script src="mapa.js?v=1"></script>
-  <script src="luz.js?v=7"></script>
+  <script src="/yourlight/mapa.js?v=1"></script>
+  <script src="/yourlight/luz.js?v=8"></script>
 </body>
 </html>
