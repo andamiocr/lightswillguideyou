@@ -2,11 +2,11 @@
  * MIS VISITAS — resumen diario de GoatCounter (José Pablo García)
  * ------------------------------------------------------------------
  * Una página privada (solo se abre con tu cuenta de Google) que junta
- * los datos de tus 3 sitios de GoatCounter y los muestra ordenados.
+ * los datos de tus sitios de GoatCounter y los muestra ordenados.
  *
  * Las llaves (API keys) NO van en este código: se guardan en
  * Configuración del proyecto → Propiedades del script, con estos nombres:
- *   lightswillguideyou   andamiocr   persona
+ *   lightswillguideyou   andamiocr   persona   personacr
  *
  * Los datos se guardan 20 minutos en memoria para que la página abra rápido.
  */
@@ -14,7 +14,8 @@
 var SITIOS = [
   { codigo: 'lightswillguideyou', nombre: 'Lights Will Guide You', web: 'lightswillguideyou.com', color: '#E0A800' },
   { codigo: 'andamiocr', nombre: 'Andamio · /info', web: 'andamiocr.com/info', color: '#2E8FC0' },
-  { codigo: 'persona', nombre: 'PERSONA · bio', web: 'bio.persona.cr', color: '#B4517A' }
+  { codigo: 'persona', nombre: 'PERSONA · bio', web: 'bio.persona.cr', color: '#B4517A' },
+  { codigo: 'personacr', nombre: 'PERSONA · sitio', web: 'www.persona.cr', color: '#4FB3E8' }
 ];
 
 function doGet() {
