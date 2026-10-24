@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..600,0..100&display=swap">
-  <link rel="stylesheet" href="/yourlight/luz.css?v=8">
+  <link rel="stylesheet" href="/yourlight/luz.css?v=9">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebPage","name":"Who is the light that guides you?","url":"https://www.lightswillguideyou.com/yourlight/","inLanguage":["en","es"],"isPartOf":{"@id":"https://www.lightswillguideyou.com/#web"},"about":{"@id":"https://www.lightswillguideyou.com/#obra"}}
   </script>
@@ -60,7 +60,10 @@
     <a class="marca" href="https://www.lightswillguideyou.com/" data-href-es="https://www.lightswillguideyou.com/" data-href-en="https://www.lightswillguideyou.com/en/">
       <svg class="marca-estrella" aria-hidden="true"><use href="#estrella"/></svg><svg class="palabra" role="img" aria-label="Lights Will Guide You"><use href="#palabra"/></svg>
     </a>
-    <button class="idioma" id="idioma" type="button" aria-label="Español / English"><span data-l="es">ES</span><span data-l="en">EN</span></button>
+    <div class="barra-der">
+      <button class="compartir-p" id="invitarArriba" type="button" aria-label="Compartir / Share"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M7.8 7.7 12 3.5l4.2 4.2M6 11.5V19a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19v-7.5"/></svg><span class="es">Compartir</span><span class="en">Share</span></button>
+      <button class="idioma" id="idioma" type="button" aria-label="Español / English"><span data-l="es">ES</span><span data-l="en">EN</span></button>
+    </div>
   </header>
 
   <main>
@@ -148,11 +151,12 @@
           <div class="listo-cabeza">
             <div>
               <p class="listo-t"><span id="listoTexto"></span></p>
-              <p class="listo-s"><span class="es">Llevala a tus historias para que tu luz brille más lejos.</span><span class="en">Take it to your Stories so your light shines further.</span></p>
+              <p class="listo-s"><span class="es">Mandásela a tu luz o a alguien que quieras. También podés llevarla a tus historias.</span><span class="en">Send it to your light, or to someone you love. You can also take it to your Stories.</span></p>
             </div>
             <button class="mini" id="mini" type="button" hidden><img id="miniImg" alt="" width="54" height="96"></button>
           </div>
-          <button class="boton boton--ancho" id="compartir" type="button"><span id="compartirTxt"><span class="es">Compartir en historias</span><span class="en">Share to Stories</span></span></button>
+          <button class="boton boton--ancho" id="mandar" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M7.8 7.7 12 3.5l4.2 4.2M6 11.5V19a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19v-7.5"/></svg><span class="es">Mandar mi estrella</span><span class="en">Send my star</span></button>
+          <button class="boton boton--ancho boton--linea" id="compartir" type="button"><span id="compartirTxt"><span class="es">Compartir en historias</span><span class="en">Share to Stories</span></span></button>
           <p class="nota-app" id="notaApp" hidden></p>
 
           <p class="pasos-t"><span class="es">Después, en Instagram:</span><span class="en">Then, in Instagram:</span></p>
@@ -183,8 +187,8 @@
     <section class="carrera" aria-labelledby="carreraT">
       <div class="envoltura dos">
         <div>
-          <h2 id="carreraT"><span class="es">¿Qué país brilla más?</span><span class="en">Which country shines brightest?</span></h2>
-          <p class="nota"><span class="es">Contamos cada estrella colgada desde cada país. Compartí tu luz para que el tuyo suba.</span><span class="en">We count every star hung from every country. Share your light so yours climbs.</span></p>
+          <h2 id="carreraT"><span class="es">Lugares donde se encendieron luces</span><span class="en">Places where lights came on</span></h2>
+          <p class="nota"><span class="es">Las estrellas colgadas desde cada país.</span><span class="en">The stars hung from each country.</span></p>
           <ol class="ranking" id="ranking"></ol>
         </div>
         <div>
@@ -203,9 +207,12 @@
           <span class="es">Las luces de este cielo van a brillar en el escenario, en la próxima temporada del espectáculo.</span>
           <span class="en">The lights in this sky will shine on stage in the show's next season.</span>
         </p>
+        <div class="escenario-acciones">
+        <button class="boton" id="invitarAbajo" type="button"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M7.8 7.7 12 3.5l4.2 4.2M6 11.5V19a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 19v-7.5"/></svg><span class="es">Enviale esta pregunta a alguien</span><span class="en">Send this question to someone</span></button>
         <a class="volver" href="https://www.lightswillguideyou.com/" data-href-es="https://www.lightswillguideyou.com/" data-href-en="https://www.lightswillguideyou.com/en/">
           <span class="es">Conocé el espectáculo</span><span class="en">Discover the show</span>
         </a>
+        </div>
       </div>
     </section>
   </main>
@@ -228,11 +235,25 @@
       </div>
     </div>
   </div>
+  <!-- Compartir sin el menú del teléfono (computadora, o si el menú no abre) -->
+  <div class="hoja" id="hoja" hidden role="dialog" aria-modal="true" aria-labelledby="hojaT">
+    <div class="hoja-caja">
+      <p class="hoja-t" id="hojaT"><span class="es">Compartir</span><span class="en">Share</span></p>
+      <p class="hoja-texto" id="hojaTexto"></p>
+      <div class="hoja-opciones">
+        <a class="boton" id="hojaWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="boton boton--linea" id="hojaFb" href="#" target="_blank" rel="noopener">Facebook</a>
+        <a class="boton boton--linea" id="hojaX" href="#" target="_blank" rel="noopener">X</a>
+        <button class="boton boton--linea" id="hojaCopiar" type="button"><span class="es">Copiar enlace</span><span class="en">Copy link</span></button>
+      </div>
+      <button class="otra" id="hojaCerrar" type="button"><span class="es">Cerrar</span><span class="en">Close</span></button>
+    </div>
+  </div>
   <p class="brindis" id="brindis" role="status" aria-live="polite"></p>
 
   <!-- Contador (GoatCounter, sin cookies): https://lightswillguideyou.goatcounter.com -->
   <script data-goatcounter="https://lightswillguideyou.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="/yourlight/mapa.js?v=1"></script>
-  <script src="/yourlight/luz.js?v=8"></script>
+  <script src="/yourlight/luz.js?v=9"></script>
 </body>
 </html>

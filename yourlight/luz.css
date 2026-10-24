@@ -288,3 +288,19 @@ body.con-visor { overflow: hidden; }
   .multitud i { animation: none; opacity: .7; }
   .chispa { display: none; }
 }
+
+/* ---------- Compartir (botón de arriba, de abajo y hoja) ---------- */
+.barra-der { display: flex; align-items: center; gap: .45rem; }
+.compartir-p { display: inline-flex; align-items: center; gap: .4rem; min-height: 2.15rem; padding: .35rem .8rem; border: 1px solid var(--hilo); border-radius: 99px; background: rgba(16, 13, 38, .6); color: var(--papel); font: 600 .8rem/1 var(--sans); cursor: pointer; }
+.compartir-p:hover { border-color: var(--papel); }
+.ico { width: 1rem; height: 1rem; flex: none; fill: none !important; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.boton--ancho + .boton--ancho { margin-top: .6rem; }
+.escenario-acciones { display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+.hoja { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  background: rgba(8, 6, 22, .9); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.hoja-caja { width: 100%; max-width: 24rem; padding: 1.4rem 1.2rem 1rem; border-radius: 20px; background: var(--noche); box-shadow: inset 0 0 0 1px #3A3466, 0 20px 60px rgba(0, 0, 0, .5); text-align: center; }
+.hoja-t { margin: 0; font: italic 400 1.3rem/1.25 var(--serif); color: var(--orbe); }
+.hoja-texto { margin: .6rem 0 1.1rem; color: #D9D4EA; font-size: .88rem; line-height: 1.45; overflow-wrap: anywhere; }
+.hoja-opciones { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.hoja-opciones .boton:first-child, .hoja-opciones .boton:last-child { grid-column: 1 / -1; }
+@media (max-width: 440px) { .compartir-p { padding: .35rem .6rem; } .compartir-p > span { display: none; } }

@@ -22,7 +22,9 @@
       elegir: 'Elegí tu país', sinPais: 'algún lugar del mundo',
       contador: function (n, k) { return n === 1 ? 'Una luz encendida. Falta la tuya.' : n.toLocaleString('es') + ' luces colgadas desde ' + k + (k === 1 ? ' país' : ' países'); },
       vacio: 'Todavía no hay luces. Colgá la primera.',
-      rankVacio: 'Cuando se cuelguen las primeras luces, aquí vas a ver qué país brilla más.',
+      rankVacio: 'Cuando se cuelguen las primeras luces, aquí vas a ver desde dónde se encienden.',
+      invitar: '¿Quién es la luz que te guía? En este mapa, cada estrella es la respuesta de alguien. Colgá la tuya:',
+      mandar: function (t, p) { return 'Colgué una estrella en el cielo de Lights Will Guide You: "' + t + '". Está sobre ' + p + '. ¿Quién es tu luz?'; },
       ultVacio: 'Las primeras luces van a aparecer aquí.',
       ejemplos: ['mi mamá', 'mis sueños', 'la canción que me sacó adelante', 'el mar', 'mi hija', 'volver a empezar', 'mi abuelo, que ya no está', 'la música', 'las ganas de seguir', 'mi perro Toby', 'un recuerdo de mi infancia', 'mi mejor amiga'],
       faltaTexto: 'Escribí quién es tu luz.', faltaPais: 'Elegí desde qué país la colgás.',
@@ -53,7 +55,9 @@
       elegir: 'Choose your country', sinPais: 'somewhere in the world',
       contador: function (n, k) { return n === 1 ? 'One light is on. Yours is missing.' : n.toLocaleString('en') + ' lights hung from ' + k + (k === 1 ? ' country' : ' countries'); },
       vacio: 'No lights yet. Hang the first one.',
-      rankVacio: 'Once the first lights are hung, you will see which country shines brightest here.',
+      rankVacio: 'Once the first lights are hung, you will see here where they came on.',
+      invitar: 'Who is the light that guides you? On this map, every star is someone\'s answer. Hang yours:',
+      mandar: function (t, p, c) { return 'I hung a star in the Lights Will Guide You sky: "' + t + '". It hangs over ' + (CON_THE.indexOf(c) > -1 ? 'the ' : '') + p + '. Who is your light?'; },
       ultVacio: 'The first lights will appear here.',
       ejemplos: ['my mom', 'my dreams', 'the song that got me through', 'the ocean', 'my daughter', 'starting over', 'my grandpa, who is gone now', 'music', 'the will to keep going', 'my dog Toby', 'a childhood memory', 'my best friend'],
       faltaTexto: 'Write who your light is.', faltaPais: 'Choose the country you are hanging it from.',
@@ -836,6 +840,45 @@
   $('#whatsapp').addEventListener('click', function () { contar('whatsapp'); });
   $('#seguir').addEventListener('click', function () { contar('seguir-instagram'); });
   $('#copiar').addEventListener('click', function () { contar('copiar-enlace'); copiarEnlace(false); });
+  /* ---------- Compartir (con o sin estrella) ----------
+     En el teléfono abre el menú propio (WhatsApp, Instagram, Mensajes…). En la computadora, o si ese menú
+     no abre, se muestra la hoja con WhatsApp, Facebook, X y Copiar enlace.
+     Contador: invitar-arriba / invitar-abajo / mandar-estrella (toques) + <base>-compartido / -whatsapp / -facebook / -x / -copiar */
+  var hoja = $('#hoja'), hojaBase = '', hojaUrl = '', focoHoja = null;
+  function compartirTexto(texto, url, base) {
+    if ((IOS || ANDROID) && navigator.share) {
+      navigator.share({ text: texto, url: url }).then(function () { contar(base + '-compartido'); }, function (e) { if (!e || e.name !== 'AbortError') abrirHoja(texto, url, base); });
+      return;
+    }
+    abrirHoja(texto, url, base);
+  }
+  function abrirHoja(texto, url, base) {
+    hojaBase = base; hojaUrl = url; focoHoja = document.activeElement;
+    $('#hojaTexto').textContent = texto + ' ' + url;
+    $('#hojaWa').href = 'https://wa.me/?text=' + encodeURIComponent(texto + ' ' + url);
+    $('#hojaFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+    $('#hojaX').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(texto) + '&url=' + encodeURIComponent(url);
+    hoja.hidden = false; $('#hojaWa').focus();
+  }
+  function cerrarHoja() { hoja.hidden = true; if (focoHoja && focoHoja.focus) focoHoja.focus(); }
+  $('#hojaCerrar').addEventListener('click', cerrarHoja);
+  hoja.addEventListener('click', function (e) { if (e.target === hoja) cerrarHoja(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !hoja.hidden) cerrarHoja(); });
+  [['#hojaWa', 'whatsapp'], ['#hojaFb', 'facebook'], ['#hojaX', 'x']].forEach(function (p) { $(p[0]).addEventListener('click', function () { contar(hojaBase + '-' + p[1]); }); });
+  $('#hojaCopiar').addEventListener('click', function () {
+    contar(hojaBase + '-copiar');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(hojaUrl).then(function () { avisar(t('copiado')); }, function () { prompt('', hojaUrl); });
+    else prompt('', hojaUrl);
+  });
+  function invitar(donde) { contar('invitar-' + donde); compartirTexto(t('invitar'), enlaceSticker(), 'invitar'); }
+  $('#invitarArriba').addEventListener('click', function () { invitar('arriba'); });
+  $('#invitarAbajo').addEventListener('click', function () { invitar('abajo'); });
+  $('#mandar').addEventListener('click', function () {
+    if (!ultimaPropia) return;
+    contar('mandar-estrella');
+    compartirTexto(t('mandar')(ultimaPropia.t, nombrePais(ultimaPropia.p), ultimaPropia.p), enlaceSticker(), 'mandar');
+  });
+
   function actualizarWa() { var w = $('#whatsapp'); if (ultimaPropia) w.href = 'https://wa.me/?text=' + encodeURIComponent(t('wa')(ultimaPropia.t) + enlaceSticker()); }
 
   /* ---------- Idioma ----------
